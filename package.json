@@ -1,0 +1,61 @@
+{
+  "name": "sanscomicsans",
+  "version": "1.0.0",
+  "description": "An attempt to hide instances of Comic Sans in the world via image obfuscation. ",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --hot --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js",
+    "lint": "eslint src/* test/*"
+  },
+  "author": "grittly",
+  "license": "ISC",
+  "babel": {
+    "presets": [
+      "env",
+      "react"
+    ],
+    "plugins": [
+      "react-hot-loader/babel"
+    ]
+  },
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "classnames": "^2.2.5",
+    "clean-webpack-plugin": "^0.1.19",
+    "clipboard": "^2.0.0",
+    "css-loader": "^0.28.11",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass-loader": "^0.1.7",
+    "normalize.css": "^8.0.0",
+    "prop-types": "^15.6.1",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "react-konva": "^1.7.2",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "sass-loader": "^6.0.7",
+    "seedrandom": "^2.4.3",
+    "style-loader": "^0.20.3",
+    "url-loader": "^1.0.1",
+    "webpack": "^4.5.0",
+    "webpack-merge": "^4.1.2"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "mocha": "^5.0.5",
+    "react-hot-loader": "^4.0.1",
+    "redux-devtools": "^3.4.1",
+    "webpack-cli": "^2.0.14",
+    "webpack-dev-server": "^3.1.3"
+  }
+}
