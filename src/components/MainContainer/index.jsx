@@ -1,14 +1,15 @@
 import React from 'react';
+import { hot } from 'react-hot-loader';
 
 const MainContainer = () => (
   <div className="mainContainer">
     <div className="leftContainer">
-      Canvas
+      <h1>Canvas</h1>
     </div>
     <div className="rightContainer">
-      Settings
+      <h1>Settings</h1>
     </div>
   </div>
 );
 
-export default MainContainer;
+export default hot(module)(MainContainer);
