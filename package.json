@@ -30,6 +30,7 @@
     "clipboard": "^2.0.0",
     "css-loader": "^0.28.11",
     "html-webpack-plugin": "^3.2.0",
+    "konva": "^2.0.2",
     "node-sass-loader": "^0.1.7",
     "normalize.css": "^8.0.0",
     "prop-types": "^15.6.1",
