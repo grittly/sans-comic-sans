@@ -8,9 +8,7 @@ import {
   loadImage,
   unloadImage,
 } from '../../actions';
-import {
-  IMAGE_STATUS
-} from '../../constants';
+import { IMAGE_STATUS } from '../../constants';
 
 /**
  * Container for CanvasVisible, CanvasPlaceholder and Header
@@ -32,18 +30,20 @@ class CanvasContainer extends Component {
     // TODO: update container size in redux store based on browser window size
   }
 
-  handleImageUpload(e){
+  handleImageUpload(e) {
+    // eslint-disable-next-line no-undef
     const reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
     this.props.imageLoading();
     reader.onload = () => {
+      // eslint-disable-next-line no-undef
       const image = new window.Image();
       image.src = reader.result;
       image.onload = () => {
         this.props.loadImage(image, image.width, image.height);
-      }
+      };
       image.onerror = this.props.unloadImage;
-    }
+    };
     reader.onerror = this.props.unloadImage;
   }
 
@@ -61,6 +61,7 @@ class CanvasContainer extends Component {
             /> :
             <CanvasPlaceholder
               handleImageUpload={this.handleImageUpload}
+              loading={this.props.imageStatus === IMAGE_STATUS.LOADING}
             />
         }
       </div>
@@ -69,13 +70,17 @@ class CanvasContainer extends Component {
 }
 
 CanvasContainer.propTypes = {
-  imageSrc: PropTypes.object,
+  // eslint-disable-next-line no-undef
+  imageSrc: PropTypes.instanceOf(HTMLImageElement),
   imageWidth: PropTypes.number,
   imageHeight: PropTypes.number,
-  imageStatus: PropTypes.shape({
-    LOADING: PropTypes.string,
-    DONE: PropTypes.string,
-  }),
+  imageStatus: PropTypes.oneOf([
+    IMAGE_STATUS.LOADING,
+    IMAGE_STATUS.DONE,
+  ]),
+  imageLoading: PropTypes.func.isRequired,
+  unloadImage: PropTypes.func.isRequired,
+  loadImage: PropTypes.func.isRequired,
 };
 
 CanvasContainer.defaultProps = {
@@ -101,7 +106,7 @@ const mapDispatchToProps = dispatch => ({
   },
   imageLoading: () => {
     dispatch(loadImage(IMAGE_STATUS.LOADING));
-  }
+  },
 });
 
 export default connect(

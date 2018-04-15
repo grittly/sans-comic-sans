@@ -23,8 +23,8 @@ export default function srcImage(state = defaultState, action) {
           status: action.status,
           src: action.src,
           width: action.width,
-          height: action.height
-        }
+          height: action.height,
+        };
       } else if(action.status === IMAGE_STATUS.LOADING){
         return {
           ...state,
@@ -32,7 +32,7 @@ export default function srcImage(state = defaultState, action) {
           src: null,
           width: 0,
           height: 0,
-        }
+        };
       }
       return state;
     case UNLOAD_IMAGE:
@@ -42,7 +42,7 @@ export default function srcImage(state = defaultState, action) {
         src: null,
         width: 0,
         height: 0,
-      }
+      };
     default:
       return state;
   }
