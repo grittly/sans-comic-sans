@@ -11,7 +11,11 @@ class CanvasVisible extends Component {
   render() {
     return (
       <div className="canvas-wrapper">
-        <Stage className="canvas-stage">
+        <Stage 
+          className="canvas-stage"
+          width={this.props.width}
+          height={this.props.height}
+        >
           <Layer>
             <Image
               image={this.props.src}

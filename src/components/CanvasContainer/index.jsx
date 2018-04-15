@@ -8,6 +8,9 @@ import {
   loadImage,
   unloadImage,
 } from '../../actions';
+import {
+  IMAGE_STATUS
+} from '../../constants';
 
 /**
  * Container for CanvasVisible, CanvasPlaceholder and Header
@@ -16,7 +19,8 @@ class CanvasContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.handleCanvasiResize = this.handleCanvasResize;
+    this.handleCanvasiResize = this.handleCanvasResize.bind(this);
+    this.handleImageUpload = this.handleImageUpload.bind(this);
   }
 
   componentDidMount() {
@@ -28,19 +32,36 @@ class CanvasContainer extends Component {
     // TODO: update container size in redux store based on browser window size
   }
 
+  handleImageUpload(e){
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    this.props.imageLoading();
+    reader.onload = () => {
+      const image = new window.Image();
+      image.src = reader.result;
+      image.onload = () => {
+        this.props.loadImage(image, image.width, image.height);
+      }
+      image.onerror = this.props.unloadImage;
+    }
+    reader.onerror = this.props.unloadImage;
+  }
+
   render() {
     return (
       <div className="canvas-container" ref={(elem) => { this.canvasContainer = elem; }}>
         Header, Canvas and Canvas placeholder
         <Header />
         {
-          this.props.imageStatus ?
+          this.props.imageStatus === IMAGE_STATUS.DONE ?
             <CanvasVisible
               src={this.props.imageSrc}
               width={this.props.imageWidth}
               height={this.props.imageHeight}
             /> :
-            <CanvasPlaceholder />
+            <CanvasPlaceholder
+              handleImageUpload={this.handleImageUpload}
+            />
         }
       </div>
     );
@@ -68,16 +89,19 @@ const mapStateToProps = state => ({
   imageSrc: state.srcImage.src,
   imageWidth: state.srcImage.width,
   imageHeight: state.srcImage.height,
-  status: state.srcImage.status,
+  imageStatus: state.srcImage.status,
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadImage: () => {
-    dispatch(loadImage());
+  loadImage: (image, width, height) => {
+    dispatch(loadImage(IMAGE_STATUS.DONE, image, width, height));
   },
   unloadImage: () => {
     dispatch(unloadImage());
   },
+  imageLoading: () => {
+    dispatch(loadImage(IMAGE_STATUS.LOADING));
+  }
 });
 
 export default connect(

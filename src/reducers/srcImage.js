@@ -17,10 +17,32 @@ const defaultState = {
 export default function srcImage(state = defaultState, action) {
   switch (action.type) {
     case LOAD_IMAGE:
-      // TODO: load image
+      if(action.status === IMAGE_STATUS.DONE && action.src && action.width > 0 && action.height > 0){
+        return {
+          ...state,
+          status: action.status,
+          src: action.src,
+          width: action.width,
+          height: action.height
+        }
+      } else if(action.status === IMAGE_STATUS.LOADING){
+        return {
+          ...state,
+          status: action.status,
+          src: null,
+          width: 0,
+          height: 0,
+        }
+      }
       return state;
     case UNLOAD_IMAGE:
-      // TODO: unload image
+      return {
+        ...state,
+        status: null,
+        src: null,
+        width: 0,
+        height: 0,
+      }
     default:
       return state;
   }
