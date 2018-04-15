@@ -2,8 +2,8 @@ const state = {
   srcImage: {
     status: null,
     src: null,
-    width: null,
-    heighT: null,
+    width: 0,
+    heighT: 0,
   },
 
 };

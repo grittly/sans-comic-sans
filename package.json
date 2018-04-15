@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --hot --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
+    "test-redux": "mocha './test/reducers/**.js' './test/actions/**.js' --watch --compilers js:babel-core/register",
     "lint": "eslint src/* test/*"
   },
   "author": "grittly",

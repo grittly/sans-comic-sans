@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import CanvasPlaceholder from '../CanvasPlaceholder';
 import CanvasVisible from '../CanvasVisible';
 import Header from '../Header';
-import { loadImage } from '../../actions';
+import {
+  loadImage,
+  unloadImage,
+} from '../../actions';
 
 /**
  * Container for CanvasVisible, CanvasPlaceholder and Header
@@ -71,6 +74,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   loadImage: () => {
     dispatch(loadImage());
+  },
+  unloadImage: () => {
+    dispatch(unloadImage());
   },
 });
 

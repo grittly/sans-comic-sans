@@ -1,5 +1,6 @@
 import {
   LOAD_IMAGE,
+  UNLOAD_IMAGE,
   IMAGE_STATUS,
 } from '../constants';
 
@@ -18,6 +19,8 @@ export default function srcImage(state = defaultState, action) {
     case LOAD_IMAGE:
       // TODO: load image
       return state;
+    case UNLOAD_IMAGE:
+      // TODO: unload image
     default:
       return state;
   }
