@@ -5,7 +5,7 @@ import {
 } from '../constants';
 
 const defaultState = {
-  status: IMAGE_STATUS.EMPTY,
+  status: null,
   src: null,
   width: 0,
   height: 0,

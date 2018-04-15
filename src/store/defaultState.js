@@ -3,7 +3,7 @@ const state = {
     status: null,
     src: null,
     width: 0,
-    heighT: 0,
+    height: 0,
   },
 
 };

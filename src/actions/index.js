@@ -1,6 +1,6 @@
 import {
   LOAD_IMAGE,
-  UNLOAD_IMAGE
+  UNLOAD_IMAGE,
   IMAGE_STATUS,
 } from '../constants';
 
@@ -23,6 +23,6 @@ export function loadImage(status = IMAGE_STATUS.EMPTY, src = null, width = 0, he
   };
 }
 
-export function unloadImage(){
+export function unloadImage() {
   return { type: UNLOAD_IMAGE };
 }
