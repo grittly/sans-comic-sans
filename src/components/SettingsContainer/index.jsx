@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SelectionFormsContainer from '../SelectionFormsContainer';
 
 /**
  * Container for CanvasVisible, CanvasPlaceholder and Header
@@ -13,6 +14,7 @@ class SettingsContainer extends Component {
     return (
       <div className="settings-container">
         Settings Container
+        <SelectionFormsContainer />
       </div>
     );
   }
