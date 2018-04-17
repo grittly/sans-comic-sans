@@ -1,3 +1,4 @@
+/* globals describe it */
 import { expect } from 'chai';
 import reducer from '../../src/reducers/srcImage';
 import {
@@ -37,7 +38,6 @@ describe('srcImage reducer', () => {
     };
     expectedState = defaultState;
     expect(reducer(initialState, action)).to.eql(expectedState);
-
   });
   it('Should leave image src as null and width and height as 0 if status is anything but DONE', () => {
     const initialState = defaultState;
@@ -111,7 +111,7 @@ describe('srcImage reducer', () => {
       status: IMAGE_STATUS.DONE,
       width: null,
       height: null,
-    }
+    };
     const expectedState = defaultState;
     expect(reducer(initialState, action)).to.eql(expectedState);
 
@@ -121,8 +121,7 @@ describe('srcImage reducer', () => {
       status: IMAGE_STATUS.DONE,
       width: -100,
       height: 100,
-    }
+    };
     expect(reducer(initialState, action)).to.eql(expectedState);
-    
   });
 });

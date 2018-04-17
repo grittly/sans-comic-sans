@@ -5,7 +5,9 @@ const state = {
     width: 0,
     height: 0,
   },
-
+  selections: {
+    collection: [],
+  },
 };
 
 export default state;
