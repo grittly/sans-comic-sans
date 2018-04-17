@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Group } from 'react-konva';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import SelectionCanvas from '../SelectionCanvas';
 
 /**
@@ -14,10 +16,34 @@ class SelectionCanvasContainer extends Component {
   render() {
     return (
       <Group>
-        <SelectionCanvas />
+        {
+          this.props.selections.map(selection => (<SelectionCanvas
+            key={`selection-form-${selection.id}`}
+            x={selection.x}
+            y={selection.y}
+            width={selection.width}
+            height={selection.height}
+            password={selection.password}
+          />))
+        }
       </Group>
     );
   }
 }
 
-export default SelectionCanvasContainer;
+SelectionCanvasContainer.propTypes = {
+  selections: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    password: PropTypes.string,
+    x: PropTypes.number,
+    y: PropTypes.number,
+    width: PropTypes.number,
+    height: PropTypes.number,
+  })).isRequired,
+};
+
+const mapStateToProps = state => ({
+  selections: state.selections.collection,
+});
+
+export default connect(mapStateToProps)(SelectionCanvasContainer);

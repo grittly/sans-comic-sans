@@ -10,6 +10,7 @@ import MainContainer from './components/MainContainer';
 import reducer from './reducers';
 import defaultState from './store/defaultState';
 import './stylesheets/main.scss';
+import { init } from './actions';
 
 let store;
 
@@ -28,6 +29,7 @@ if (process.env.NODE_ENV === 'production') {
   );
 }
 
+store.dispatch(init())
 
 const App = () => (
   <Provider store={store}>

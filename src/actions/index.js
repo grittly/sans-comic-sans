@@ -10,6 +10,22 @@ import {
 // Actions related to loading source image
 
 /**
+ * Initialize app (for use in development)
+ */
+export function init() {
+  return (dispatch) => {
+    dispatch(addSelection({
+      x: 0,
+      y: 0,
+      width: 20,
+      height: 20,
+      password: '',
+    }));
+  };
+}
+
+
+/**
  * Load image into redux store
  */
 export function loadImage(status, src, width, height) {
@@ -35,8 +51,15 @@ export function unloadImage() {
 /**
  * Add a selection representing an area on the source image
  */
-export function addSelection() {
-  return { type: ADD_SELECTION };
+export function addSelection({ x, y, width, height, password }) {
+  return {
+    type: ADD_SELECTION,
+    x,
+    y,
+    width,
+    height,
+    password,
+  };
 }
 
 /**
