@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Stage, Layer, Image } from 'react-konva';
 import PropTypes from 'prop-types';
+import SelectionCanvasContainer from '../SelectionCanvasContainer';
 
 /**
  * Konva canvas where the loaded image is displayed
@@ -25,6 +26,7 @@ class CanvasVisible extends Component {
               width={this.props.width}
               height={this.props.height}
             />
+            <SelectionCanvasContainer />
           </Layer>
         </Stage>
       </div>

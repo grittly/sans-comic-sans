@@ -14,11 +14,12 @@ const defaultState = {
 
 /* eslint-disable no-case-declarations */
 export default function selections(state = defaultState, action) {
+  const maxId = state.collection.reduce((acc, selection) => (
+    selection.id > acc ? selection.id : acc
+  ), 0);
+
   switch (action.type) {
     case ADD_SELECTION:
-      const maxId = state.collection.reduce((acc, selection) => (
-        selection.id > acc ? selection.id : acc
-      ), 0);
       return {
         ...state,
         collection: [

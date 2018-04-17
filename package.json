@@ -7,6 +7,7 @@
     "start": "webpack-dev-server --hot --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "test-redux": "mocha './test/reducers/**.js' './test/actions/**.js' --watch --require babel-register",
+    "test-react": "mocha './test/components/**.js' --watch --require babel-register",
     "lint": "eslint src/* test/*"
   },
   "author": "grittly",

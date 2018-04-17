@@ -11,7 +11,7 @@ import state from '../../src/store/defaultState';
 
 const defaultState = state.selections;
 
-describe.only('selections reducer', () => {
+describe('selections reducer', () => {
   it('Adds a new selection if all the params are provided', () => {
     const initialState = defaultState;
     const action = {

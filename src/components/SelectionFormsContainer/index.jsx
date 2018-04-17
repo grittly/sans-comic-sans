@@ -20,6 +20,7 @@ class SelectionFormsContainer extends Component {
         {
           this.props.selections.map(selection => (<SelectionForm
             key={`selection-form-${selection.id}`}
+            id={selection.id}
             x={selection.x}
             y={selection.y}
             width={selection.width}
