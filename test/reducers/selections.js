@@ -1,6 +1,6 @@
 /* globals describe it */
 import { expect } from 'chai';
-import reducer from '../../src/reducers/srcImage';
+import reducer from '../../src/reducers/selections';
 import {
   ADD_SELECTION,
   MODIFY_SELECTION,
@@ -11,7 +11,7 @@ import state from '../../src/store/defaultState';
 
 const defaultState = state.selections;
 
-describe('selections reducer', () => {
+describe.only('selections reducer', () => {
   it('Adds a new selection if all the params are provided', () => {
     const initialState = defaultState;
     const action = {
@@ -20,12 +20,13 @@ describe('selections reducer', () => {
       y: 2,
       width: 3,
       height: 4,
+      password: 'pass',
     };
     const expectedState = {
       ...initialState,
-      selections: [
+      collection: [
         {
-          id: 1, x: 1, y: 1, width: 3, height: 4,
+          id: 1, x: 1, y: 2, width: 3, height: 4, password: 'pass',
         },
       ],
     };
@@ -35,7 +36,7 @@ describe('selections reducer', () => {
   it('Adds a new selection and increments the id', () => {
     const initialState = {
       ...defaultState,
-      selections: [
+      collection: [
         {
           id: 1,
         },
@@ -47,13 +48,15 @@ describe('selections reducer', () => {
       y: 2,
       width: 3,
       height: 4,
+      password: '123',
     };
     const expectedState = {
       ...initialState,
-      selections: [
+      collection: [
         {
-          id: 2, x: 1, y: 1, width: 3, height: 4,
+          id: 2, x: 1, y: 2, width: 3, height: 4, password: '123',
         },
+        ...initialState.collection,
       ],
     };
     expect(reducer(initialState, action)).to.eql(expectedState);
@@ -61,7 +64,7 @@ describe('selections reducer', () => {
   it('Deletes a selection with a specified id', () => {
     const initialState = {
       ...defaultState,
-      selections: [
+      collection: [
         {
           id: 2,
         },
@@ -73,14 +76,14 @@ describe('selections reducer', () => {
     };
     const expectedState = {
       ...initialState,
-      selections: [],
+      collection: [],
     };
     expect(reducer(initialState, action)).to.eql(expectedState);
   });
   it('Does not delete a selection if the specified id is invalid or does not exist', () => {
     const initialState = {
       ...defaultState,
-      selections: [
+      collection: [
         {
           id: 2,
         },
@@ -97,9 +100,9 @@ describe('selections reducer', () => {
   it('Updates multiple fields in a selection with a specified id', () => {
     const initialState = {
       ...defaultState,
-      selections: [
+      collection: [
         {
-          id: 2, x: 1, y: 1, width: 1, height: 1,
+          id: 2, x: 1, y: 1, width: 1, height: 1, password: '123',
         },
       ],
     };
@@ -111,9 +114,9 @@ describe('selections reducer', () => {
     };
     const expectedState = {
       ...initialState,
-      selections: [
+      collection: [
         {
-          ...initialState.selections[0],
+          ...initialState.collection[0],
           x: 10,
           y: 11,
         },
@@ -124,9 +127,9 @@ describe('selections reducer', () => {
   it('Does not update a seelection if field provided does not exist', () => {
     const initialState = {
       ...defaultState,
-      selections: [
+      collection: [
         {
-          id: 2, x: 1, y: 1, width: 1, height: 1,
+          id: 2, x: 1, y: 1, width: 1, height: 1, password: '123',
         },
       ],
     };
@@ -141,9 +144,9 @@ describe('selections reducer', () => {
   it('Does not update any selection if the specified id is invalid or does not exist', () => {
     const initialState = {
       ...defaultState,
-      selections: [
+      collection: [
         {
-          id: 2, x: 1, y: 1, width: 1, height: 1,
+          id: 2, x: 1, y: 1, width: 1, height: 1, password: '123',
         },
       ],
     };
