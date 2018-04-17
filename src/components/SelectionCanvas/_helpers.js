@@ -7,7 +7,15 @@
  * @param {number} max - maximum position allowed, taking into account size of object
  * @returns {number} Re-calculated position within the allowed boundaries
  */
-export function setBoundaries(position, size, min, max) {
-  // TODO: fill out the code
-  return position;
+export function setBoundaries(position = 0, size = 0, min = 0, max = 0) {
+  if (min >= 0 && size >= 0 && min < max && size <= max) {
+    return Math.min(
+      Math.max(
+        min,
+        position,
+      ),
+      max - size,
+    );
+  }
+  return undefined;
 }

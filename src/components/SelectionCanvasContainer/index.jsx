@@ -24,6 +24,8 @@ class SelectionCanvasContainer extends Component {
             width={selection.width}
             height={selection.height}
             password={selection.password}
+            containerWidth={this.props.containerWidth}
+            containerHeight={this.props.containerHeight}
           />))
         }
       </Group>
@@ -44,6 +46,8 @@ SelectionCanvasContainer.propTypes = {
 
 const mapStateToProps = state => ({
   selections: state.selections.collection,
+  containerWidth: state.srcImage.width,
+  containerHeight: state.srcImage.height,
 });
 
 export default connect(mapStateToProps)(SelectionCanvasContainer);

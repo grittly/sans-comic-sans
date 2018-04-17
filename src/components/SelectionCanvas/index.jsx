@@ -29,13 +29,13 @@ class SelectionCanvas extends Component {
         x,
         this.props.width,
         0,
-        this.props.width,
+        this.props.containerWidth,
       ),
       y: setBoundaries(
         y,
         this.props.height,
         0,
-        this.props.height,
+        this.props.containerHeight,
       ),
     };
   }
@@ -63,6 +63,8 @@ SelectionCanvas.propTypes = {
   y: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
+  containerWidth: PropTypes.number.isRequired,
+  containerHeight: PropTypes.number.isRequired,
 };
 
 export default SelectionCanvas;
