@@ -13,13 +13,15 @@ import {
  * Initialize app (for use in development)
  */
 export function init() {
+  /* eslint-disable */
   return (dispatch) => {
     const image = new window.Image();
-    image.src = "http://via.placeholder.com/700x500";
+    image.src = 'http://via.placeholder.com/700x500';
     return new Promise((resolve) => image.onload = resolve)
       .then(() => dispatch(loadImage(IMAGE_STATUS.DONE, image, image.width, image.height)))
       .then(() => dispatch(addSelection()));
   };
+  /* eslint-enable */
 }
 
 
