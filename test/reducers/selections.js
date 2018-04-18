@@ -21,6 +21,8 @@ describe('selections reducer', () => {
       width: 3,
       height: 4,
       password: 'pass',
+      imageWidth: 100,
+      imageHeight: 100,
     };
     const expectedState = {
       ...initialState,
@@ -32,7 +34,33 @@ describe('selections reducer', () => {
     };
     expect(reducer(initialState, action)).to.eql(expectedState);
   });
-  it('Adds a new selection with defaults (20% width and 20% height of srcImage) if no params are provided');
+  it('Adds a new selection with defaults (20% width and 20% height of srcImage) if no params are provided', () => {
+    const initialState = defaultState;
+    const action = {
+      type: ADD_SELECTION,
+      imageWidth: 100,
+      imageHeight: 100,
+    };
+    const expectedState = {
+      ...initialState,
+      collection: [
+        {
+          id: 1, x: 0, y: 0, width: action.imageWidth * 0.2, height: action.imageWidth * 0.2, password: '',
+        },
+      ],
+    };
+    expect(reducer(initialState, action)).to.eql(expectedState);
+  });
+  it('Does not add a selection if imageWidth or imageHeight are undefined', () => {
+    const initialState = defaultState;
+    const action = {
+      type: ADD_SELECTION,
+      imageWidth: undefined,
+      imageHeight: undefined,
+    };
+    const expectedState = initialState;
+    expect(reducer(initialState, action)).to.eql(expectedState);
+  });
   it('Adds a new selection and increments the id', () => {
     const initialState = {
       ...defaultState,
@@ -49,6 +77,8 @@ describe('selections reducer', () => {
       width: 3,
       height: 4,
       password: '123',
+      imageWidth: 100,
+      imageHeight: 100,
     };
     const expectedState = {
       ...initialState,

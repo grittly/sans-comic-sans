@@ -14,13 +14,11 @@ import {
  */
 export function init() {
   return (dispatch) => {
-    dispatch(addSelection({
-      x: 0,
-      y: 0,
-      width: 20,
-      height: 20,
-      password: '',
-    }));
+    const image = new window.Image();
+    image.src = "http://via.placeholder.com/700x500";
+    return new Promise((resolve) => image.onload = resolve)
+      .then(() => dispatch(loadImage(IMAGE_STATUS.DONE, image, image.width, image.height)))
+      .then(() => dispatch(addSelection()));
   };
 }
 
@@ -51,14 +49,22 @@ export function unloadImage() {
 /**
  * Add a selection representing an area on the source image
  */
-export function addSelection({ x, y, width, height, password }) {
-  return {
-    type: ADD_SELECTION,
-    x,
-    y,
-    width,
-    height,
-    password,
+export function addSelection({
+  x, y, width, height, password,
+} = {}) {
+  return (dispatch, getState) => {
+    const imageWidth = getState().srcImage.width;
+    const imageHeight = getState().srcImage.height;
+    dispatch({
+      type: ADD_SELECTION,
+      x,
+      y,
+      width,
+      height,
+      password,
+      imageWidth,
+      imageHeight,
+    });
   };
 }
 
@@ -75,4 +81,3 @@ export function modifySelection() {
 export function deleteSelection() {
   return { type: DELETE_SELECTION };
 }
-
