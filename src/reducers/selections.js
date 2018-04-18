@@ -50,11 +50,11 @@ export default function selections(state = defaultState, action) {
           return {
             ...selection,
             id: action.id,
-            x: action.x || selection.x,
-            y: action.y || selection.y,
-            width: action.width || selection.width,
-            height: action.height || selection.height,
-            password: action.password || selection.password,
+            x: action.x === undefined ? selection.x : action.x,
+            y: action.y === undefined ? selection.y : action.y,
+            width: action.width === undefined ? selection.width : action.width,
+            height: action.height === undefined ? selection.height : action.height,
+            password: action.password === undefined ? selection.password : action.password,
           };
         }
         return selection;
