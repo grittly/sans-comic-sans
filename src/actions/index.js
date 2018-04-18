@@ -73,8 +73,18 @@ export function addSelection({
 /**
  * Modify a selection
  */
-export function modifySelection() {
-  return { type: MODIFY_SELECTION };
+export function modifySelection({
+  id, x, y, width, height, password,
+} = {}) {
+  return {
+    type: MODIFY_SELECTION,
+    id,
+    x,
+    y,
+    width,
+    height,
+    password,
+  };
 }
 
 /**

@@ -49,7 +49,7 @@ export default function selections(state = defaultState, action) {
         if (selection.id === action.id) {
           return {
             ...selection,
-            id: action.id || selection.id,
+            id: action.id,
             x: action.x || selection.x,
             y: action.y || selection.y,
             width: action.width || selection.width,

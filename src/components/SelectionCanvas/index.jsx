@@ -23,10 +23,15 @@ class SelectionCanvas extends Component {
     super(props);
     this.state = {};
     this.handleSelectionBoundaries = this.handleSelectionBoundaries.bind(this);
+    this.handleHandleBoundaries = this.handleHandleBoundaries.bind(this);
     this.changeHandlePosition = this.changeHandlePosition.bind(this);
     this.changeSelectionSize = this.changeSelectionSize.bind(this);
+    this.updateCoordinates = this.updateCoordinates.bind(this);
   }
 
+  /**
+   * Update the handle position as the selection is being dragged
+   */
   changeHandlePosition() {
     const { x, y } = this.selection.position();
     this.handle.position({
@@ -35,11 +40,31 @@ class SelectionCanvas extends Component {
     });
   }
 
+  /**
+   * Update the selection size as the handle is being dragged
+   */
   changeSelectionSize() {
     const { x, y } = this.handle.position();
     this.selection.size({
       width: (x - this.selection.position().x) + this.handle.size().width,
       height: (y - this.selection.position().y) + this.handle.size().height,
+    });
+  }
+
+
+  /**
+   * Update the selection position and size after dragging stops
+   */
+  updateCoordinates() {
+    const { width, height } = this.selection.size();
+    const { x, y } = this.selection.position();
+    const { id } = this.props;
+    this.props.updateCoordinates({
+      id,
+      x,
+      y,
+      width,
+      height,
     });
   }
 
@@ -66,6 +91,29 @@ class SelectionCanvas extends Component {
     };
   }
 
+  /**
+   * Boundary function for konva to use when dragging the handle
+   * @param {Object} position - x and y coordinates
+   * @param {number} position.x - x coordinate
+   * @param {number} position.y - y coordinate
+   */
+  handleHandleBoundaries({ x, y }) {
+    return {
+      x: setBoundaries(
+        x,
+        RESIZE_HANDLE_SIZE,
+        this.props.x,
+        this.props.containerWidth,
+      ),
+      y: setBoundaries(
+        y,
+        RESIZE_HANDLE_SIZE,
+        this.props.y,
+        this.props.containerHeight,
+      ),
+    };
+  }
+
   render() {
     return (
       <Group>
@@ -80,6 +128,7 @@ class SelectionCanvas extends Component {
           dragBoundFunc={this.handleSelectionBoundaries}
           onDragMove={this.changeHandlePosition}
           ref={(elem) => { this.selection = elem; }}
+          onDragEnd={this.updateCoordinates}
 
         />
         <Group
@@ -90,6 +139,8 @@ class SelectionCanvas extends Component {
           onDragMove={this.changeSelectionSize}
           draggable={true}
           ref={(elem) => { this.handle = elem; }}
+          onDragEnd={this.updateCoordinates}
+          dragBoundFunc={this.handleHandleBoundaries}
         >
           <ResizeHandle />
         </Group>
@@ -99,12 +150,14 @@ class SelectionCanvas extends Component {
 }
 
 SelectionCanvas.propTypes = {
+  id: PropTypes.number.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   containerWidth: PropTypes.number.isRequired,
   containerHeight: PropTypes.number.isRequired,
+  updateCoordinates: PropTypes.func.isRequired,
 };
 
 export default SelectionCanvas;

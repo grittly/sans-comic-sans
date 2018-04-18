@@ -3,6 +3,7 @@ import { Group } from 'react-konva';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SelectionCanvas from '../SelectionCanvas';
+import { modifySelection } from '../../actions';
 
 /**
  * Container for selections that are displayed on CanvasVisible
@@ -19,6 +20,7 @@ class SelectionCanvasContainer extends Component {
         {
           this.props.selections.map(selection => (<SelectionCanvas
             key={`selection-form-${selection.id}`}
+            id={selection.id}
             x={selection.x}
             y={selection.y}
             width={selection.width}
@@ -26,6 +28,7 @@ class SelectionCanvasContainer extends Component {
             password={selection.password}
             containerWidth={this.props.containerWidth}
             containerHeight={this.props.containerHeight}
+            updateCoordinates={this.props.updateCoordinates}
           />))
         }
       </Group>
@@ -42,6 +45,9 @@ SelectionCanvasContainer.propTypes = {
     width: PropTypes.number,
     height: PropTypes.number,
   })).isRequired,
+  containerWidth: PropTypes.number.isRequired,
+  containerHeight: PropTypes.number.isRequired,
+  updateCoordinates: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -50,4 +56,13 @@ const mapStateToProps = state => ({
   containerHeight: state.srcImage.height,
 });
 
-export default connect(mapStateToProps)(SelectionCanvasContainer);
+const mapDispatchToProps = dispatch => ({
+  updateCoordinates: (coords) => {
+    dispatch(modifySelection(coords));
+  },
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SelectionCanvasContainer);
