@@ -4,6 +4,7 @@ const state = {
     src: null,
     width: 0,
     height: 0,
+    aspectRatio: 1,
   },
   selections: {
     collection: [],

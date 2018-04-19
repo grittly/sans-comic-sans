@@ -17,7 +17,7 @@ describe('srcImage reducer', () => {
     let action = {
       type: LOAD_IMAGE,
       width: 100,
-      height: 100,
+      height: 200,
       src: {},
       status: IMAGE_STATUS.DONE,
     };
@@ -26,7 +26,8 @@ describe('srcImage reducer', () => {
       src: {},
       status: IMAGE_STATUS.DONE,
       width: 100,
-      height: 100,
+      height: 200,
+      aspectRatio: 2,
     };
     expect(reducer(initialState, action)).to.eql(expectedState);
     action = {
@@ -47,7 +48,7 @@ describe('srcImage reducer', () => {
     action = {
       type: LOAD_IMAGE,
       width: 100,
-      height: 100,
+      height: 200,
       src: {},
       status: IMAGE_STATUS.LOADING,
     };
@@ -57,6 +58,7 @@ describe('srcImage reducer', () => {
       status: IMAGE_STATUS.LOADING,
       width: 0,
       height: 0,
+      aspectRatio: 1,
     };
 
     expect(reducer(initialState, action)).to.eql(expectedState);
@@ -64,7 +66,7 @@ describe('srcImage reducer', () => {
     action = {
       type: LOAD_IMAGE,
       width: 100,
-      height: 100,
+      height: 200,
       src: {},
       status: IMAGE_STATUS.DONE,
     };
@@ -73,7 +75,8 @@ describe('srcImage reducer', () => {
       src: {},
       status: IMAGE_STATUS.DONE,
       width: 100,
-      height: 100,
+      height: 200,
+      aspectRatio: 2,
     };
     expect(reducer(initialState, action)).to.eql(expectedState);
   });
@@ -83,7 +86,8 @@ describe('srcImage reducer', () => {
       src: {},
       status: IMAGE_STATUS.DONE,
       width: 100,
-      height: 100,
+      height: 200,
+      aspectRatio: 2,
     };
     const action = {
       type: UNLOAD_IMAGE,
@@ -98,7 +102,7 @@ describe('srcImage reducer', () => {
       src: {},
       status: 'WRONG_STATUS',
       width: 100,
-      height: 100,
+      height: 200,
     };
     const expectedState = defaultState;
     expect(reducer(initialState, action)).to.eql(expectedState);

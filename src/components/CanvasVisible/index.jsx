@@ -14,11 +14,19 @@ class CanvasVisible extends Component {
 
   render() {
     return (
-      <div className="canvas-wrapper">
+      <div
+        className="canvas-wrapper"
+        style={{
+          position: 'relative',
+          height: this.props.height,
+          border: '1px solid black',
+        }}
+      >
         <Stage
           className="canvas-stage"
           width={this.props.width}
           height={this.props.height}
+          style={{ position: 'absolute' }}
         >
           <Layer>
             <Image

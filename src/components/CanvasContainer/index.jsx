@@ -7,6 +7,7 @@ import Header from '../Header';
 import {
   loadImage,
   unloadImage,
+  resizeCanvas,
 } from '../../actions';
 import { IMAGE_STATUS } from '../../constants';
 
@@ -17,17 +18,18 @@ class CanvasContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.handleCanvasiResize = this.handleCanvasResize.bind(this);
+    this.handleCanvasResize = this.handleCanvasResize.bind(this);
     this.handleImageUpload = this.handleImageUpload.bind(this);
   }
 
   componentDidMount() {
     // eslint-disable-next-line no-undef
     window.addEventListener('resize', this.handleCanvasResize);
+    this.handleCanvasResize();
   }
 
-  handleCanvasResize(e) {
-    // TODO: update container size in redux store based on browser window size
+  handleCanvasResize() {
+    this.props.resizeCanvas(this.canvasContainer.offsetWidth);
   }
 
   handleImageUpload(e) {
@@ -56,8 +58,8 @@ class CanvasContainer extends Component {
           this.props.imageStatus === IMAGE_STATUS.DONE ?
             <CanvasVisible
               src={this.props.imageSrc}
-              width={this.props.imageWidth}
-              height={this.props.imageHeight}
+              width={this.props.containerWidth}
+              height={this.props.containerHeight}
             /> :
             <CanvasPlaceholder
               handleImageUpload={this.handleImageUpload}
@@ -72,8 +74,8 @@ class CanvasContainer extends Component {
 CanvasContainer.propTypes = {
   // eslint-disable-next-line no-undef
   imageSrc: PropTypes.instanceOf(HTMLImageElement),
-  imageWidth: PropTypes.number,
-  imageHeight: PropTypes.number,
+  containerWidth: PropTypes.number,
+  containerHeight: PropTypes.number,
   imageStatus: PropTypes.oneOf([
     IMAGE_STATUS.LOADING,
     IMAGE_STATUS.DONE,
@@ -81,21 +83,26 @@ CanvasContainer.propTypes = {
   imageLoading: PropTypes.func.isRequired,
   unloadImage: PropTypes.func.isRequired,
   loadImage: PropTypes.func.isRequired,
+  resizeCanvas: PropTypes.func.isRequired,
 };
 
 CanvasContainer.defaultProps = {
   imageSrc: null,
-  imageWidth: 0,
-  imageHeight: 0,
   imageStatus: null,
+  containerWidth: 0,
+  containerHeight: 0,
 };
 
-const mapStateToProps = state => ({
-  imageSrc: state.srcImage.src,
-  imageWidth: state.srcImage.width,
-  imageHeight: state.srcImage.height,
-  imageStatus: state.srcImage.status,
-});
+const mapStateToProps = (state) => {
+  const aspectRatio = state.srcImage.aspectRatio;
+  return {
+    imageSrc: state.srcImage.src,
+    containerWidth: state.srcImage.containerWidth,
+    containerHeight: state.srcImage.containerWidth * aspectRatio,
+    imageStatus: state.srcImage.status,
+    aspectRatio,
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   loadImage: (image, width, height) => {
@@ -106,6 +113,9 @@ const mapDispatchToProps = dispatch => ({
   },
   imageLoading: () => {
     dispatch(loadImage(IMAGE_STATUS.LOADING));
+  },
+  resizeCanvas: (width) => {
+    dispatch(resizeCanvas(width));
   },
 });
 

@@ -5,6 +5,7 @@ import {
   ADD_SELECTION,
   MODIFY_SELECTION,
   DELETE_SELECTION,
+  RESIZE_CANVAS_CONTAINER,
 } from '../constants';
 
 // Actions related to loading source image
@@ -24,6 +25,18 @@ export function init() {
   /* eslint-enable */
 }
 
+/**
+ * Modify canvas container dimensions in redux store in
+ * response to the browser resizing
+ */
+export function resizeCanvas(containerWidth = 0) {
+  return (dispatch) => {
+    dispatch({
+      type: RESIZE_CANVAS_CONTAINER,
+      containerWidth,
+    });
+  };
+}
 
 /**
  * Load image into redux store
