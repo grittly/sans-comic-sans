@@ -5,6 +5,7 @@ import {
   ADD_SELECTION,
   MODIFY_SELECTION,
   DELETE_SELECTION,
+  SET_ACTIVE_SELECTION,
 } from '../../src/constants';
 
 import state from '../../src/store/defaultState';
@@ -12,6 +13,62 @@ import state from '../../src/store/defaultState';
 const defaultState = state.selections;
 
 describe('selections reducer', () => {
+  it('Sets activeSelectionId to the passed id if it exists in the redux store', () => {
+    const initialState = {
+      ...defaultState,
+      collection: [
+        {
+          id: 3, x: 1, y: 2, width: 3, height: 4, password: 'pass',
+        },
+      ],
+      activeSelectionId: null,
+    };
+    const action = {
+      type: SET_ACTIVE_SELECTION,
+      id: 3,
+    };
+    const expectedState = {
+      ...initialState,
+      activeSelectionId: 3,
+    };
+    expect(reducer(initialState, action)).to.eql(expectedState);
+  });
+  it('Sets activeSelectionId to null if thepassed id does exists in the redux store', () => {
+    const initialState = {
+      ...defaultState,
+      collection: [
+        {
+          id: 3, x: 1, y: 2, width: 3, height: 4, password: 'pass',
+        },
+      ],
+      activeSelectionId: null,
+    };
+    const action = {
+      type: SET_ACTIVE_SELECTION,
+      id: 999,
+    };
+    expect(reducer(initialState, action)).to.eql(initialState);
+  });
+  it('Sets activeSelectionId to null if undefined is passed in', () => {
+    const initialState = {
+      ...defaultState,
+      collection: [
+        {
+          id: 3, x: 1, y: 2, width: 3, height: 4, password: 'pass',
+        },
+      ],
+      activeSelectionId: 3,
+    };
+    const action = {
+      type: SET_ACTIVE_SELECTION,
+      id: null,
+    };
+    const expectedState = {
+      ...initialState,
+      activeSelectionId: null,
+    };
+    expect(reducer(initialState, action)).to.eql(expectedState);
+  });
   it('Adds a new selection if all the params are provided', () => {
     const initialState = defaultState;
     const action = {

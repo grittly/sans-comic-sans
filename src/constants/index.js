@@ -7,6 +7,7 @@ export const RESIZE_CANVAS_CONTAINER = 'RESIZE_CANVAS_CONTAINER';
 export const ADD_SELECTION = 'ADD_SELECTION';
 export const DELETE_SELECTION = 'DELETE_SELECTION';
 export const MODIFY_SELECTION = 'MODIFY_SELECTION';
+export const SET_ACTIVE_SELECTION = 'SET_ACTIVE_SELECTION';
 
 // Image loading status constants
 export const IMAGE_STATUS = {

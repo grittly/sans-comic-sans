@@ -9,6 +9,7 @@ const state = {
   },
   selections: {
     collection: [],
+    activeSelectionId: null,
   },
 };
 

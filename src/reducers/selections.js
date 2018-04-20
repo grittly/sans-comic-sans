@@ -2,10 +2,12 @@ import {
   ADD_SELECTION,
   MODIFY_SELECTION,
   DELETE_SELECTION,
+  SET_ACTIVE_SELECTION,
 } from '../constants';
 
 const defaultState = {
   collection: [],
+  activeSelectionId: null,
 };
 
 /**
@@ -19,6 +21,9 @@ export default function selections(state = defaultState, action) {
   ), 0);
 
   switch (action.type) {
+    case SET_ACTIVE_SELECTION:
+      // TODO: code for setting active selection
+      return state;
     case ADD_SELECTION:
       if (action.imageWidth && action.imageHeight) {
         const {
