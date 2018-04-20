@@ -5,6 +5,7 @@ const state = {
     width: 0,
     height: 0,
     aspectRatio: 1,
+    scale: 1,
   },
   selections: {
     collection: [],

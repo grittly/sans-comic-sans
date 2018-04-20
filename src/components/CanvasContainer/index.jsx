@@ -93,16 +93,12 @@ CanvasContainer.defaultProps = {
   containerHeight: 0,
 };
 
-const mapStateToProps = (state) => {
-  const aspectRatio = state.srcImage.aspectRatio;
-  return {
-    imageSrc: state.srcImage.src,
-    containerWidth: state.srcImage.containerWidth,
-    containerHeight: state.srcImage.containerWidth * aspectRatio,
-    imageStatus: state.srcImage.status,
-    aspectRatio,
-  };
-};
+const mapStateToProps = state => ({
+  imageSrc: state.srcImage.src,
+  containerWidth: state.srcImage.containerWidth,
+  containerHeight: state.srcImage.containerWidth * state.srcImage.aspectRatio,
+  imageStatus: state.srcImage.status,
+});
 
 const mapDispatchToProps = dispatch => ({
   loadImage: (image, width, height) => {

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Rect, Group } from 'react-konva';
 import PropTypes from 'prop-types';
-import { setBoundaries } from './_helpers';
+import {
+  setBoundaries,
+  scaleCoordinates,
+} from './_helpers';
 
 // configuration
 const SELECTION_FILL = 'rgba(255,255,255,0.7)';
@@ -21,12 +24,18 @@ const ResizeHandle = () => (
 class SelectionCanvas extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = scaleCoordinates(props, RESIZE_HANDLE_SIZE);
     this.handleSelectionBoundaries = this.handleSelectionBoundaries.bind(this);
     this.handleHandleBoundaries = this.handleHandleBoundaries.bind(this);
     this.changeHandlePosition = this.changeHandlePosition.bind(this);
     this.changeSelectionSize = this.changeSelectionSize.bind(this);
     this.updateCoordinates = this.updateCoordinates.bind(this);
+  }
+
+
+  componentWillReceiveProps(nextProps) {
+    // Convenient to do scaling in one place
+    this.setState(scaleCoordinates(nextProps, RESIZE_HANDLE_SIZE));
   }
 
   /**
@@ -58,13 +67,13 @@ class SelectionCanvas extends Component {
   updateCoordinates() {
     const { width, height } = this.selection.size();
     const { x, y } = this.selection.position();
-    const { id } = this.props;
+    const { id, scale } = this.props;
     this.props.updateCoordinates({
       id,
-      x,
-      y,
-      width,
-      height,
+      x: Math.round(x / scale),
+      y: Math.round(y / scale),
+      width: Math.round(width / scale),
+      height: Math.round(height / scale),
     });
   }
 
@@ -78,15 +87,15 @@ class SelectionCanvas extends Component {
     return {
       x: setBoundaries(
         x,
-        this.props.width,
+        this.state.selection.width,
         0,
-        this.props.containerWidth,
+        this.state.container.width,
       ),
       y: setBoundaries(
         y,
-        this.props.height,
+        this.state.selection.height,
         0,
-        this.props.containerHeight,
+        this.state.container.height,
       ),
     };
   }
@@ -101,15 +110,15 @@ class SelectionCanvas extends Component {
     return {
       x: setBoundaries(
         x,
-        RESIZE_HANDLE_SIZE,
-        this.props.x,
-        this.props.containerWidth,
+        this.state.handle.width,
+        this.state.selection.x,
+        this.state.container.width,
       ),
       y: setBoundaries(
         y,
-        RESIZE_HANDLE_SIZE,
-        this.props.y,
-        this.props.containerHeight,
+        this.state.handle.height,
+        this.state.selection.y,
+        this.state.container.height,
       ),
     };
   }
@@ -118,10 +127,10 @@ class SelectionCanvas extends Component {
     return (
       <Group>
         <Rect
-          x={this.props.x}
-          y={this.props.y}
-          width={this.props.width}
-          height={this.props.height}
+          x={this.state.selection.x}
+          y={this.state.selection.y}
+          width={this.state.selection.width}
+          height={this.state.selection.height}
           fill={SELECTION_FILL}
           draggable={true}
           stroke={SELECTION_STROKE}
@@ -132,10 +141,10 @@ class SelectionCanvas extends Component {
 
         />
         <Group
-          x={(this.props.x + this.props.width) - RESIZE_HANDLE_SIZE}
-          y={(this.props.y + this.props.height) - RESIZE_HANDLE_SIZE}
-          width={RESIZE_HANDLE_SIZE}
-          height={RESIZE_HANDLE_SIZE}
+          x={(this.state.handle.x + this.state.handle.width) - RESIZE_HANDLE_SIZE}
+          y={(this.state.handle.y + this.state.handle.height) - RESIZE_HANDLE_SIZE}
+          width={this.state.handle.width}
+          height={this.state.handle.height}
           onDragMove={this.changeSelectionSize}
           draggable={true}
           ref={(elem) => { this.handle = elem; }}
@@ -158,6 +167,7 @@ SelectionCanvas.propTypes = {
   containerWidth: PropTypes.number.isRequired,
   containerHeight: PropTypes.number.isRequired,
   updateCoordinates: PropTypes.func.isRequired,
+  scale: PropTypes.number.isRequired,
 };
 
 export default SelectionCanvas;

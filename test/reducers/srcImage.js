@@ -9,7 +9,10 @@ import {
 
 import state from '../../src/store/defaultState';
 
-const defaultState = state.srcImage;
+const defaultState = {
+  ...state.srcImage,
+  containerWidth: 50,
+};
 
 describe('srcImage reducer', () => {
   it('Sets image src if all params are present', () => {
@@ -28,6 +31,7 @@ describe('srcImage reducer', () => {
       width: 100,
       height: 200,
       aspectRatio: 2,
+      scale: 0.5,
     };
     expect(reducer(initialState, action)).to.eql(expectedState);
     action = {
@@ -59,6 +63,7 @@ describe('srcImage reducer', () => {
       width: 0,
       height: 0,
       aspectRatio: 1,
+      scale: 1,
     };
 
     expect(reducer(initialState, action)).to.eql(expectedState);
@@ -77,6 +82,7 @@ describe('srcImage reducer', () => {
       width: 100,
       height: 200,
       aspectRatio: 2,
+      scale: 0.5,
     };
     expect(reducer(initialState, action)).to.eql(expectedState);
   });

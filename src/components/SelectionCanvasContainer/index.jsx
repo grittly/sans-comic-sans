@@ -29,6 +29,7 @@ class SelectionCanvasContainer extends Component {
             containerWidth={this.props.containerWidth}
             containerHeight={this.props.containerHeight}
             updateCoordinates={this.props.updateCoordinates}
+            scale={this.props.scale}
           />))
         }
       </Group>
@@ -45,6 +46,7 @@ SelectionCanvasContainer.propTypes = {
     width: PropTypes.number,
     height: PropTypes.number,
   })).isRequired,
+  scale: PropTypes.number.isRequired,
   containerWidth: PropTypes.number.isRequired,
   containerHeight: PropTypes.number.isRequired,
   updateCoordinates: PropTypes.func.isRequired,
@@ -54,6 +56,7 @@ const mapStateToProps = state => ({
   selections: state.selections.collection,
   containerWidth: state.srcImage.width,
   containerHeight: state.srcImage.height,
+  scale: state.srcImage.scale,
 });
 
 const mapDispatchToProps = dispatch => ({

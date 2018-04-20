@@ -12,6 +12,7 @@ const defaultState = {
   height: 0,
   containerWidth: 0,
   aspectRatio: 1,
+  scale: 1,
 };
 
 /**
@@ -23,6 +24,7 @@ export default function srcImage(state = defaultState, action) {
       return {
         ...state,
         containerWidth: action.containerWidth,
+        scale: state.width ? action.containerWidth / state.width : 1,
       };
     case LOAD_IMAGE:
       if (action.status === IMAGE_STATUS.DONE
@@ -34,6 +36,7 @@ export default function srcImage(state = defaultState, action) {
           width: action.width,
           height: action.height,
           aspectRatio: action.height / action.width,
+          scale: state.containerWidth / action.width,
         };
       } else if (action.status === IMAGE_STATUS.LOADING) {
         return {
@@ -54,6 +57,7 @@ export default function srcImage(state = defaultState, action) {
         width: 0,
         height: 0,
         aspectRatio: 1,
+        scale: 1,
       };
     default:
       return state;
