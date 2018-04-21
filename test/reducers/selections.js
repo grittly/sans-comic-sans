@@ -18,7 +18,12 @@ describe('selections reducer', () => {
       ...defaultState,
       collection: [
         {
-          id: 3, x: 1, y: 2, width: 3, height: 4, password: 'pass',
+          id: { value: 3, errors: [] },
+          x: { value: 1, errors: [] },
+          y: { value: 2, errors: [] },
+          width: { value: 3, errors: [] },
+          height: { value: 4, errors: [] },
+          password: { value: 'pass', errors: [] },
         },
       ],
       activeSelectionId: null,
@@ -38,7 +43,12 @@ describe('selections reducer', () => {
       ...defaultState,
       collection: [
         {
-          id: 3, x: 1, y: 2, width: 3, height: 4, password: 'pass',
+          id: { value: 3, errors: [] },
+          x: { value: 1, errors: [] },
+          y: { value: 2, errors: [] },
+          width: { value: 3, errors: [] },
+          height: { value: 4, errors: [] },
+          password: { value: 'pass', errors: [] },
         },
       ],
       activeSelectionId: null,
@@ -54,7 +64,12 @@ describe('selections reducer', () => {
       ...defaultState,
       collection: [
         {
-          id: 3, x: 1, y: 2, width: 3, height: 4, password: 'pass',
+          id: { value: 3, errors: [] },
+          x: { value: 1, errors: [] },
+          y: { value: 2, errors: [] },
+          width: { value: 3, errors: [] },
+          height: { value: 4, errors: [] },
+          password: { value: 'pass', errors: [] },
         },
       ],
       activeSelectionId: 3,
@@ -85,7 +100,13 @@ describe('selections reducer', () => {
       ...initialState,
       collection: [
         {
-          id: 1, x: 1, y: 2, width: 3, height: 4, password: 'pass',
+          id: { value: 1, errors: [] },
+          x: { value: 1, errors: [] },
+          y: { value: 2, errors: [] },
+          width: { value: 3, errors: [] },
+          height: { value: 4, errors: [] },
+          password: { value: 'pass', errors: [] },
+          hasErrors: false,
         },
       ],
     };
@@ -102,7 +123,13 @@ describe('selections reducer', () => {
       ...initialState,
       collection: [
         {
-          id: 1, x: 0, y: 0, width: action.imageWidth * 0.2, height: action.imageWidth * 0.2, password: '',
+          id: { value: 1, errors: [] },
+          x: { value: 0, errors: [] },
+          y: { value: 0, errors: [] },
+          width: { value: action.imageWidth * 0.2, errors: [] },
+          height: { value: action.imageWidth * 0.2, errors: [] },
+          password: { value: '', errors: [] },
+          hasErrors: false,
         },
       ],
     };
@@ -123,7 +150,7 @@ describe('selections reducer', () => {
       ...defaultState,
       collection: [
         {
-          id: 1,
+          id: { value: 1, errors: [] },
         },
       ],
     };
@@ -141,7 +168,13 @@ describe('selections reducer', () => {
       ...initialState,
       collection: [
         {
-          id: 2, x: 1, y: 2, width: 3, height: 4, password: '123',
+          id: { value: 2, errors: [] },
+          x: { value: 1, errors: [] },
+          y: { value: 2, errors: [] },
+          width: { value: 3, errors: [] },
+          height: { value: 4, errors: [] },
+          password: { value: '123', errors: [] },
+          hasErrors: false
         },
         ...initialState.collection,
       ],
@@ -153,7 +186,7 @@ describe('selections reducer', () => {
       ...defaultState,
       collection: [
         {
-          id: 2,
+          id: { value: 2, errors: [] },
         },
       ],
     };
@@ -172,7 +205,7 @@ describe('selections reducer', () => {
       ...defaultState,
       collection: [
         {
-          id: 2,
+          id: { value: 2, errors: [] },
         },
       ],
     };
@@ -189,7 +222,13 @@ describe('selections reducer', () => {
       ...defaultState,
       collection: [
         {
-          id: 2, x: 1, y: 1, width: 1, height: 1, password: '123',
+          id: { value: 2, errors: [] },
+          x: { value: 1, errors: [] },
+          y: { value: 1, errors: [] },
+          width: { value: 1, errors: [] },
+          height: { value: 1, errors: [] },
+          password: { value: '123', errors: [] },
+          hasErrors: false,
         },
       ],
     };
@@ -204,8 +243,8 @@ describe('selections reducer', () => {
       collection: [
         {
           ...initialState.collection[0],
-          x: 10,
-          y: 11,
+          x: { value: 10, errors: [] },
+          y: { value: 11, errors: [] },
         },
       ],
     };
@@ -216,7 +255,13 @@ describe('selections reducer', () => {
       ...defaultState,
       collection: [
         {
-          id: 2, x: 1, y: 1, width: 1, height: 1, password: '123',
+          id: { value: 2, errors: [] },
+          x: { value: 1, errors: [] },
+          y: { value: 1, errors: [] },
+          width: { value: 1, errors: [] },
+          height: { value: 1, errors: [] },
+          password: { value: '123', errors: [] },
+          hasErrors: false,
         },
       ],
     };
@@ -233,7 +278,13 @@ describe('selections reducer', () => {
       ...defaultState,
       collection: [
         {
-          id: 2, x: 1, y: 1, width: 1, height: 1, password: '123',
+          id: { value: 2, errors: [] },
+          x: { value: 1, errors: [] },
+          y: { value: 1, errors: [] },
+          width: { value: 1, errors: [] },
+          height: { value: 1, errors: [] },
+          password: { value: '123', errors: [] },
+          hasErrors: false,
         },
       ],
     };

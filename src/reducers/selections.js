@@ -17,17 +17,17 @@ const defaultState = {
 /* eslint-disable no-case-declarations */
 export default function selections(state = defaultState, action) {
   const maxId = state.collection.reduce((acc, selection) => (
-    selection.id > acc ? selection.id : acc
+    selection.id.value > acc ? selection.id.value : acc
   ), 0);
 
   switch (action.type) {
     case SET_ACTIVE_SELECTION:
       if (Number.isInteger(action.id)) {
-        const activeSelectionIndex = state.collection.findIndex(elem => elem.id === action.id);
+        const activeSelectionIndex = state.collection.findIndex(elem => elem.id.value === action.id);
         if (activeSelectionIndex > -1) {
           return {
             ...state,
-            activeSelectionId: state.collection[activeSelectionIndex].id,
+            activeSelectionId: state.collection[activeSelectionIndex].id.value,
           };
         }
       }
@@ -48,12 +48,13 @@ export default function selections(state = defaultState, action) {
           ...state,
           collection: [
             {
-              id: maxId + 1,
-              x,
-              y,
-              width,
-              height,
-              password,
+              id: { value: maxId + 1, errors: [] },
+              x: { value: x, errors: [] },
+              y: { value: y, errors: [] },
+              width: { value: width, errors: [] },
+              height: { value: height, errors: [] },
+              password: { value: password, errors: [] },
+              hasErrors: false,
             },
             ...state.collection,
           ],
@@ -62,15 +63,33 @@ export default function selections(state = defaultState, action) {
       return state;
     case MODIFY_SELECTION:
       const updatedCollection = state.collection.map((selection) => {
-        if (selection.id === action.id) {
+        if (selection.id.value === action.id) {
           return {
             ...selection,
-            id: action.id,
-            x: action.x === undefined ? selection.x : action.x,
-            y: action.y === undefined ? selection.y : action.y,
-            width: action.width === undefined ? selection.width : action.width,
-            height: action.height === undefined ? selection.height : action.height,
-            password: action.password === undefined ? selection.password : action.password,
+            id: {
+              ...selection.id,
+              value: action.id,
+            },
+            x: {
+              ...selection.x,
+              value: action.x === undefined ? selection.x.value : action.x,
+            },
+            y: {
+              ...selection.y,
+              value: action.y === undefined ? selection.y.value : action.y,
+            },
+            width: {
+              ...selection.width,
+              value: action.width === undefined ? selection.width.value : action.width,
+            },
+            height: {
+              ...selection.height,
+              value: action.height === undefined ? selection.height.value : action.height,
+            },
+            password: {
+              ...selection.password,
+              value: action.password === undefined ? selection.password.value : action.password,
+            },
           };
         }
         return selection;
@@ -82,7 +101,7 @@ export default function selections(state = defaultState, action) {
     case DELETE_SELECTION:
       return {
         ...state,
-        collection: state.collection.filter(selection => selection.id !== action.id),
+        collection: state.collection.filter(selection => selection.id.value !== action.id),
       };
     default:
       return state;
