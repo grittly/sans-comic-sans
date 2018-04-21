@@ -34,7 +34,6 @@ class SelectionCanvas extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-
   componentWillReceiveProps(nextProps) {
     // Convenient to do scaling in one place
     this.setState(scaleCoordinates(nextProps, RESIZE_HANDLE_SIZE));
@@ -61,7 +60,6 @@ class SelectionCanvas extends Component {
       height: (y - this.selection.position().y) + this.handle.size().height,
     });
   }
-
 
   /**
    * Update the selection position and size after dragging stops
@@ -126,7 +124,7 @@ class SelectionCanvas extends Component {
   }
 
   /**
-   * Set current selection as active when it is clicked on 
+   * Set current selection as active when it is clicked on
    */
   handleClick() {
     this.props.setActiveSelection(this.props.id);

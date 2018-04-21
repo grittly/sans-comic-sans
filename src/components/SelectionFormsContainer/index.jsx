@@ -22,7 +22,7 @@ class SelectionFormsContainer extends Component {
         Forms for Selections
         {
           this.props.selections.map(selection => (<SelectionForm
-            key={`selection-form-${selection.id}`}
+            key={`selection-form-${selection.id.value}`}
             id={selection.id}
             x={selection.x}
             y={selection.y}
@@ -40,12 +40,12 @@ class SelectionFormsContainer extends Component {
 
 SelectionFormsContainer.propTypes = {
   selections: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    password: PropTypes.string,
-    x: PropTypes.number,
-    y: PropTypes.number,
-    width: PropTypes.number,
-    height: PropTypes.number,
+    id: PropTypes.Object,
+    password: PropTypes.Object,
+    x: PropTypes.Object,
+    y: PropTypes.Object,
+    width: PropTypes.Object,
+    height: PropTypes.Object,
   })).isRequired,
   updateCoordinates: PropTypes.func.isRequired,
   setActiveSelection: PropTypes.func.isRequired,

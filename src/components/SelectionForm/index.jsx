@@ -11,80 +11,84 @@ const SelectionForm = props => (
     <div className="input-section">
       <div className="id-area">
         <div className="input-label-wrapper">
-          <label htmlFor={`selection-${props.id}-id`}>id:</label>
-          <span id={`selection-${props.id}-id`}>{props.id}</span>
+          <label htmlFor={`selection-${props.id.value}-id`}>id:</label>
+          <span id={`selection-${props.id.value}-id`}>{props.id.value}</span>
         </div>
       </div>
       <div className="coordinates-area">
         <div className="input-label-wrapper">
-          <label htmlFor={`selection-${props.id}-password`}>key:</label>
+          <label htmlFor={`selection-${props.id.value}-password`}>key:</label>
           <input
             type="text"
-            id={`selection-${props.id}-password`}
-            value={props.password}
+            id={`selection-${props.id.value}-password`}
+            value={props.password.value}
             onChange={(e) => {
               props.updateCoordinates({
-                id: props.id, password: e.target.value,
+                id: props.id.value, password: e.target.value,
               });
             }}
-            onFocus={() => { props.setActiveSelection(props.id); }}
+            onFocus={() => { props.setActiveSelection(props.id.value); }}
             onBlur={() => { props.setActiveSelection(); }}
           />
         </div>
         <div className="input-label-wrapper">
-          <label htmlFor={`selection-${props.id}-x`}>x:</label>
+          <label htmlFor={`selection-${props.id.value}-x`}>x:</label>
           <input
             type="number"
-            id={`selection-${props.id}-x`}
-            value={props.x}
+            id={`selection-${props.id.value}-x`}
+            value={props.x.value}
             onChange={(e) => {
               props.updateCoordinates({
-                id: props.id, x: e.target.value,
+                id: props.id.value, x: e.target.value,
               });
             }}
-            onFocus={() => { props.setActiveSelection(props.id); }}
+            onFocus={() => { props.setActiveSelection(props.id.value); }}
             onBlur={() => { props.setActiveSelection(); }}
           />
         </div>
         <div className="input-label-wrapper">
-          <label htmlFor={`selection-${props.id}-y`}>y:</label>
+          <label htmlFor={`selection-${props.id.value}-y`}>y:</label>
           <input
             type="number"
-            id={`selection-${props.id}-y`}
-            value={props.y}
+            id={`selection-${props.id.value}-y`}
+            value={props.y.value}
             onChange={(e) => {
               props.updateCoordinates({
-                id: props.id, y: e.target.value,
+                id: props.id.value, y: e.target.value,
               });
             }}
-            onFocus={() => { props.setActiveSelection(props.id); }}
+            onFocus={() => { props.setActiveSelection(props.id.value); }}
             onBlur={() => { props.setActiveSelection(); }}
           />
         </div>
         <div className="input-label-wrapper">
-          <label htmlFor={`selection-${props.id}-width`}>width:</label>
+          <label htmlFor={`selection-${props.id.value}-width`}>width:</label>
           <input
             type="number"
-            id={`selection-${props.id}-width`}
-            value={props.width}
+            id={`selection-${props.id.value}-width`}
+            value={props.width.value}
             onChange={(e) => {
               props.updateCoordinates({
-                id: props.id, width: e.target.value,
+                id: props.id.value, width: e.target.value,
               });
             }}
+            onFocus={() => { props.setActiveSelection(props.id.value); }}
+            onBlur={() => { props.setActiveSelection(); }}
           />
         </div>
         <div className="input-label-wrapper">
-          <label htmlFor={`selection-${props.id}-height`}>height:</label>
+          <label htmlFor={`selection-${props.id.value}-height`}>height:</label>
           <input
             type="number"
-            id={`selection-${props.id}-height`}
-            value={props.height}
+            id={`selection-${props.id.value}-height`}
+            value={props.height.value}
             onChange={(e) => {
               props.updateCoordinates({
-                id: props.id, height: e.target.value,
+                id: props.id.value, height: e.target.value,
               });
             }}
+            onFocus={() => { props.setActiveSelection(props.id.value); }}
+            onBlur={() => { props.setActiveSelection(); }}
           />
         </div>
       </div>
@@ -95,12 +99,30 @@ const SelectionForm = props => (
 );
 
 SelectionForm.propTypes = {
-  id: PropTypes.number.isRequired,
-  password: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
+  id: PropTypes.shape({
+    value: PropTypes.number,
+    errors: PropTypes.array,
+  }).isRequired,
+  password: PropTypes.shape({
+    value: PropTypes.string,
+    errors: PropTypes.array,
+  }).isRequired,
+  width: PropTypes.shape({
+    value: PropTypes.number,
+    errors: PropTypes.array,
+  }).isRequired,
+  height: PropTypes.shape({
+    value: PropTypes.number,
+    errors: PropTypes.array,
+  }).isRequired,
+  x: PropTypes.shape({
+    value: PropTypes.number,
+    errors: PropTypes.array,
+  }).isRequired,
+  y: PropTypes.shape({
+    value: PropTypes.number,
+    errors: PropTypes.array,
+  }).isRequired,
   updateCoordinates: PropTypes.func.isRequired,
   setActiveSelection: PropTypes.func.isRequired,
 };

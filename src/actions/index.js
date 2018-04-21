@@ -7,6 +7,7 @@ import {
   DELETE_SELECTION,
   RESIZE_CANVAS_CONTAINER,
   SET_ACTIVE_SELECTION,
+  VALIDATE_SELECTIONS,
 } from '../constants';
 
 // Actions related to loading source image
@@ -27,15 +28,28 @@ export function init() {
 }
 
 /**
+ * Run the validator through the collection array inside selections reducer
+ *
+ */
+export function validateSelections() {
+  // TODO: run validation
+  return {
+    type: VALIDATE_SELECTIONS,
+    validatedCollection: null,
+    hasErrors: false,
+  };
+}
+
+/**
  * Set or unset the id of the current selection
- * @param {number} id - Id corresponding to the id in collection 
+ * @param {number} id - Id corresponding to the id in collection
  * array inside selection reducer
  */
 export function setActiveSelection(id) {
   return {
     type: SET_ACTIVE_SELECTION,
     id,
-  }
+  };
 }
 
 /**

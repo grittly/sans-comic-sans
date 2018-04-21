@@ -22,18 +22,17 @@ class SelectionCanvasContainer extends Component {
       <Group>
         {
           this.props.selections.map(selection => (<SelectionCanvas
-            key={`selection-form-${selection.id}`}
-            id={selection.id}
-            x={selection.x}
-            y={selection.y}
-            width={selection.width}
-            height={selection.height}
-            password={selection.password}
+            key={`selection-canvas-${selection.id.value}`}
+            id={selection.id.value}
+            x={selection.x.value}
+            y={selection.y.value}
+            width={selection.width.value}
+            height={selection.height.value}
             containerWidth={this.props.containerWidth}
             containerHeight={this.props.containerHeight}
             updateCoordinates={this.props.updateCoordinates}
             scale={this.props.scale}
-            active={this.props.activeSelectionId === selection.id}
+            active={this.props.activeSelectionId === selection.id.value}
             setActiveSelection={this.props.setActiveSelection}
           />))
         }
@@ -48,12 +47,11 @@ SelectionCanvasContainer.defaultProps = {
 
 SelectionCanvasContainer.propTypes = {
   selections: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    password: PropTypes.string,
-    x: PropTypes.number,
-    y: PropTypes.number,
-    width: PropTypes.number,
-    height: PropTypes.number,
+    id: PropTypes.object,
+    x: PropTypes.object,
+    y: PropTypes.object,
+    width: PropTypes.object,
+    height: PropTypes.object,
   })).isRequired,
   scale: PropTypes.number.isRequired,
   containerWidth: PropTypes.number.isRequired,
