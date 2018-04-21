@@ -6,6 +6,7 @@ import {
   MODIFY_SELECTION,
   DELETE_SELECTION,
   RESIZE_CANVAS_CONTAINER,
+  SET_ACTIVE_SELECTION,
 } from '../constants';
 
 // Actions related to loading source image
@@ -23,6 +24,18 @@ export function init() {
       .then(() => dispatch(addSelection()));
   };
   /* eslint-enable */
+}
+
+/**
+ * Set or unset the id of the current selection
+ * @param {number} id - Id corresponding to the id in collection 
+ * array inside selection reducer
+ */
+export function setActiveSelection(id) {
+  return {
+    type: SET_ACTIVE_SELECTION,
+    id,
+  }
 }
 
 /**

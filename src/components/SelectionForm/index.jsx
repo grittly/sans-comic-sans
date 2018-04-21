@@ -27,6 +27,8 @@ const SelectionForm = props => (
                 id: props.id, password: e.target.value,
               });
             }}
+            onFocus={() => { props.setActiveSelection(props.id); }}
+            onBlur={() => { props.setActiveSelection(); }}
           />
         </div>
         <div className="input-label-wrapper">
@@ -40,6 +42,8 @@ const SelectionForm = props => (
                 id: props.id, x: e.target.value,
               });
             }}
+            onFocus={() => { props.setActiveSelection(props.id); }}
+            onBlur={() => { props.setActiveSelection(); }}
           />
         </div>
         <div className="input-label-wrapper">
@@ -53,6 +57,8 @@ const SelectionForm = props => (
                 id: props.id, y: e.target.value,
               });
             }}
+            onFocus={() => { props.setActiveSelection(props.id); }}
+            onBlur={() => { props.setActiveSelection(); }}
           />
         </div>
         <div className="input-label-wrapper">
@@ -90,12 +96,13 @@ const SelectionForm = props => (
 
 SelectionForm.propTypes = {
   id: PropTypes.number.isRequired,
-  password: PropTypes.number.isRequired,
+  password: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   updateCoordinates: PropTypes.func.isRequired,
+  setActiveSelection: PropTypes.func.isRequired,
 };
 
 export default SelectionForm;

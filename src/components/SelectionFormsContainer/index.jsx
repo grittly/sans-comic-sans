@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SelectionForm from '../SelectionForm';
-import { modifySelection } from '../../actions';
+import {
+  modifySelection,
+  setActiveSelection,
+} from '../../actions';
 
 /**
  * Container for Selection Forms that are linked to selections in CanvasVisible
@@ -27,6 +30,7 @@ class SelectionFormsContainer extends Component {
             height={selection.height}
             password={selection.password}
             updateCoordinates={this.props.updateCoordinates}
+            setActiveSelection={this.props.setActiveSelection}
           />))
         }
       </div>
@@ -44,6 +48,7 @@ SelectionFormsContainer.propTypes = {
     height: PropTypes.number,
   })).isRequired,
   updateCoordinates: PropTypes.func.isRequired,
+  setActiveSelection: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -53,6 +58,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   updateCoordinates: (coords) => {
     dispatch(modifySelection(coords));
+  },
+  setActiveSelection: (id) => {
+    dispatch(setActiveSelection(id));
   },
 });
 

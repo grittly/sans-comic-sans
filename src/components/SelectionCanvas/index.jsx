@@ -7,7 +7,8 @@ import {
 } from './_helpers';
 
 // configuration
-const SELECTION_FILL = 'rgba(255,255,255,0.7)';
+const SELECTION_FILL_ACTIVE = 'rgba(255,255,255,0.7)';
+const SELECTION_FILL_INACTIVE = 'rgba(255,255,255,0.2)';
 const SELECTION_STROKE = 'green';
 const RESIZE_HANDLE_SIZE = 32;
 const RESIZE_HANDLE_FILL = 'red';
@@ -30,6 +31,7 @@ class SelectionCanvas extends Component {
     this.changeHandlePosition = this.changeHandlePosition.bind(this);
     this.changeSelectionSize = this.changeSelectionSize.bind(this);
     this.updateCoordinates = this.updateCoordinates.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
 
@@ -123,6 +125,13 @@ class SelectionCanvas extends Component {
     };
   }
 
+  /**
+   * Set current selection as active when it is clicked on 
+   */
+  handleClick() {
+    this.props.setActiveSelection(this.props.id);
+  }
+
   render() {
     return (
       <Group>
@@ -131,28 +140,32 @@ class SelectionCanvas extends Component {
           y={this.state.selection.y}
           width={this.state.selection.width}
           height={this.state.selection.height}
-          fill={SELECTION_FILL}
-          draggable={true}
+          fill={this.props.active ? SELECTION_FILL_ACTIVE : SELECTION_FILL_INACTIVE}
+          draggable={this.props.active}
           stroke={SELECTION_STROKE}
           dragBoundFunc={this.handleSelectionBoundaries}
           onDragMove={this.changeHandlePosition}
           ref={(elem) => { this.selection = elem; }}
           onDragEnd={this.updateCoordinates}
-
+          onClick={this.handleClick}
         />
-        <Group
-          x={(this.state.handle.x + this.state.handle.width) - RESIZE_HANDLE_SIZE}
-          y={(this.state.handle.y + this.state.handle.height) - RESIZE_HANDLE_SIZE}
-          width={this.state.handle.width}
-          height={this.state.handle.height}
-          onDragMove={this.changeSelectionSize}
-          draggable={true}
-          ref={(elem) => { this.handle = elem; }}
-          onDragEnd={this.updateCoordinates}
-          dragBoundFunc={this.handleHandleBoundaries}
-        >
-          <ResizeHandle />
-        </Group>
+        {
+          this.props.active ?
+            <Group
+              x={(this.state.handle.x + this.state.handle.width) - RESIZE_HANDLE_SIZE}
+              y={(this.state.handle.y + this.state.handle.height) - RESIZE_HANDLE_SIZE}
+              width={this.state.handle.width}
+              height={this.state.handle.height}
+              onDragMove={this.changeSelectionSize}
+              draggable={this.props.active}
+              ref={(elem) => { this.handle = elem; }}
+              onDragEnd={this.updateCoordinates}
+              dragBoundFunc={this.handleHandleBoundaries}
+            >
+              <ResizeHandle />
+            </Group> :
+            null
+        }
       </Group>
     );
   }
@@ -166,8 +179,10 @@ SelectionCanvas.propTypes = {
   height: PropTypes.number.isRequired,
   containerWidth: PropTypes.number.isRequired,
   containerHeight: PropTypes.number.isRequired,
-  updateCoordinates: PropTypes.func.isRequired,
   scale: PropTypes.number.isRequired,
+  active: PropTypes.bool.isRequired,
+  updateCoordinates: PropTypes.func.isRequired,
+  setActiveSelection: PropTypes.func.isRequired,
 };
 
 export default SelectionCanvas;

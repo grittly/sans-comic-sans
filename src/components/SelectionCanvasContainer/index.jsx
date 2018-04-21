@@ -3,7 +3,10 @@ import { Group } from 'react-konva';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SelectionCanvas from '../SelectionCanvas';
-import { modifySelection } from '../../actions';
+import {
+  modifySelection,
+  setActiveSelection,
+} from '../../actions';
 
 /**
  * Container for selections that are displayed on CanvasVisible
@@ -30,12 +33,18 @@ class SelectionCanvasContainer extends Component {
             containerHeight={this.props.containerHeight}
             updateCoordinates={this.props.updateCoordinates}
             scale={this.props.scale}
+            active={this.props.activeSelectionId === selection.id}
+            setActiveSelection={this.props.setActiveSelection}
           />))
         }
       </Group>
     );
   }
 }
+
+SelectionCanvasContainer.defaultProps = {
+  activeSelectionId: null,
+};
 
 SelectionCanvasContainer.propTypes = {
   selections: PropTypes.arrayOf(PropTypes.shape({
@@ -50,6 +59,8 @@ SelectionCanvasContainer.propTypes = {
   containerWidth: PropTypes.number.isRequired,
   containerHeight: PropTypes.number.isRequired,
   updateCoordinates: PropTypes.func.isRequired,
+  setActiveSelection: PropTypes.func.isRequired,
+  activeSelectionId: PropTypes.number,
 };
 
 const mapStateToProps = state => ({
@@ -57,11 +68,15 @@ const mapStateToProps = state => ({
   containerWidth: state.srcImage.width,
   containerHeight: state.srcImage.height,
   scale: state.srcImage.scale,
+  activeSelectionId: state.selections.activeSelectionId,
 });
 
 const mapDispatchToProps = dispatch => ({
   updateCoordinates: (coords) => {
     dispatch(modifySelection(coords));
+  },
+  setActiveSelection: (id) => {
+    dispatch(setActiveSelection(id));
   },
 });
 

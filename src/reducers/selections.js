@@ -22,8 +22,19 @@ export default function selections(state = defaultState, action) {
 
   switch (action.type) {
     case SET_ACTIVE_SELECTION:
-      // TODO: code for setting active selection
-      return state;
+      if (Number.isInteger(action.id)) {
+        const activeSelectionIndex = state.collection.findIndex(elem => elem.id === action.id);
+        if (activeSelectionIndex > -1) {
+          return {
+            ...state,
+            activeSelectionId: state.collection[activeSelectionIndex].id,
+          };
+        }
+      }
+      return {
+        ...state,
+        activeSelectionId: null,
+      };
     case ADD_SELECTION:
       if (action.imageWidth && action.imageHeight) {
         const {
