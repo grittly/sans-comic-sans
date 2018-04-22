@@ -9,6 +9,7 @@ import {
   SET_ACTIVE_SELECTION,
   VALIDATE_SELECTIONS,
 } from '../constants';
+import { runSelectionValidator } from './helpers';
 
 // Actions related to loading source image
 
@@ -32,11 +33,14 @@ export function init() {
  *
  */
 export function validateSelections() {
-  // TODO: run validation
-  return {
-    type: VALIDATE_SELECTIONS,
-    validatedCollection: null,
-    hasErrors: false,
+  return (dispatch, getState) => {
+    const selections = getState().selections.collection;
+    const { width, height } = getState().srcImage;
+    return runSelectionValidator(selections, width, height)
+      .then(validatedCollection => dispatch({
+        type: VALIDATE_SELECTIONS,
+        validatedCollection,
+      }));
   };
 }
 
@@ -97,16 +101,18 @@ export function addSelection({
   return (dispatch, getState) => {
     const imageWidth = getState().srcImage.width;
     const imageHeight = getState().srcImage.height;
-    dispatch({
-      type: ADD_SELECTION,
-      x,
-      y,
-      width,
-      height,
-      password,
-      imageWidth,
-      imageHeight,
-    });
+    return Promise.resolve()
+      .then(() => dispatch({
+        type: ADD_SELECTION,
+        x,
+        y,
+        width,
+        height,
+        password,
+        imageWidth,
+        imageHeight,
+      }))
+      .then(() => dispatch(validateSelections()));
   };
 }
 
@@ -116,15 +122,17 @@ export function addSelection({
 export function modifySelection({
   id, x, y, width, height, password,
 } = {}) {
-  return {
-    type: MODIFY_SELECTION,
-    id,
-    x,
-    y,
-    width,
-    height,
-    password,
-  };
+  return dispatch => Promise.resolve()
+    .then(() => dispatch({
+      type: MODIFY_SELECTION,
+      id,
+      x,
+      y,
+      width,
+      height,
+      password,
+    }))
+    .then(() => dispatch(validateSelections()));
 }
 
 /**

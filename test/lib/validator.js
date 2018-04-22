@@ -27,6 +27,29 @@ const validations = {
 const Validate = Validator(rules, validations);
 
 describe('Validator', () => {
+  it('Able to modify default rules if customRules are provided', () => {
+    const key = 'char_length_test';
+    let entry = { value: '123' };
+    let result = Validate(key, entry);
+    expect(result.errors).to.have.length(0);
+
+    entry = { value: '123' };
+    result = Validate(key, entry, { RULE_CHAR_LENGTH_RANGE: { minLength: 0, maxLength: 2 } });
+    expect(result.errors).to.have.length(1);
+    expect(result.errors[0]).to.include('characters long');
+  });
+  it('Able to modify default list of validations if customValidations are provided', () => {
+    const key = 'integer_test';
+    let entry = { value: 'abcdefg', errors: [] };
+    let result = Validate(key, entry);
+    expect(result.errors).to.have.length(1);
+    expect(result.errors[0]).to.include('integer');
+
+    entry = { value: 'abcdefg', errors: [] };
+    result = Validate(key, entry, {}, [VALIDATE_CHAR_LENGTH_RANGE]);
+    expect(result.errors).to.have.length(1);
+    expect(result.errors[0]).to.include('characters long');
+  });
   it('Handles the case where they key provided is not present in the validations', () => {
     const key = 'non_existent_key';
     const entry = { value: 'somevalue', errors: [] };

@@ -10,6 +10,8 @@ const state = {
   selections: {
     collection: [],
     activeSelectionId: null,
+    hasErrors: false,
+    validated: false,
   },
 };
 

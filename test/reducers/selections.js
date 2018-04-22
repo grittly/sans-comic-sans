@@ -128,7 +128,7 @@ describe('selections reducer', () => {
           y: { value: 0, errors: [] },
           width: { value: action.imageWidth * 0.2, errors: [] },
           height: { value: action.imageWidth * 0.2, errors: [] },
-          password: { value: '', errors: [] },
+          password: { value: 'password', errors: [] },
           hasErrors: false,
         },
       ],

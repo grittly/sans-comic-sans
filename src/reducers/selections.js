@@ -3,6 +3,7 @@ import {
   MODIFY_SELECTION,
   DELETE_SELECTION,
   SET_ACTIVE_SELECTION,
+  VALIDATE_SELECTIONS,
 } from '../constants';
 
 const defaultState = {
@@ -42,10 +43,11 @@ export default function selections(state = defaultState, action) {
           y = 0,
           width = Math.round(action.imageWidth * 0.2),
           height = Math.round(action.imageHeight * 0.2),
-          password = '',
+          password = 'password',
         } = action;
         return {
           ...state,
+          validated: false,
           collection: [
             {
               id: { value: maxId + 1, errors: [] },
@@ -97,11 +99,20 @@ export default function selections(state = defaultState, action) {
       return {
         ...state,
         collection: updatedCollection,
+        validated: false,
       };
     case DELETE_SELECTION:
       return {
         ...state,
         collection: state.collection.filter(selection => selection.id.value !== action.id),
+      };
+    case VALIDATE_SELECTIONS:
+      const hasErrors = action.validatedCollection.reduce((acc, selection) => selection.hasErrors || acc, false);
+      return {
+        ...state,
+        collection: action.validatedCollection,
+        hasErrors,
+        validated: true,
       };
     default:
       return state;
