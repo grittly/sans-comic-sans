@@ -13,9 +13,9 @@ import {
 } from '../../src/constants';
 
 const rules = {
-  [RULE_CHAR_LENGTH_RANGE]: [0, 5],
-  [RULE_NUMERIC_RANGE]: [4, 10],
-  [RULE_ALLOWED_CHARACTERS]: /^\S+$/,
+  [RULE_CHAR_LENGTH_RANGE]: { minLength: 0, maxLength: 5 },
+  [RULE_NUMERIC_RANGE]: { minNum: 4, maxNum: 10 },
+  [RULE_ALLOWED_CHARACTERS]: { allowedCharsRe: /^\S+$/ },
 };
 const validations = {
   presence_test: [VALIDATE_PRESENCE],
@@ -38,7 +38,7 @@ describe('Validator', () => {
     const entry = { value: '', errors: [] };
     const result = Validate(key, entry);
     expect(result.errors).to.have.length(1);
-    expect(result.errors[0].to.include('empty'));
+    expect(result.errors[0]).to.include('empty');
   });
   it('Adds errors property to the return value even if it is not provided in the entry object', () => {
     const key = 'presence_test';
@@ -135,17 +135,17 @@ describe('Validator', () => {
     let entry = { value: 0, errors: [] };
     let result = Validate(key, entry);
     expect(result.errors).to.have.length(1);
-    expect(result.errors[0]).to.include('must be within');
+    expect(result.errors[0]).to.include('must be between');
 
     entry = { value: 100, errors: [] };
     result = Validate(key, entry);
     expect(result.errors).to.have.length(1);
-    expect(result.errors[0]).to.include('must be within');
+    expect(result.errors[0]).to.include('must be between');
 
     entry = { value: -3, errors: [] };
     result = Validate(key, entry);
     expect(result.errors).to.have.length(1);
-    expect(result.errors[0]).to.include('must be within');
+    expect(result.errors[0]).to.include('must be between');
 
     // Valid values - border case
     entry = { value: 4, errors: [] };

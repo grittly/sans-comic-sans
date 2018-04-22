@@ -32,7 +32,7 @@ export default function Validator(rules = {}, validations = {}) {
         ];
       }
       return acc;
-    });
+    }, []);
     return {
       ...entry,
       errors,
