@@ -36,7 +36,9 @@ class SelectionCanvas extends Component {
 
   componentWillReceiveProps(nextProps) {
     // Convenient to do scaling in one place
-    this.setState(scaleCoordinates(nextProps, RESIZE_HANDLE_SIZE));
+    if (nextProps.validated) {
+      this.setState(scaleCoordinates(nextProps, RESIZE_HANDLE_SIZE));
+    }
   }
 
   /**
@@ -171,16 +173,29 @@ class SelectionCanvas extends Component {
 
 SelectionCanvas.propTypes = {
   id: PropTypes.number.isRequired,
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
+  x: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]).isRequired,
+  y: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]).isRequired,
+  width: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]).isRequired,
+  height: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]).isRequired,
   containerWidth: PropTypes.number.isRequired,
   containerHeight: PropTypes.number.isRequired,
   scale: PropTypes.number.isRequired,
   active: PropTypes.bool.isRequired,
   updateCoordinates: PropTypes.func.isRequired,
   setActiveSelection: PropTypes.func.isRequired,
+  validated: PropTypes.bool.isRequired,
 };
 
 export default SelectionCanvas;

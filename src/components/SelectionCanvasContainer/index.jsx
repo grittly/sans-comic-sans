@@ -34,6 +34,7 @@ class SelectionCanvasContainer extends Component {
             scale={this.props.scale}
             active={this.props.activeSelectionId === selection.id.value}
             setActiveSelection={this.props.setActiveSelection}
+            validated={this.props.validated}
           />))
         }
       </Group>
@@ -59,14 +60,16 @@ SelectionCanvasContainer.propTypes = {
   updateCoordinates: PropTypes.func.isRequired,
   setActiveSelection: PropTypes.func.isRequired,
   activeSelectionId: PropTypes.number,
+  validated: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
-  selections: state.selections.collection,
+  selections: state.selections.collection.filter(selection => !selection.hasErrors),
   containerWidth: state.srcImage.width,
   containerHeight: state.srcImage.height,
   scale: state.srcImage.scale,
   activeSelectionId: state.selections.activeSelectionId,
+  validated: state.selections.validated,
 });
 
 const mapDispatchToProps = dispatch => ({

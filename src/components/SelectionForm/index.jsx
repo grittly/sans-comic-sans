@@ -39,7 +39,8 @@ const SelectionForm = props => (
             value={props.x.value}
             onChange={(e) => {
               props.updateCoordinates({
-                id: props.id.value, x: e.target.value,
+                id: props.id.value,
+                x: e.target.value,
               });
             }}
             onFocus={() => { props.setActiveSelection(props.id.value); }}
@@ -54,7 +55,8 @@ const SelectionForm = props => (
             value={props.y.value}
             onChange={(e) => {
               props.updateCoordinates({
-                id: props.id.value, y: e.target.value,
+                id: props.id.value,
+                y: e.target.value,
               });
             }}
             onFocus={() => { props.setActiveSelection(props.id.value); }}
@@ -94,7 +96,13 @@ const SelectionForm = props => (
       </div>
       <div className="icons-area"></div>
     </div>
-    <div className="errors-section"></div>
+    <div className="errors-section">
+      <ul>
+        { props.errors.map((error, idx) => (
+          <li key={ `selection-${props.id}-error-${idx}` }>{error}</li>
+        ))}
+    </ul>
+    </div>
   </div>
 );
 
@@ -108,23 +116,36 @@ SelectionForm.propTypes = {
     errors: PropTypes.array,
   }).isRequired,
   width: PropTypes.shape({
-    value: PropTypes.number,
+    value: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
     errors: PropTypes.array,
   }).isRequired,
   height: PropTypes.shape({
-    value: PropTypes.number,
+    value: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
     errors: PropTypes.array,
   }).isRequired,
   x: PropTypes.shape({
-    value: PropTypes.number,
+    value: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
     errors: PropTypes.array,
   }).isRequired,
   y: PropTypes.shape({
-    value: PropTypes.number,
+    value: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
     errors: PropTypes.array,
   }).isRequired,
   updateCoordinates: PropTypes.func.isRequired,
   setActiveSelection: PropTypes.func.isRequired,
+  errors: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default SelectionForm;

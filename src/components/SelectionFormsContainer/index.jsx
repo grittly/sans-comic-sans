@@ -31,6 +31,14 @@ class SelectionFormsContainer extends Component {
             password={selection.password}
             updateCoordinates={this.props.updateCoordinates}
             setActiveSelection={this.props.setActiveSelection}
+            errors={[
+              ...selection.id.errors,
+              ...selection.x.errors,
+              ...selection.y.errors,
+              ...selection.width.errors,
+              ...selection.height.errors,
+              ...selection.password.errors,
+            ]}
           />))
         }
       </div>

@@ -24,7 +24,8 @@ export default function selections(state = defaultState, action) {
   switch (action.type) {
     case SET_ACTIVE_SELECTION:
       if (Number.isInteger(action.id)) {
-        const activeSelectionIndex = state.collection.findIndex(elem => elem.id.value === action.id);
+        const activeSelectionIndex
+          = state.collection.findIndex(elem => elem.id.value === action.id);
         if (activeSelectionIndex > -1) {
           return {
             ...state,
@@ -107,7 +108,9 @@ export default function selections(state = defaultState, action) {
         collection: state.collection.filter(selection => selection.id.value !== action.id),
       };
     case VALIDATE_SELECTIONS:
-      const hasErrors = action.validatedCollection.reduce((acc, selection) => selection.hasErrors || acc, false);
+      const hasErrors
+        = action.validatedCollection.reduce((acc, selection) => selection.hasErrors
+          || acc, false);
       return {
         ...state,
         collection: action.validatedCollection,

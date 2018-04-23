@@ -35,13 +35,13 @@ export function runSelectionValidator(selections, imgWidth, imgHeight) {
           RULE_NUMERIC_RANGE: { minNum: 0, maxNum: imgWidth - selection.width.value },
         }),
         y: Validate('y', selection.y, {
-          RULE_NUMERIC_RANGE: { minNum: 0, maxNum: imgWidth - selection.width.value },
+          RULE_NUMERIC_RANGE: { minNum: 0, maxNum: imgWidth - selection.height.value },
         }),
         width: Validate('width', selection.width, {
           RULE_NUMERIC_RANGE: { minNum: 0, maxNum: imgWidth - selection.x.value },
         }),
         height: Validate('height', selection.height, {
-          RULE_NUMERIC_RANGE: { minNum: 0, maxNum: imgHeight - selection.x.value },
+          RULE_NUMERIC_RANGE: { minNum: 0, maxNum: imgHeight - selection.y.value },
         }),
         password: Validate('password', selection.password),
       };

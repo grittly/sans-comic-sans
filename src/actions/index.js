@@ -122,6 +122,7 @@ export function addSelection({
 export function modifySelection({
   id, x, y, width, height, password,
 } = {}) {
+
   return dispatch => Promise.resolve()
     .then(() => dispatch({
       type: MODIFY_SELECTION,
