@@ -8,8 +8,14 @@ import {
   RESIZE_CANVAS_CONTAINER,
   SET_ACTIVE_SELECTION,
   VALIDATE_SELECTIONS,
+  IMAGE_OBFUSCATING,
+  IMAGE_OBFUSCATING_STATUS,
+  UNLOAD_OBFUSCATED_IMAGE,
 } from '../constants';
-import { runSelectionValidator } from './helpers';
+import {
+  runSelectionValidator,
+  obfuscationAddNoise,
+} from './helpers';
 
 // Actions related to loading source image
 
@@ -26,6 +32,57 @@ export function init() {
       .then(() => dispatch(addSelection()));
   };
   /* eslint-enable */
+}
+
+/**
+ * Load image into redux store
+ */
+export function loadImage(status, src, width, height) {
+  return (dispatch) => {
+    dispatch({
+      type: LOAD_IMAGE,
+      status,
+      src,
+      width,
+      height,
+    });
+  };
+}
+
+/**
+ *  Run image obfuscation
+ *  @param {boolean} decrypt - When true, the obfuscation
+ *  subtracts the noise from the image
+ */
+export function obfuscateImage() {
+  return (dispatch, getState) => {
+    const srcImage = getState().srcImage.src;
+    const { decrypt } = getState().settings.decrypt;
+
+    Promise.resolve()
+      .then(() => dispatch({ type: IMAGE_OBFUSCATING, status: IMAGE_OBFUSCATING_STATUS.LOADING }))
+      .then(() => obfuscationAddNoise(srcImage, decrypt))
+      .then((obfuscatedSrc) => {
+        dispatch({
+          type: IMAGE_OBFUSCATING,
+          status: IMAGE_OBFUSCATING_STATUS.DONE,
+          obfuscatedSrc,
+        });
+        return obfuscatedSrc;
+      })
+      .then(obfuscatedSrc => dispatch(loadImage(
+        IMAGE_STATUS.DONE,
+        obfuscatedSrc,
+        obfuscatedSrc.width,
+        obfuscatedSrc.height,
+      )));
+  };
+}
+
+export function unloadObfuscatedImage() {
+  return {
+    type: UNLOAD_OBFUSCATED_IMAGE,
+  };
 }
 
 /**
@@ -70,22 +127,6 @@ export function resizeCanvas(containerWidth = 0) {
 }
 
 /**
- * Load image into redux store
- */
-export function loadImage(status, src, width, height) {
-  return (dispatch) => {
-    dispatch({
-      type: LOAD_IMAGE,
-      status,
-      src,
-      width,
-      height,
-    });
-  };
-}
-
-
-/**
  * Unload image from redux store
  */
 export function unloadImage() {
@@ -122,7 +163,6 @@ export function addSelection({
 export function modifySelection({
   id, x, y, width, height, password,
 } = {}) {
-
   return dispatch => Promise.resolve()
     .then(() => dispatch({
       type: MODIFY_SELECTION,

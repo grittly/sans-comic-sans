@@ -21,6 +21,14 @@ export const RULE_CHAR_LENGTH_RANGE = 'RULE_CHAR_LENGTH_RANGE';
 export const RULE_NUMERIC_RANGE = 'RULE_NUMERIC_RANGE';
 export const RULE_ALLOWED_CHARACTERS = 'RULE_ALLOWED_CHARACTERS';
 
+// Action types linked to image obfuscation
+export const IMAGE_OBFUSCATING = 'IMAGE_OBFUSCATING';
+export const IMAGE_OBFUSCATING_STATUS = {
+  LOADING: 'LOADING',
+  DONE: 'DONE',
+};
+export const UNLOAD_OBFUSCATED_IMAGE = 'UNLOAD_OBFUSCATED_IMAGE';
+
 // Image loading status constants
 export const IMAGE_STATUS = {
   LOADING: 'LOADING',
