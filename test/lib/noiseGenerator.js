@@ -41,17 +41,27 @@ const noiseMap = Uint8ClampedArray
 
 describe('Validator', () => {
   it('Validate that adding noise works', () => {
-    const imagePlusNoise = mergeNoiseAndImageData(dataImageRegular, emptyMap, noiseMap, false);
+    const imagePlusNoise = mergeNoiseAndImageData(
+      { data: dataImageRegular },
+      { data: emptyMap },
+      noiseMap,
+      false,
+    );
     expect(imagePlusNoise.slice(0, 100)).to.eql(dataImagePlus.slice(0, 100));
   });
   it('Validate that subtracting noise works', () => {
-    const imageMinusNoise = mergeNoiseAndImageData(dataImageRegular, emptyMap, noiseMap, true);
+    const imageMinusNoise = mergeNoiseAndImageData(
+      { data: dataImageRegular },
+      { data: emptyMap },
+      noiseMap,
+      true,
+    );
     expect(imageMinusNoise.slice(0, 100)).to.eql(dataImageMinus.slice(0, 100));
   });
   it('Validate that noise map adds to pixels in encryptedLayer if they are present', () => {
     const imagePlusNoise = mergeNoiseAndImageData(
-      dataImageRegular,
-      dataImageMinus,
+      { data: dataImageRegular },
+      { data: dataImageMinus },
       noiseMap,
       false,
     );
