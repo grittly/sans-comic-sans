@@ -9,7 +9,7 @@ import {
   RULE_CHAR_LENGTH_RANGE,
 } from '../constants';
 import Validator from '../lib/Validator';
-import NoiseGenerator from '../lib/NoiseGenerator';
+import noiseGenerator from '../lib/NoiseGenerator';
 
 const rules = {
   [RULE_CHAR_LENGTH_RANGE]: { minLength: 0, maxLength: 100 },
@@ -42,7 +42,6 @@ export function runSelectionValidator(selections, imgWidth, imgHeight) {
           RULE_NUMERIC_RANGE: { minNum: 0, maxNum: imgWidth - selection.x.value },
         }),
         height: Validate('height', selection.height, {
-          RULE_NUMERIC_RANGE: { minNum: 0, maxNum: imgHeight - selection.y.value },
         }),
         password: Validate('password', selection.password),
       };
@@ -59,12 +58,18 @@ export function runSelectionValidator(selections, imgWidth, imgHeight) {
 
 /**
  *  Adds noise to the srcImage and returns an obfuscated image
- *  @param {HTMLImageElement} srcImage - original image source
+ *  @param {ImageData} originalImage - original image source
+ *  @param {ImageData} encryptedImage - image layer with already encrypted areas
  *  @param {boolean} decrypt - subtract noise from image if true
- *  @param {number} maxWidth - maxWidth of the obfuscated image
- *  @return {HTMLImageElement} - obfuscated image as a Promise
+ *  @return {ImageData} - Return same sized ImageData with noise added/subtracted,
+ *  depending on value of decrypt
  */
-export function obfuscationAddNoise(srcImage, decrypt=false, maxWidth) {
-  // Fill in code here
-  return Promise.resolve(srcImage);
+export function obfuscateSelectedArea({
+  originalImage,
+  encryptedImage,
+  password,
+  decrypt=false,
+}) {
+  const result = noiseGenerator(password, originalImage, encryptedImage, decrypt);
+  return new ImageData(result, originalImage.width, originalImage.height);
 }

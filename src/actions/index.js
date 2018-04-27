@@ -14,7 +14,7 @@ import {
 } from '../constants';
 import {
   runSelectionValidator,
-  obfuscationAddNoise,
+  obfuscateSelectedArea,
 } from './helpers';
 
 // Actions related to loading source image
@@ -51,17 +51,64 @@ export function loadImage(status, src, width, height) {
 
 /**
  *  Run image obfuscation
- *  @param {boolean} decrypt - When true, the obfuscation
- *  subtracts the noise from the image
  */
 export function obfuscateImage() {
   return (dispatch, getState) => {
     const srcImage = getState().srcImage.src;
     const { decrypt } = getState().settings.decrypt;
+    const selections = getState().selections.collection;
 
     Promise.resolve()
       .then(() => dispatch({ type: IMAGE_OBFUSCATING, status: IMAGE_OBFUSCATING_STATUS.LOADING }))
-      .then(() => obfuscationAddNoise(srcImage, decrypt))
+      .then(() => {
+        const MAX_SIZE = 300;
+        let maxWidth = srcImage.width;
+        let maxHeight = srcImage.height;
+        if(MAX_SIZE < srcImage.width || MAX_SIZE < srcImage.height){
+          [ maxWidth, maxHeight ] = srcImage.width > srcImage.height ?
+            [ MAX_SIZE, Math.round(srcImage.height * MAX_SIZE / srcImage.width) ] :
+            [ Math.round(srcImage.width * MAX_SIZE / srcImage.height), MAX_SIZE ];
+        }
+        const scale = maxWidth / srcImage.width;
+
+        const canvasOriginal = document.createElement('canvas');
+        const ctxOriginal = canvasOriginal.getContext('2d');
+        canvasOriginal.width = maxWidth;
+        canvasOriginal.height = maxHeight;
+
+        const canvasEncrypted = document.createElement('canvas');
+        const ctxEncrypted = canvasEncrypted.getContext('2d');
+        canvasEncrypted.width = maxWidth;
+        canvasEncrypted.height = maxHeight;
+
+        ctxOriginal.drawImage(srcImage, 0, 0, maxWidth, maxHeight);
+
+        selections.forEach(({ x, y, width, height, password }) => {
+          ctxEncrypted.putImageData(
+            obfuscateSelectedArea({
+              originalImage: ctxOriginal.getImageData(x.value * scale, y.value * scale, width.value * scale, height.value * scale),
+              encryptedImage: ctxEncrypted.getImageData(x.value * scale, y.value * scale, width.value * scale, height.value * scale),
+              password,
+              decrypt,
+            }),
+            Math.round(x.value * scale),
+            Math.round(y.value * scale),
+          );
+        });
+        ctxOriginal.drawImage(canvasEncrypted, 0, 0, maxWidth, maxHeight);
+        return new Promise((resolve, reject) => {
+          canvasOriginal.toBlob((blob) => {
+            resolve(blob);
+          });
+        });
+      })
+      .then((blob) => {
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(blob);
+        return new Promise((resolve, reject) => {
+          img.onload = () => resolve(img);
+        });
+      })
       .then((obfuscatedSrc) => {
         dispatch({
           type: IMAGE_OBFUSCATING,
