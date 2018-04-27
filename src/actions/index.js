@@ -226,6 +226,9 @@ export function modifySelection({
 /**
  * Delete a selection
  */
-export function deleteSelection() {
-  return { type: DELETE_SELECTION };
+export function deleteSelection(id) {
+  return { 
+    type: DELETE_SELECTION,
+    id,
+  };
 }

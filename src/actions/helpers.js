@@ -42,6 +42,7 @@ export function runSelectionValidator(selections, imgWidth, imgHeight) {
           RULE_NUMERIC_RANGE: { minNum: 0, maxNum: imgWidth - selection.x.value },
         }),
         height: Validate('height', selection.height, {
+          RULE_NUMERIC_RANGE: { minNum: 0, maxNum: imgHeight - selection.y.value },
         }),
         password: Validate('password', selection.password),
       };
@@ -68,8 +69,9 @@ export function obfuscateSelectedArea({
   originalImage,
   encryptedImage,
   password,
-  decrypt=false,
+  decrypt = false,
 }) {
   const result = noiseGenerator(password, originalImage, encryptedImage, decrypt);
+  // eslint-disable-next-line no-undef
   return new ImageData(result, originalImage.width, originalImage.height);
 }

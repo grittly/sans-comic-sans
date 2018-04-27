@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import CanvasPlaceholder from '../CanvasPlaceholder';
 import CanvasVisible from '../CanvasVisible';
 import Header from '../Header';
+import ActionsPanel from '../ActionsPanel';
 import {
   loadImage,
   unloadImage,
@@ -66,6 +67,7 @@ class CanvasContainer extends Component {
               loading={this.props.imageStatus === IMAGE_STATUS.LOADING}
             />
         }
+        <ActionsPanel />
       </div>
     );
   }

@@ -148,6 +148,7 @@ class SelectionCanvas extends Component {
           ref={(elem) => { this.selection = elem; }}
           onDragEnd={this.updateCoordinates}
           onClick={this.handleClick}
+          onTap={this.handleClick}
         />
         {
           this.props.active ?
