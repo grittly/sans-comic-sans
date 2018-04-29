@@ -92,7 +92,7 @@ describe('selections reducer', () => {
       type: SCALE_SELECTIONS,
     };
 
-    const expectedState = defaultState;
+    const expectedState = initialState;
     expect(reducer(initialState, action)).to.eql(expectedState);
   });
   it('Sets activeSelectionId to the passed id if it exists in the redux store', () => {

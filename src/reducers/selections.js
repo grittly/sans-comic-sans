@@ -24,6 +24,32 @@ export default function selections(state = defaultState, action) {
 
   switch (action.type) {
     case SCALE_SELECTIONS:
+      if (action.scale) {
+        return {
+          ...state,
+          collection: state.collection.map((selection) => {
+            return {
+              ...selection,
+              x: {
+                ...selection.x,
+                 value: selection.x.value * action.scale,
+              },
+              y: {
+                ...selection.y,
+                value: selection.y.value * action.scale,
+              },
+              width: {
+                ...selection.width,
+                value: selection.width.value * action.scale,
+              },
+              height: {
+                ...selection.height,
+                value: selection.height.value * action.scale,
+              },
+            };
+          }),
+        };
+      }
       return state;
     case SET_ACTIVE_SELECTION:
       if (Number.isInteger(action.id)) {
