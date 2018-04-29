@@ -4,6 +4,7 @@ import {
   DELETE_SELECTION,
   SET_ACTIVE_SELECTION,
   VALIDATE_SELECTIONS,
+  SCALE_SELECTIONS,
 } from '../constants';
 
 const defaultState = {
@@ -22,6 +23,8 @@ export default function selections(state = defaultState, action) {
   ), 0);
 
   switch (action.type) {
+    case SCALE_SELECTIONS:
+      return state;
     case SET_ACTIVE_SELECTION:
       if (Number.isInteger(action.id)) {
         const activeSelectionIndex

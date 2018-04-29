@@ -11,6 +11,7 @@ import {
   IMAGE_OBFUSCATING,
   IMAGE_OBFUSCATING_STATUS,
   UNLOAD_OBFUSCATED_IMAGE,
+  SCALE_SELECTIONS,
 } from '../constants';
 import {
   runSelectionValidator,
@@ -32,6 +33,18 @@ export function init() {
       .then(() => dispatch(addSelection()));
   };
   /* eslint-enable */
+}
+
+/**
+ *  Scale all selections by a factor.
+ *  Needed when obfuscated image is scaled down
+ *  @param {number} scale - scale factor
+ */
+export function scaleSelections(scale) {
+  return {
+    type: SCALE_SELECTIONS,
+    scale,
+  };
 }
 
 /**

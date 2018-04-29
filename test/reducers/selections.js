@@ -6,6 +6,7 @@ import {
   MODIFY_SELECTION,
   DELETE_SELECTION,
   SET_ACTIVE_SELECTION,
+  SCALE_SELECTIONS,
 } from '../../src/constants';
 
 import state from '../../src/store/defaultState';
@@ -13,6 +14,87 @@ import state from '../../src/store/defaultState';
 const defaultState = state.selections;
 
 describe('selections reducer', () => {
+  it('Scales selections by the provided factor', () => {
+    const initialState = {
+      ...defaultState,
+      collection: [
+        {
+          id: { value: 3, errors: [] },
+          x: { value: 2, errors: [] },
+          y: { value: 4, errors: [] },
+          width: { value: 8, errors: [] },
+          height: { value: 16, errors: [] },
+          password: { value: 'pass', errors: [] },
+        },
+        {
+          id: { value: 7, errors: [] },
+          x: { value: 32, errors: ['should keep errors'] },
+          y: { value: 64, errors: [] },
+          width: { value: 128, errors: [] },
+          height: { value: 256, errors: [] },
+          password: { value: 'pass', errors: [] },
+        },
+      ],
+    };
+
+    const action = {
+      type: SCALE_SELECTIONS,
+      scale: 0.5,
+    };
+
+    const expectedState = {
+      ...defaultState,
+      collection: [
+        {
+          id: { value: 3, errors: [] },
+          x: { value: 1, errors: [] },
+          y: { value: 2, errors: [] },
+          width: { value: 4, errors: [] },
+          height: { value: 8, errors: [] },
+          password: { value: 'pass', errors: [] },
+        },
+        {
+          id: { value: 7, errors: [] },
+          x: { value: 16, errors: ['should keep errors'] },
+          y: { value: 32, errors: [] },
+          width: { value: 64, errors: [] },
+          height: { value: 128, errors: [] },
+          password: { value: 'pass', errors: [] },
+        },
+      ],
+    };
+    expect(reducer(initialState, action)).to.eql(expectedState);
+  });
+  it('Does not scale selections if scaling factor is not provided', () => {
+    const initialState = {
+      ...defaultState,
+      collection: [
+        {
+          id: { value: 3, errors: [] },
+          x: { value: 2, errors: [] },
+          y: { value: 4, errors: [] },
+          width: { value: 8, errors: [] },
+          height: { value: 16, errors: [] },
+          password: { value: 'pass', errors: [] },
+        },
+        {
+          id: { value: 7, errors: [] },
+          x: { value: 32, errors: ['should keep errors'] },
+          y: { value: 64, errors: [] },
+          width: { value: 128, errors: [] },
+          height: { value: 256, errors: [] },
+          password: { value: 'pass', errors: [] },
+        },
+      ],
+    };
+
+    const action = {
+      type: SCALE_SELECTIONS,
+    };
+
+    const expectedState = defaultState;
+    expect(reducer(initialState, action)).to.eql(expectedState);
+  });
   it('Sets activeSelectionId to the passed id if it exists in the redux store', () => {
     const initialState = {
       ...defaultState,
@@ -174,7 +256,7 @@ describe('selections reducer', () => {
           width: { value: 3, errors: [] },
           height: { value: 4, errors: [] },
           password: { value: '123', errors: [] },
-          hasErrors: false
+          hasErrors: false,
         },
         ...initialState.collection,
       ],
