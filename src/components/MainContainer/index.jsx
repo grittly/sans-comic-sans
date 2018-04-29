@@ -1,7 +1,7 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
 import CanvasContainer from '../CanvasContainer';
-import SettingsContainer from '../SettingsContainer';
+import FormsContainer from '../FormsContainer';
 
 const MainContainer = () => (
   <div className="mainContainer">
@@ -11,7 +11,7 @@ const MainContainer = () => (
     </div>
     <div className="rightContainer">
       <h1>Settings</h1>
-      <SettingsContainer />
+      <FormsContainer />
     </div>
   </div>
 );

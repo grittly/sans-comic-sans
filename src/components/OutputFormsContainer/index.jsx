@@ -13,15 +13,19 @@ class OutputFormsContainer extends Component {
 
   render() {
     return (
-      <div className="selection-forms-container">
+      <div className="output-forms-container">
         <div>
           <label htmlFor="export-selections-summary">
-            Summary
-            <textarea rows={5} id="export-selections-summary" value={this.props.summary} readOnly placeholder={'No selections presnt'}/>
+            Base64 export
+            <textarea rows={5} id="export-selections-base64" value={this.props.selectionsBase64} readOnly placeholder="No selections presnt" />
           </label>
         </div>
-        <button>Download</button>
-        <button>Start Again</button>
+        <div>
+          <label htmlFor="export-selections-base64">
+            Summary
+            <textarea rows={5} id="export-selections-summary" value={this.props.summary} readOnly placeholder="No selections presnt" />
+          </label>
+        </div>
       </div>
     );
   }
@@ -29,10 +33,12 @@ class OutputFormsContainer extends Component {
 
 OutputFormsContainer.defaultProps = {
   summary: '',
+  selectionsBase64: '',
 };
 
 OutputFormsContainer.propTypes = {
   summary: PropTypes.string,
+  selectionsBase64: PropTypes.string,
 };
 
 const mapStateToProps = state => ({
@@ -44,6 +50,17 @@ const mapStateToProps = state => ({
     `size: ${selection.width.value} x ${selection.height.value}\n` +
     '---------------\n'
   ), ''),
+  selectionsBase64: state.selections.collection.length > 0
+    // eslint-disable-next-line no-undef
+  ? btoa(JSON.stringify(
+    state.selections.collection.map(selection => ({
+      x: selection.x.value,
+      y: selection.y.value,
+      width: selection.width.value,
+      height: selection.height.value,
+      password: selection.password.value,
+    }))
+  )) : '',
 });
 
 export default connect(mapStateToProps)(OutputFormsContainer);

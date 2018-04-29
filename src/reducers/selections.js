@@ -32,19 +32,19 @@ export default function selections(state = defaultState, action) {
               ...selection,
               x: {
                 ...selection.x,
-                 value: selection.x.value * action.scale,
+                 value: Math.round(selection.x.value * action.scale),
               },
               y: {
                 ...selection.y,
-                value: selection.y.value * action.scale,
+                value: Math.round(selection.y.value * action.scale),
               },
               width: {
                 ...selection.width,
-                value: selection.width.value * action.scale,
+                value: Math.round(selection.width.value * action.scale),
               },
               height: {
                 ...selection.height,
-                value: selection.height.value * action.scale,
+                value: Math.round(selection.height.value * action.scale),
               },
             };
           }),

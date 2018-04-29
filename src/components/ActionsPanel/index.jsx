@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {
   obfuscateImage,
   unloadImage,
-  addSelection,
+  addAndValidateSelection,
   deleteSelection,
 } from '../../actions';
 
@@ -37,7 +37,7 @@ ActionsPanel.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   unloadImage : () => dispatch(unloadImage()),
-  addSelection : () => dispatch(addSelection()),
+  addSelection : () => dispatch(addAndValidateSelection()),
   deleteSelection : id => dispatch(deleteSelection(id)),
   obfuscateImage : () => dispatch(obfuscateImage()),
 });

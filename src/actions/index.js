@@ -1,3 +1,4 @@
+/* global atob, document, URL */
 import {
   LOAD_IMAGE,
   UNLOAD_IMAGE,
@@ -30,10 +31,11 @@ export function init() {
     image.src = 'http://via.placeholder.com/700x500';
     return new Promise((resolve) => image.onload = resolve)
       .then(() => dispatch(loadImage(IMAGE_STATUS.DONE, image, image.width, image.height)))
-      .then(() => dispatch(addSelection()));
+      .then(() => dispatch(addAndValidateSelection()));
   };
   /* eslint-enable */
 }
+
 
 /**
  *  Scale all selections by a factor.
@@ -69,47 +71,61 @@ export function obfuscateImage() {
   return (dispatch, getState) => {
     const srcImage = getState().srcImage.src;
     const { decrypt } = getState().settings.decrypt;
-    const selections = getState().selections.collection;
+
+    const canvasOriginal = document.createElement('canvas');
+    const ctxOriginal = canvasOriginal.getContext('2d');
+    const canvasEncrypted = document.createElement('canvas');
+    const ctxEncrypted = canvasEncrypted.getContext('2d');
+    let maxWidth = srcImage.width;
+    let maxHeight = srcImage.height;
 
     Promise.resolve()
       .then(() => dispatch({ type: IMAGE_OBFUSCATING, status: IMAGE_OBFUSCATING_STATUS.LOADING }))
       .then(() => {
         const MAX_SIZE = 300;
-        let maxWidth = srcImage.width;
-        let maxHeight = srcImage.height;
-        if(MAX_SIZE < srcImage.width || MAX_SIZE < srcImage.height){
-          [ maxWidth, maxHeight ] = srcImage.width > srcImage.height ?
-            [ MAX_SIZE, Math.round(srcImage.height * MAX_SIZE / srcImage.width) ] :
-            [ Math.round(srcImage.width * MAX_SIZE / srcImage.height), MAX_SIZE ];
+        if (MAX_SIZE < srcImage.width || MAX_SIZE < srcImage.height) {
+          [maxWidth, maxHeight] = srcImage.width > srcImage.height ?
+            [MAX_SIZE, Math.round((srcImage.height * MAX_SIZE) / srcImage.width)] :
+            [Math.round((srcImage.width * MAX_SIZE) / srcImage.height), MAX_SIZE];
         }
         const scale = maxWidth / srcImage.width;
-
-        const canvasOriginal = document.createElement('canvas');
-        const ctxOriginal = canvasOriginal.getContext('2d');
         canvasOriginal.width = maxWidth;
         canvasOriginal.height = maxHeight;
 
-        const canvasEncrypted = document.createElement('canvas');
-        const ctxEncrypted = canvasEncrypted.getContext('2d');
         canvasEncrypted.width = maxWidth;
         canvasEncrypted.height = maxHeight;
-
         ctxOriginal.drawImage(srcImage, 0, 0, maxWidth, maxHeight);
 
-        selections.forEach(({ x, y, width, height, password }) => {
+        return dispatch(scaleSelections(scale));
+      })
+      .then(() => {
+        const selections = getState().selections.collection;
+        selections.forEach(({
+          x, y, width, height, password,
+        }) => {
           ctxEncrypted.putImageData(
             obfuscateSelectedArea({
-              originalImage: ctxOriginal.getImageData(x.value * scale, y.value * scale, width.value * scale, height.value * scale),
-              encryptedImage: ctxEncrypted.getImageData(x.value * scale, y.value * scale, width.value * scale, height.value * scale),
+              originalImage: ctxOriginal.getImageData(
+                x.value,
+                y.value,
+                width.value,
+                height.value,
+              ),
+              encryptedImage: ctxEncrypted.getImageData(
+                x.value,
+                y.value,
+                width.value,
+                height.value,
+              ),
               password,
               decrypt,
             }),
-            Math.round(x.value * scale),
-            Math.round(y.value * scale),
+            Math.round(x.value),
+            Math.round(y.value),
           );
         });
         ctxOriginal.drawImage(canvasEncrypted, 0, 0, maxWidth, maxHeight);
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
           canvasOriginal.toBlob((blob) => {
             resolve(blob);
           });
@@ -118,7 +134,7 @@ export function obfuscateImage() {
       .then((blob) => {
         const img = document.createElement('img');
         img.src = URL.createObjectURL(blob);
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
           img.onload = () => resolve(img);
         });
       })
@@ -194,25 +210,42 @@ export function unloadImage() {
 }
 
 /**
- * Add a selection representing an area on the source image
+ *
  */
 export function addSelection({
+  x, y, width, height, password, imageWidth, imageHeight,
+}) {
+  return {
+    type: ADD_SELECTION,
+    x,
+    y,
+    width,
+    height,
+    imageWidth,
+    imageHeight,
+    password,
+  };
+}
+
+/**
+ * Add a selection representing an area on the source image
+ */
+export function addAndValidateSelection({
   x, y, width, height, password,
 } = {}) {
   return (dispatch, getState) => {
     const imageWidth = getState().srcImage.width;
     const imageHeight = getState().srcImage.height;
     return Promise.resolve()
-      .then(() => dispatch({
-        type: ADD_SELECTION,
+      .then(() => dispatch(addSelection({
         x,
         y,
         width,
         height,
-        password,
         imageWidth,
         imageHeight,
-      }))
+        password,
+      })))
       .then(() => dispatch(validateSelections()));
   };
 }
@@ -240,8 +273,35 @@ export function modifySelection({
  * Delete a selection
  */
 export function deleteSelection(id) {
-  return { 
+  return {
     type: DELETE_SELECTION,
     id,
+  };
+}
+
+/**
+ *  Import selections from base64 string
+ */
+export function importSelections(selectionsBase64) {
+  return (dispatch, getState) => {
+    const imageWidth = getState().srcImage.width;
+    const imageHeight = getState().srcImage.height;
+    try {
+      const parsedSelections = JSON.parse(atob(selectionsBase64));
+      if (Array.isArray(parsedSelections)) {
+        Promise.all(parsedSelections.map(selection => dispatch(addSelection({
+          x: selection.x,
+          y: selection.y,
+          width: selection.width,
+          height: selection.height,
+          password: selection.password,
+          imageWidth,
+          imageHeight,
+        }))))
+          .then(() => dispatch(validateSelections()));
+      }
+    } catch (e) {
+      // TODO: dispatch error
+    }
   };
 }
