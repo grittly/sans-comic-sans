@@ -13,6 +13,9 @@ const state = {
     hasErrors: false,
     validated: false,
   },
+  settings: {
+    decrypt: false,
+  },
 };
 
 export default state;

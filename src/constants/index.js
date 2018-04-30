@@ -37,3 +37,6 @@ export const IMAGE_STATUS = {
   DONE: 'DONE',
 };
 
+
+// Constants related to settings
+export const CHANGE_OBFUSCATION_DIRECTION = 'CHANGE_OBFUSCATION_DIRECTION';

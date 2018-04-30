@@ -1,5 +1,4 @@
-import {
-} from '../constants';
+import { CHANGE_OBFUSCATION_DIRECTION } from '../constants';
 
 const defaultState = {
   decrypt: false,
@@ -10,6 +9,11 @@ const defaultState = {
  */
 export default function settings(state = defaultState, action) {
   switch (action.type) {
+    case CHANGE_OBFUSCATION_DIRECTION:
+      return {
+        ...state,
+        decrypt: action.decrypt === true,
+      };
     default:
       return state;
   }

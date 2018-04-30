@@ -14,6 +14,7 @@ import {
   UNLOAD_OBFUSCATED_IMAGE,
   SCALE_SELECTIONS,
   CLEAR_SELECTIONS,
+  CHANGE_OBFUSCATION_DIRECTION,
 } from '../constants';
 import {
   runSelectionValidator,
@@ -37,6 +38,16 @@ export function init() {
   /* eslint-enable */
 }
 
+
+/**
+ *  Set decrypt to false or true in settings reducer
+ */
+export function changeObfuscationDirection(decrypt = false) {
+  return {
+    type: CHANGE_OBFUSCATION_DIRECTION,
+    decrypt,
+  };
+}
 
 /**
  *  Scale all selections by a factor.
@@ -71,7 +82,7 @@ export function loadImage(status, src, width, height) {
 export function obfuscateImage() {
   return (dispatch, getState) => {
     const srcImage = getState().srcImage.src;
-    const { decrypt } = getState().settings.decrypt;
+    const { decrypt } = getState().settings;
 
     const canvasOriginal = document.createElement('canvas');
     const ctxOriginal = canvasOriginal.getContext('2d');
@@ -83,7 +94,7 @@ export function obfuscateImage() {
     Promise.resolve()
       .then(() => dispatch({ type: IMAGE_OBFUSCATING, status: IMAGE_OBFUSCATING_STATUS.LOADING }))
       .then(() => {
-        const MAX_SIZE = 300;
+        const MAX_SIZE = 3000;
         if (MAX_SIZE < srcImage.width || MAX_SIZE < srcImage.height) {
           [maxWidth, maxHeight] = srcImage.width > srcImage.height ?
             [MAX_SIZE, Math.round((srcImage.height * MAX_SIZE) / srcImage.width)] :
@@ -100,6 +111,7 @@ export function obfuscateImage() {
         return dispatch(scaleSelections(scale));
       })
       .then(() => {
+        console.log("Decrypt is", decrypt)
         const selections = getState().selections.collection;
         selections.forEach(({
           x, y, width, height, password,
@@ -300,7 +312,7 @@ export function importSelections(selectionsBase64, _customBase64Conversion = ato
     try {
       const parsedSelections = JSON.parse(_customBase64Conversion(selectionsBase64));
       if (Array.isArray(parsedSelections)) {
-       return Promise.all(parsedSelections.map(selection => dispatch(addSelection({
+        return Promise.all(parsedSelections.map(selection => dispatch(addSelection({
           x: selection.x,
           y: selection.y,
           width: selection.width,

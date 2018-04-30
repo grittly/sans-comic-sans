@@ -40,17 +40,19 @@ export function mergeNoiseAndImageData(imageData, encryptedData, noiseData, decr
   const newData = new Uint8ClampedArray(imageData.data);
   const modulo = 256;
   const direction = decrypt ? -1 : 1;
+  // const decryption = -1;
   for (let i = 0; i < newData.length; i += 4) {
     // Red channel
     newData[i] = (
-      (encryptedData.data[i + 3] ? encryptedData.data[i] : newData[i])
+      (decrypt * 256) + (encryptedData.data[i + 3] ? encryptedData.data[i] : newData[i])
       + (noiseData[i] * direction)) % modulo;
     // Green channel
     newData[i + 1] = (
-      (encryptedData.data[i + 3] ? encryptedData.data[i + 1] : newData[i + 1])
+      (decrypt * 256) + (encryptedData.data[i + 3] ? encryptedData.data[i + 1] : newData[i + 1])
       + (noiseData[i + 1] * direction)) % modulo;
     // Blue channel
-    newData[i + 2] = ((encryptedData.data[i + 3] ? encryptedData.data[i + 2] : newData[i + 2])
+    newData[i + 2] = (
+      (decrypt * 256) + (encryptedData.data[i + 3] ? encryptedData.data[i + 2] : newData[i + 2])
       + (noiseData[i + 2] * direction)) % modulo;
     // Alpha channel
     newData[i + 3] = 255;

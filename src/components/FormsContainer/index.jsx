@@ -4,16 +4,17 @@ import PropTypes from 'prop-types';
 import {
   obfuscateImage,
   importSelections,
+  changeObfuscationDirection,
 } from '../../actions';
 import SelectionFormsContainer from '../SelectionFormsContainer';
 import OutputFormsContainer from '../OutputFormsContainer';
 import ImportSelectionsForm from '../ImportSelectionsForm';
-
+import ObfuscationDirectionForm from '../ObfuscationDirectionForm';
 
 /**
  * Container for CanvasVisible, CanvasPlaceholder and Header
  */
-class SettingsContainer extends Component {
+class FormsContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -27,7 +28,7 @@ class SettingsContainer extends Component {
 
   render() {
     return (
-      <div className="settings-container">
+      <div className="forms-container">
         {
           this.props.isObfuscated ?
             <div>
@@ -42,6 +43,7 @@ class SettingsContainer extends Component {
             <form onSubmit={this.handleSubmit}>
               Settings Container
               <SelectionFormsContainer />
+              <ObfuscationDirectionForm decrypt={this.props.decrypt} changeDirection={this.props.changeObfuscationDirection} />
               <ImportSelectionsForm importSelections={this.props.importSelections} />
               <button type="submit" disabled={!this.props.readyToObfuscate}>Obfuscate</button>
             </form>
@@ -51,31 +53,35 @@ class SettingsContainer extends Component {
   }
 }
 
-SettingsContainer.defaultProps = {
+FormsContainer.defaultProps = {
   obfuscatedImageSrc: null,
 };
 
-SettingsContainer.propTypes = {
+FormsContainer.propTypes = {
   readyToObfuscate: PropTypes.bool.isRequired,
   isObfuscated: PropTypes.bool.isRequired,
   obfuscateImage: PropTypes.func.isRequired,
   // eslint-disable-next-line no-undef
   obfuscatedImageSrc: PropTypes.instanceOf(HTMLImageElement),
   importSelections: PropTypes.func.isRequired,
+  decrypt: PropTypes.bool.isRequired,
+  changeObfuscationDirection: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   readyToObfuscate: state.selections.validated && !state.selections.hasErrors,
   isObfuscated: state.obfuscatedImage.src !== null,
   obfuscatedImageSrc: state.obfuscatedImage.src,
+  decrypt: state.settings.decrypt,
 });
 
 const mapDispatchToProps = dispatch => ({
   obfuscateImage: () => dispatch(obfuscateImage()),
   importSelections: selectionsBase64 => dispatch(importSelections(selectionsBase64)),
+  changeObfuscationDirection: decrypt => dispatch(changeObfuscationDirection(decrypt)),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(SettingsContainer);
+)(FormsContainer);
