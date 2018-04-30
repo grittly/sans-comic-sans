@@ -7,6 +7,7 @@ import {
   DELETE_SELECTION,
   SET_ACTIVE_SELECTION,
   SCALE_SELECTIONS,
+  CLEAR_SELECTIONS,
 } from '../../src/constants';
 
 import state from '../../src/store/defaultState';
@@ -14,6 +15,39 @@ import state from '../../src/store/defaultState';
 const defaultState = state.selections;
 
 describe('selections reducer', () => {
+  it('Clears all selections and does appropriate clean-up', () => {
+    const initialState = {
+      ...defaultState,
+      collection: [
+        {
+          id: { value: 3, errors: [] },
+          x: { value: 2, errors: [] },
+          y: { value: 4, errors: [] },
+          width: { value: 8, errors: [] },
+          height: { value: 16, errors: [] },
+          password: { value: 'pass', errors: [] },
+        },
+        {
+          id: { value: 7, errors: [] },
+          x: { value: 32, errors: ['should keep errors'] },
+          y: { value: 64, errors: [] },
+          width: { value: 128, errors: [] },
+          height: { value: 256, errors: [] },
+          password: { value: 'pass', errors: [] },
+        },
+      ],
+      activeSelectionId: 3,
+    };
+    const action = {
+      type: CLEAR_SELECTIONS,
+    };
+    const expectedState = {
+      ...defaultState,
+      collection: [],
+      activeSelectionId: null,
+    };
+    expect(reducer(initialState, action)).to.eql(expectedState);
+  });
   it('Scales selections by the provided factor', () => {
     const initialState = {
       ...defaultState,

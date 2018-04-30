@@ -5,6 +5,7 @@ import {
   SET_ACTIVE_SELECTION,
   VALIDATE_SELECTIONS,
   SCALE_SELECTIONS,
+  CLEAR_SELECTIONS,
 } from '../constants';
 
 const defaultState = {
@@ -23,6 +24,12 @@ export default function selections(state = defaultState, action) {
   ), 0);
 
   switch (action.type) {
+    case CLEAR_SELECTIONS:
+      return {
+        ...state,
+        collection: [],
+        activeSelectionId: null,
+      };
     case SCALE_SELECTIONS:
       if (action.scale) {
         return {

@@ -13,6 +13,7 @@ import {
   IMAGE_OBFUSCATING_STATUS,
   UNLOAD_OBFUSCATED_IMAGE,
   SCALE_SELECTIONS,
+  CLEAR_SELECTIONS,
 } from '../constants';
 import {
   runSelectionValidator,
@@ -203,10 +204,17 @@ export function resizeCanvas(containerWidth = 0) {
 }
 
 /**
- * Unload image from redux store
+ *  Unload image from redux store
  */
 export function unloadImage() {
   return { type: UNLOAD_IMAGE };
+}
+
+/**
+ *  Clear all selections
+ */
+export function clearSelections() {
+  return { type: CLEAR_SELECTIONS };
 }
 
 /**
@@ -281,15 +289,18 @@ export function deleteSelection(id) {
 
 /**
  *  Import selections from base64 string
+ *  @param {string} selectionsBase64 - base64 string of a json array with selection coordinates
+ *  @param {Function} _customBase64Conversion - custom function for converting base64 to ascii.
+ *  This is mostly for testing
  */
-export function importSelections(selectionsBase64) {
+export function importSelections(selectionsBase64, _customBase64Conversion = atob) {
   return (dispatch, getState) => {
     const imageWidth = getState().srcImage.width;
     const imageHeight = getState().srcImage.height;
     try {
-      const parsedSelections = JSON.parse(atob(selectionsBase64));
+      const parsedSelections = JSON.parse(_customBase64Conversion(selectionsBase64));
       if (Array.isArray(parsedSelections)) {
-        Promise.all(parsedSelections.map(selection => dispatch(addSelection({
+       return Promise.all(parsedSelections.map(selection => dispatch(addSelection({
           x: selection.x,
           y: selection.y,
           width: selection.width,
