@@ -111,7 +111,6 @@ export function obfuscateImage() {
         return dispatch(scaleSelections(scale));
       })
       .then(() => {
-        console.log("Decrypt is", decrypt)
         const selections = getState().selections.collection;
         selections.forEach(({
           x, y, width, height, password,
@@ -216,17 +215,22 @@ export function resizeCanvas(containerWidth = 0) {
 }
 
 /**
- *  Unload image from redux store
- */
-export function unloadImage() {
-  return { type: UNLOAD_IMAGE };
-}
-
-/**
  *  Clear all selections
  */
 export function clearSelections() {
   return { type: CLEAR_SELECTIONS };
+}
+
+/**
+ *  Unload image from redux store
+ */
+export function unloadImage() {
+  return (dispatch) => {
+    return Promise.resolve()
+      .then(() => dispatch(setActiveSelection()))
+      .then(() => dispatch(clearSelections()))
+      .then(() => dispatch({ type: UNLOAD_IMAGE }));
+  };
 }
 
 /**

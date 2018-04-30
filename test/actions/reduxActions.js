@@ -1,4 +1,4 @@
-/* globals describe it */
+/* globals describe it beforeEach */
 import { expect } from 'chai';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -10,7 +10,11 @@ import {
 import {
   ADD_SELECTION,
   VALIDATE_SELECTIONS,
+  UNLOAD_IMAGE,
+  CLEAR_SELECTIONS,
+  SET_ACTIVE_SELECTION,
 } from '../../src/constants';
+
 const mockStore = configureStore([thunk]);
 let store;
 
@@ -41,10 +45,11 @@ describe('Redux actions', () => {
         width: 20,
         height: 21,
         password: 'pass',
-      }],
-    )).toString('base64');
-    const action = importSelections(selectionsBase64,
-      base64String => Buffer.from(base64String, 'base64').toString());
+      }])).toString('base64');
+    const action = importSelections(
+      selectionsBase64,
+      base64String => Buffer.from(base64String, 'base64').toString(),
+    );
     const expectedActions = [
       {
         type: ADD_SELECTION,
@@ -65,15 +70,24 @@ describe('Redux actions', () => {
         imageWidth: 200,
         imageHeight: 200,
         password: 'pass',
-      }
+      },
     ];
     store.dispatch(action)
       .then(() => {
         const result = store.getActions();
-        expect(result.slice(0,2)).to.eql(expectedActions);
+        expect(result.slice(0, 2)).to.eql(expectedActions);
         expect(result.length).to.equal(3);
         expect(result[2].type).to.equal(VALIDATE_SELECTIONS);
-      })
+      });
   });
-  it('unloadImage does the proper clean-up on the rest of redux state');
+  it('unloadImage does the proper clean-up on the rest of redux state', () => {
+    const action = unloadImage();
+    const expectedActions = [
+      { type: SET_ACTIVE_SELECTION, id: undefined },
+      { type: CLEAR_SELECTIONS },
+      { type: UNLOAD_IMAGE },
+    ];
+    store.dispatch(action)
+      .then(() => expect(store.getActions()).to.eql(expectedActions));
+  });
 });
