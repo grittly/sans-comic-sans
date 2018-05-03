@@ -1,0 +1,34 @@
+// Vertical rhythm
+$body-line-height: 1.45;
+$baseline-margin: $body-line-height * 1em;
+
+// Media query breakpoints
+$mobile-breakpoint: 760;
+$desktop-breakpoint: 960;
+$widescreen-breakpoint: 1200;
+
+// Colors
+$accent-color: #FF3B38;
+$base-color: #EFEFEF;
+$light-color: #F9F9F9;
+$dark-color: #333333;
+$white-color: #FFFFFF;
+$black-color: #000000;
+
+// Derivative colors
+$text-color: $dark-color;
+
+// Hirizontal rhythm
+$section-gutter: 2em;
+$gap: $section-gutter/2;
+
+// Z-index layers
+$layer-one: 1;
+$layer-two: 2;
+$layer-three: 3;
+
+
+
+
+
+

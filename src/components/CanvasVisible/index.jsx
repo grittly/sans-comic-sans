@@ -34,7 +34,11 @@ class CanvasVisible extends Component {
               width={this.props.width}
               height={this.props.height}
             />
-            <SelectionCanvasContainer />
+            {
+              this.props.displaySelections ?
+                <SelectionCanvasContainer /> :
+                null
+            }
           </Layer>
         </Stage>
       </div>
@@ -47,6 +51,7 @@ CanvasVisible.propTypes = {
   src: PropTypes.instanceOf(HTMLImageElement).isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
+  displaySelections: PropTypes.bool.isRequired,
 };
 
 

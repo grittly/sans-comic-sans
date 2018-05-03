@@ -61,6 +61,7 @@ class CanvasContainer extends Component {
               src={this.props.imageSrc}
               width={this.props.containerWidth}
               height={this.props.containerHeight}
+              displaySelections={!this.props.isObfuscated}
             /> :
             <CanvasPlaceholder
               handleImageUpload={this.handleImageUpload}
@@ -86,6 +87,7 @@ CanvasContainer.propTypes = {
   unloadImage: PropTypes.func.isRequired,
   loadImage: PropTypes.func.isRequired,
   resizeCanvas: PropTypes.func.isRequired,
+  isObfuscated: PropTypes.bool.isRequired,
 };
 
 CanvasContainer.defaultProps = {
@@ -100,6 +102,7 @@ const mapStateToProps = state => ({
   containerWidth: state.srcImage.containerWidth,
   containerHeight: state.srcImage.containerWidth * state.srcImage.aspectRatio,
   imageStatus: state.srcImage.status,
+  isObfuscated: state.obfuscatedImage.src !== null,
 });
 
 const mapDispatchToProps = dispatch => ({
