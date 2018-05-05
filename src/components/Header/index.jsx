@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 /**
- * Container for CanvasVisible, CanvasPlaceholder and Header
+ * Header component
  */
 class Header extends Component {
   constructor(props) {

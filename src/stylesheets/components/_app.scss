@@ -11,6 +11,8 @@
   width: 100%;
   max-width: $desktop-breakpoint * 1px;
   justify-content: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
 }
 
 .leftContainer {
@@ -19,6 +21,7 @@
   justify-content: flex-end;
   align-items: center;
   max-width: 50%;
+  min-height: 100vh;
 }
 
 .canvasContainer {
@@ -41,6 +44,7 @@
   flex: 0 0 50%;
   justify-content: flex-start;
   align-items: center;
+  min-height: 100vh;
 }
 
 .formsContainer{
@@ -54,16 +58,28 @@
   flex: 0 0 10%;
 }
 
+.footer {
+  flex: 0 0 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
 @include mobile {
   .mainContainer {
     flex-direction: column;
     justify-content: flex-start;
+    flex-wrap: nowrap;
+    align-items: stretch;
+  }
+  .footer{
+    flex: 1;
   }
   .leftContainer {
     flex: 0 0 auto;
     max-width: 100%;
     align-items: flex-start;
-
+    min-height: auto;
   }
 
   .canvasContainer {
@@ -73,6 +89,7 @@
   }
   .rightContainer {
     flex: 0 0 auto;
+    min-height: auto;
   }
   .formsContainer {
     flex: 1;
