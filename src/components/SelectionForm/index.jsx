@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 
 const SelectionForm = props => (
   <div className="selection-form">
-    Selection Form
     <div className="input-section">
       <div className="id-area">
         <div className="input-label-wrapper">

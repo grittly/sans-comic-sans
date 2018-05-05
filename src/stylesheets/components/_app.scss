@@ -1,0 +1,81 @@
+#app {
+  background-color: $base-color;
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.mainContainer {
+  display: flex;
+  width: 100%;
+  max-width: $desktop-breakpoint * 1px;
+  justify-content: center;
+}
+
+.leftContainer {
+  display: flex;
+  flex: 0 0 50%;
+  justify-content: flex-end;
+  align-items: center;
+  max-width: 50%;
+}
+
+.canvasContainer {
+  margin: $gap;
+  flex: 1;
+  .canvasPlaceholder {
+    width: $mobile-breakpoint/2 * 1px;
+    border: 1px solid black;
+      box-sizing: content-box;
+    &:after {
+      content: "";
+      padding-bottom: 100%;
+      width:0px;
+    }
+  }
+}
+
+.rightContainer {
+  display: flex;
+  flex: 0 0 50%;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.formsContainer{
+  min-width: $mobile-breakpoint/2 * 1px;
+  padding: $gap;
+  flex: 1;
+  min-height: 50%;
+}
+
+.header {
+  flex: 0 0 10%;
+}
+
+@include mobile {
+  .mainContainer {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .leftContainer {
+    flex: 0 0 auto;
+    max-width: 100%;
+    align-items: flex-start;
+
+  }
+
+  .canvasContainer {
+    .canvasPlaceholder {
+      width: 100%;
+    }
+  }
+  .rightContainer {
+    flex: 0 0 auto;
+  }
+  .formsContainer {
+    flex: 1;
+    min-width: 0;
+  }
+}

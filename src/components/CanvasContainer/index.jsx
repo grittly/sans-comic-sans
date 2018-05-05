@@ -52,8 +52,7 @@ class CanvasContainer extends Component {
 
   render() {
     return (
-      <div className="canvas-container" ref={(elem) => { this.canvasContainer = elem; }}>
-        Header, Canvas and Canvas placeholder
+      <div className="canvasContainer" ref={(elem) => { this.canvasContainer = elem; }}>
         <Header />
         {
           this.props.imageStatus === IMAGE_STATUS.DONE ?

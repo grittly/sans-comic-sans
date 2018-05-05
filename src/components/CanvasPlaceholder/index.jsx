@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
  * A placeholder for when there is no image loaded into CanvasVisible
  */
 const CanvasPlaceholder = props => (
-  <div className="canvas-placeholder">
+  <div className="canvasPlaceholder">
     <form>
       <label htmlFor="image-browser">
         Upload Image

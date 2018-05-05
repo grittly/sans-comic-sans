@@ -28,7 +28,7 @@ class FormsContainer extends Component {
 
   render() {
     return (
-      <div className="forms-container">
+      <div className="formsContainer">
         {
           this.props.isObfuscated ?
             <div>
@@ -41,7 +41,6 @@ class FormsContainer extends Component {
               </form>
             </div> :
             <form onSubmit={this.handleSubmit}>
-              Settings Container
               <SelectionFormsContainer />
               <ObfuscationDirectionForm decrypt={this.props.decrypt} changeDirection={this.props.changeObfuscationDirection} />
               <ImportSelectionsForm importSelections={this.props.importSelections} />
