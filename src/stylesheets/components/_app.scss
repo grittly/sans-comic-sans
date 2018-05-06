@@ -13,6 +13,7 @@
   justify-content: center;
   flex-wrap: wrap;
   align-items: flex-start;
+  min-width: $mobile-breakpoint * 1px;
 }
 
 .leftContainer {
@@ -71,6 +72,7 @@
     justify-content: flex-start;
     flex-wrap: nowrap;
     align-items: stretch;
+    min-width: auto;
   }
   .footer{
     flex: 1;
@@ -94,5 +96,12 @@
   .formsContainer {
     flex: 1;
     min-width: 0;
+  }
+}
+
+@include desktop {
+  .mainContainer {
+    max-width: $widescreen-breakpoint * 1px;
+    max-width: 190vh;
   }
 }

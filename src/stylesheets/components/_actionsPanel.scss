@@ -1,0 +1,7 @@
+.actions-panel {
+  z-index: $layer-two;
+  .fixed {
+    position: fixed;
+    bottom: 0;
+  }
+}

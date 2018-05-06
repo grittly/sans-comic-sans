@@ -9,3 +9,15 @@
     @content;
   }
 }
+
+@mixin widescreen() {
+  @media (min-width: $widescreen-breakpoint * 1px){
+    @content;
+  }
+}
+
+@mixin fullhd() {
+  @media (min-width: $fullhd-breakpoint * 1px){
+    @content;
+  }
+}

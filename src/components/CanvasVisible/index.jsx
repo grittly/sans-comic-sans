@@ -1,3 +1,4 @@
+/* globals window */
 import React, { Component } from 'react';
 import { Stage, Layer, Image } from 'react-konva';
 import PropTypes from 'prop-types';
@@ -10,6 +11,12 @@ class CanvasVisible extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  componentDidMount() {
+    // Trigger a scroll event so that ActionsPanel fixed
+    // poisitioning is triggered on image load
+    window.scrollTo(window.scrollX, window.scrollY - 1);
   }
 
   render() {

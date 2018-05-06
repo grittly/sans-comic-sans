@@ -1,6 +1,8 @@
-import React from 'react';
+/* globals window */
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import classnames from 'classnames';
 import {
   obfuscateImage,
   unloadImage,
@@ -9,23 +11,76 @@ import {
 } from '../../actions';
 
 
-const ActionsPanel = props => (
-  <div className="actions-panel">
-    <button disabled={!props.imageLoaded} onClick={() => props.addSelection()} >New Selection</button>
-    <button disabled={!(props.imageLoaded && props.currentSelectionId)} onClick={() => props.deleteSelection(props.currentSelectionId)} >Delete Selection</button>
-    <button disabled={!props.imageLoaded} onClick={() => props.unloadImage()} >Close Image</button>
-    <button disabled={!props.imageLoaded} onClick={() => props.obfuscateImage()} >Obfuscate</button>
-  </div>
-);
+class ActionsPanel extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fixed: false,
+    };
+    this.handleScrolling = this.handleScrolling.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScrolling);
+  }
+
+  handleScrolling() {
+    if (!this.state.fixed && this.actionsPanel.offsetTop > (window.innerHeight + window.scrollY)) {
+      this.setState({
+        fixed: true,
+      });
+    } else if (
+      this.state.fixed &&
+      this.actionsPanel.offsetTop <= (window.innerHeight + window.scrollY)
+    ) {
+      this.setState({
+        fixed: false,
+      });
+    }
+  }
+
+  render() {
+    return (
+      <div className="actions-panel" ref={(elem) => { this.actionsPanel = elem; }}>
+        <div className={classnames({ fixed: this.state.fixed })}>
+          <button
+            disabled={!this.props.imageLoaded}
+            onClick={() => this.props.addSelection()}
+          >
+            New Selection
+          </button>
+          <button
+            disabled={!(this.props.imageLoaded && this.props.currentSelectionId)}
+            onClick={() => this.props.deleteSelection(this.props.currentSelectionId)}
+          >
+            Delete Selection
+          </button>
+          <button
+            disabled={!this.props.imageLoaded}
+            onClick={() => this.props.unloadImage()}
+          >
+            Close Image
+          </button>
+          <button
+            disabled={!this.props.imageLoaded}
+            onClick={() => this.props.obfuscateImage()}
+          >
+            Obfuscate
+          </button>
+        </div>
+      </div>
+    );
+  }
+}
 
 const mapStateToProps = state => ({
   currentSelectionId: state.selections.activeSelectionId,
-  imageLoaded: state.srcImage.src ? true : false,
+  imageLoaded: state.srcImage.src !== null,
 });
 
 ActionsPanel.defaultProps = {
   currentSelectionId: null,
-}
+};
 
 ActionsPanel.propTypes = {
   unloadImage: PropTypes.func.isRequired,
@@ -33,13 +88,14 @@ ActionsPanel.propTypes = {
   deleteSelection: PropTypes.func.isRequired,
   obfuscateImage: PropTypes.func.isRequired,
   currentSelectionId: PropTypes.number,
+  imageLoaded: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
-  unloadImage : () => dispatch(unloadImage()),
-  addSelection : () => dispatch(addAndValidateSelection()),
-  deleteSelection : id => dispatch(deleteSelection(id)),
-  obfuscateImage : () => dispatch(obfuscateImage()),
+  unloadImage: () => dispatch(unloadImage()),
+  addSelection: () => dispatch(addAndValidateSelection()),
+  deleteSelection: id => dispatch(deleteSelection(id)),
+  obfuscateImage: () => dispatch(obfuscateImage()),
 });
 
 export default connect(

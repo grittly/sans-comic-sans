@@ -29,6 +29,7 @@ class CanvasContainer extends Component {
     this.handleCanvasResize();
   }
 
+
   handleCanvasResize() {
     this.props.resizeCanvas(this.canvasContainer.offsetWidth);
   }
