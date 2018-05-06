@@ -5,3 +5,17 @@
     bottom: 0;
   }
 }
+
+
+@include mobile {
+  .actions-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    width: 100% !important;
+    .fixed{
+      position: relative;
+    }
+  }
+}

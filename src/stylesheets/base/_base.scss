@@ -10,3 +10,13 @@ html {
   box-sizing: inherit;
 }
 
+button, input[type="submit"] {
+  border: none;
+  background-color: $accent-color;
+  color: $white-color;
+
+}
+
+input, textarea {
+  width: 100%;
+}

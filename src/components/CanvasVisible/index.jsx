@@ -17,6 +17,7 @@ class CanvasVisible extends Component {
     // Trigger a scroll event so that ActionsPanel fixed
     // poisitioning is triggered on image load
     window.scrollTo(window.scrollX, window.scrollY - 1);
+    window.scrollTo(window.scrollX, window.scrollY + 1);
   }
 
   render() {
@@ -60,6 +61,5 @@ CanvasVisible.propTypes = {
   height: PropTypes.number.isRequired,
   displaySelections: PropTypes.bool.isRequired,
 };
-
 
 export default CanvasVisible;

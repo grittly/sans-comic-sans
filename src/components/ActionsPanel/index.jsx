@@ -42,7 +42,10 @@ class ActionsPanel extends Component {
   render() {
     return (
       <div className="actions-panel" ref={(elem) => { this.actionsPanel = elem; }}>
-        <div className={classnames({ fixed: this.state.fixed })}>
+        <div
+          style={this.state.fixed ? { width: this.props.width } : {}}
+          className={classnames({ fixed: this.state.fixed })}
+        >
           <button
             disabled={!this.props.imageLoaded}
             onClick={() => this.props.addSelection()}
@@ -89,6 +92,7 @@ ActionsPanel.propTypes = {
   obfuscateImage: PropTypes.func.isRequired,
   currentSelectionId: PropTypes.number,
   imageLoaded: PropTypes.bool.isRequired,
+  width: PropTypes.number.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({

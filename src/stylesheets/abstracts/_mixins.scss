@@ -1,3 +1,4 @@
+// Wrapper mixins for media query breakpoints
 @mixin mobile() {
   @media (max-width: $mobile-breakpoint * 1px){
     @content;
@@ -20,4 +21,10 @@
   @media (min-width: $fullhd-breakpoint * 1px){
     @content;
   }
+}
+
+// Mixins for transitions
+@mixin transition-animation($property) {
+  transition: $property 0.3s;
+  transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
 }

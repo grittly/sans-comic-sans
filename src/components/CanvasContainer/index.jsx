@@ -68,7 +68,7 @@ class CanvasContainer extends Component {
               loading={this.props.imageStatus === IMAGE_STATUS.LOADING}
             />
         }
-        <ActionsPanel />
+        <ActionsPanel width={this.props.containerWidth} />
       </div>
     );
   }

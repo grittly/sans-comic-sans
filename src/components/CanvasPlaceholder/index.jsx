@@ -6,16 +6,19 @@ import PropTypes from 'prop-types';
  */
 const CanvasPlaceholder = props => (
   <div className="canvasPlaceholder">
-    <form>
-      <label htmlFor="image-browser">
-        Upload Image
-        <input id="image-browser" type="file" accept="image/*" onChange={props.handleImageUpload} />
-        { props.loading ?
-            'Loading' :
-            null
-        }
-      </label>
-    </form>
+    <div className="uploadArea">
+      <form>
+        <label htmlFor="image-browser">
+          Upload Image
+          <input id="image-browser" type="file" accept="image/*" onChange={props.handleImageUpload} />
+          { props.loading ?
+              'Loading' :
+              null
+          }
+        </label>
+      </form>
+      <button>Load sample image</button>
+    </div>
   </div>
 );
 

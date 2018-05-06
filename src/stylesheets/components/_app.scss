@@ -14,6 +14,7 @@
   flex-wrap: wrap;
   align-items: flex-start;
   min-width: $mobile-breakpoint * 1px;
+  overflow: hidden;
 }
 
 .leftContainer {
@@ -28,15 +29,25 @@
 .canvasContainer {
   margin: $gap;
   flex: 1;
-  .canvasPlaceholder {
-    width: $mobile-breakpoint/2 * 1px;
-    border: 1px solid black;
-      box-sizing: content-box;
-    &:after {
-      content: "";
-      padding-bottom: 100%;
-      width:0px;
-    }
+}
+.canvasPlaceholder {
+  // width: $mobile-breakpoint/2 * 1px;
+  width: 100%;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .uploadArea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  &:after {
+    display:block;
+    content: "";
+    padding-bottom: 70%;
+    width:0px;
   }
 }
 
@@ -46,6 +57,13 @@
   justify-content: flex-start;
   align-items: center;
   min-height: 100vh;
+  overflow: hidden;
+  flex-wrap: wrap;
+  align-content: space-between;
+  @include transition-animation(flex-basis);
+  &.collapsed {
+    flex-basis: 0%;
+  }
 }
 
 .formsContainer{
@@ -62,7 +80,7 @@
 .footer {
   flex: 0 0 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: flex-end;
 }
 
@@ -85,9 +103,10 @@
   }
 
   .canvasContainer {
-    .canvasPlaceholder {
-      width: 100%;
-    }
+  }
+
+  .canvasPlaceholder {
+    width: 100%;
   }
   .rightContainer {
     flex: 0 0 auto;
