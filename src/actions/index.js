@@ -230,6 +230,7 @@ export function unloadImage() {
     return Promise.resolve()
       .then(() => dispatch(setActiveSelection()))
       .then(() => dispatch(clearSelections()))
+      .then(() => dispatch(unloadObfuscatedImage()))
       .then(() => dispatch({ type: UNLOAD_IMAGE }));
   };
 }

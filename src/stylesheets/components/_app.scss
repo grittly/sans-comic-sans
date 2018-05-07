@@ -33,10 +33,10 @@
 .canvasPlaceholder {
   // width: $mobile-breakpoint/2 * 1px;
   width: 100%;
-  border: 1px solid black;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid $border-color;
   .uploadArea {
     display: flex;
     flex-direction: column;

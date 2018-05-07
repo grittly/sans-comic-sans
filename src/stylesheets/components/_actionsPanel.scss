@@ -1,20 +1,52 @@
-.actions-panel {
+.actions-panel-container{
   z-index: $layer-two;
-  .fixed {
+}
+
+.actions-panel {
+  display:flex;
+  width: 100%;
+  justify-content: space-around;
+  height: 3em;
+  overflow: hidden;
+  fill: $icon-color-dark;
+  &.fixed {
+    background-color: $accent-color;
     position: fixed;
     bottom: 0;
+    fill: $icon-color-light;
+  }
+}
+
+.icon-hoc {
+  width: 1.6em;
+  display:flex;
+  position: relative;
+  top: 0;
+  @include transition-animation(top);
+  &.hidden{
+    top: -100%;
+  }
+  svg {
+    width: 100%;
   }
 }
 
 
 @include mobile {
-  .actions-panel {
+  .actions-panel-container {
     position: fixed;
     bottom: 0;
     left: 0;
     display: flex;
     width: 100% !important;
-    .fixed{
+  }
+  .icon-hoc {
+    fill: $icon-color-light;
+  }
+  .actions-panel {
+    background-color: $accent-color;
+    color: $light-color;
+    &.fixed {
       position: relative;
     }
   }

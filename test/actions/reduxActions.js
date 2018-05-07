@@ -13,6 +13,7 @@ import {
   UNLOAD_IMAGE,
   CLEAR_SELECTIONS,
   SET_ACTIVE_SELECTION,
+  UNLOAD_OBFUSCATED_IMAGE,
 } from '../../src/constants';
 
 const mockStore = configureStore([thunk]);
@@ -85,6 +86,7 @@ describe('Redux actions', () => {
     const expectedActions = [
       { type: SET_ACTIVE_SELECTION, id: undefined },
       { type: CLEAR_SELECTIONS },
+      { type: UNLOAD_OBFUSCATED_IMAGE },
       { type: UNLOAD_IMAGE },
     ];
     store.dispatch(action)

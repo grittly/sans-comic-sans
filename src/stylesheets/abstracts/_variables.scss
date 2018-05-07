@@ -16,8 +16,12 @@ $dark-color: #333333;
 $white-color: #FFFFFF;
 $black-color: #000000;
 
+
 // Derivative colors
 $text-color: $dark-color;
+$border-color: lighten($dark-color, 30);
+$icon-color-dark: lighten($dark-color, 10);
+$icon-color-light: $light-color;
 
 // Hirizontal rhythm
 $section-gutter: 2em;

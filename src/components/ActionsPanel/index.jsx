@@ -9,6 +9,14 @@ import {
   addAndValidateSelection,
   deleteSelection,
 } from '../../actions';
+import {
+  ClearIcon,
+  NewSelectionIcon,
+  DeleteSelectionIcon,
+  ScrambleIcon,
+  HelpIcon,
+  DownloadIcon,
+} from '../Icons';
 
 
 class ActionsPanel extends Component {
@@ -41,44 +49,74 @@ class ActionsPanel extends Component {
 
   render() {
     return (
-      <div className="actions-panel" ref={(elem) => { this.actionsPanel = elem; }}>
+      <div className="actions-panel-container" ref={(elem) => { this.actionsPanel = elem; }}>
         <div
           style={this.state.fixed ? { width: this.props.width } : {}}
-          className={classnames({ fixed: this.state.fixed })}
+          className={classnames('actions-panel', { fixed: this.state.fixed })}
         >
-          <button
-            disabled={!this.props.imageLoaded}
+          <NewSelectionIcon
             onClick={() => this.props.addSelection()}
-          >
-            New Selection
-          </button>
-          <button
-            disabled={!(this.props.imageLoaded && this.props.currentSelectionId)}
+            hidden={!this.props.imageLoaded || this.props.isImageObfuscated}
+          />
+          <DeleteSelectionIcon
             onClick={() => this.props.deleteSelection(this.props.currentSelectionId)}
-          >
-            Delete Selection
-          </button>
-          <button
-            disabled={!this.props.imageLoaded}
+            hidden={!(this.props.imageLoaded && this.props.currentSelectionId) || this.props.isImageObfuscated}
+          />
+          {
+            this.props.isImageObfuscated ?
+              <DownloadIcon
+                onClick={() => console.log("download")}
+                hidden={!this.props.imageLoaded}
+              /> :
+              <ScrambleIcon
+                onClick={() => this.props.obfuscateImage()}
+                hidden={!this.props.imageLoaded}
+              />
+          }
+          <ClearIcon
             onClick={() => this.props.unloadImage()}
-          >
-            Close Image
-          </button>
-          <button
-            disabled={!this.props.imageLoaded}
-            onClick={() => this.props.obfuscateImage()}
-          >
-            Obfuscate
-          </button>
-        </div>
+            hidden={!this.props.imageLoaded}
+          />
+          <HelpIcon
+            onClick={() => console.log("Open up modal")}
+            hidden={false}
+          />
+          {
+            // <button
+            //   disabled={!this.props.imageLoaded}
+            //   onClick={() => this.props.addSelection()}
+            // >
+            //   New Selection
+            // </button>
+            // <button
+            //   disabled={!(this.props.imageLoaded && this.props.currentSelectionId)}
+            //   onClick={() => this.props.deleteSelection(this.props.currentSelectionId)}
+            // >
+            //   Delete Selection
+            // </button>
+            // <button
+            //   disabled={!this.props.imageLoaded}
+            //   onClick={() => this.props.unloadImage()}
+            // >
+            //   Close Image
+            // </button>
+            // <button
+            //   disabled={!this.props.imageLoaded}
+            //   onClick={() => this.props.obfuscateImage()}
+            // >
+            //   Obfuscate
+            // </button>
+          }
       </div>
-    );
+      </div>
+  );
   }
 }
 
 const mapStateToProps = state => ({
   currentSelectionId: state.selections.activeSelectionId,
   imageLoaded: state.srcImage.src !== null,
+  isImageObfuscated: state.obfuscatedImage.src !==null,
 });
 
 ActionsPanel.defaultProps = {
