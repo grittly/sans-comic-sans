@@ -42,7 +42,10 @@ class FormsContainer extends Component {
             </div> :
             <form onSubmit={this.handleSubmit}>
               <SelectionFormsContainer />
-              <ObfuscationDirectionForm decrypt={this.props.decrypt} changeDirection={this.props.changeObfuscationDirection} />
+              <ObfuscationDirectionForm
+                decrypt={this.props.decrypt}
+                changeDirection={this.props.changeObfuscationDirection}
+              />
               <ImportSelectionsForm importSelections={this.props.importSelections} />
               <button type="submit" disabled={!this.props.readyToObfuscate}>Obfuscate</button>
             </form>

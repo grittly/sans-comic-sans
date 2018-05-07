@@ -10,10 +10,11 @@
   overflow: hidden;
   fill: $icon-color-dark;
   &.fixed {
-    background-color: $accent-color;
+    // background-color: rgba($accent-color, 0.7);
+    background-color: rgba($base-color, 0.7);
     position: fixed;
     bottom: 0;
-    fill: $icon-color-light;
+    fill: $icon-color-dark;
   }
 }
 
@@ -22,6 +23,19 @@
   display:flex;
   position: relative;
   top: 0;
+  flex-direction: column;
+  justify-content: center;
+  &:hover{
+    fill: $accent-color;
+    .underline{
+      visibility: visible;
+    }
+  }
+  .underline{
+    visibility: hidden;
+    fill: inherit;
+
+  }
   @include transition-animation(top);
   &.hidden{
     top: -100%;

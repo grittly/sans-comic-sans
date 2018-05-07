@@ -52,7 +52,7 @@ class ActionsPanel extends Component {
       <div className="actions-panel-container" ref={(elem) => { this.actionsPanel = elem; }}>
         <div
           style={this.state.fixed ? { width: this.props.width } : {}}
-          className={classnames('actions-panel', { fixed: this.state.fixed })}
+          className={classnames('actions-panel', { fixed: this.state.fixed && this.props.imageLoaded })}
         >
           <NewSelectionIcon
             onClick={() => this.props.addSelection()}
@@ -66,11 +66,12 @@ class ActionsPanel extends Component {
             this.props.isImageObfuscated ?
               <DownloadIcon
                 onClick={() => console.log("download")}
+                href={this.props.obfuscatedImageSrc.src}
                 hidden={!this.props.imageLoaded}
               /> :
               <ScrambleIcon
                 onClick={() => this.props.obfuscateImage()}
-                hidden={!this.props.imageLoaded}
+                hidden={!this.props.imageLoaded || !this.props.readyToObfuscate}
               />
           }
           <ClearIcon
@@ -81,32 +82,6 @@ class ActionsPanel extends Component {
             onClick={() => console.log("Open up modal")}
             hidden={false}
           />
-          {
-            // <button
-            //   disabled={!this.props.imageLoaded}
-            //   onClick={() => this.props.addSelection()}
-            // >
-            //   New Selection
-            // </button>
-            // <button
-            //   disabled={!(this.props.imageLoaded && this.props.currentSelectionId)}
-            //   onClick={() => this.props.deleteSelection(this.props.currentSelectionId)}
-            // >
-            //   Delete Selection
-            // </button>
-            // <button
-            //   disabled={!this.props.imageLoaded}
-            //   onClick={() => this.props.unloadImage()}
-            // >
-            //   Close Image
-            // </button>
-            // <button
-            //   disabled={!this.props.imageLoaded}
-            //   onClick={() => this.props.obfuscateImage()}
-            // >
-            //   Obfuscate
-            // </button>
-          }
       </div>
       </div>
   );
@@ -116,7 +91,9 @@ class ActionsPanel extends Component {
 const mapStateToProps = state => ({
   currentSelectionId: state.selections.activeSelectionId,
   imageLoaded: state.srcImage.src !== null,
-  isImageObfuscated: state.obfuscatedImage.src !==null,
+  isImageObfuscated: state.obfuscatedImage.src !== null,
+  obfuscatedImageSrc: state.obfuscatedImage.src,
+  readyToObfuscate: !state.selections.hasErrors && state.selections.validated,
 });
 
 ActionsPanel.defaultProps = {
