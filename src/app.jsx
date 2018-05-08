@@ -27,9 +27,9 @@ if (process.env.NODE_ENV === 'production') {
     // Requires redux devtools extension to be installed
     composeWithDevTools(applyMiddleware(thunk)),
   );
+  store.dispatch(init());
 }
 
-store.dispatch(init())
 
 const App = () => (
   <Provider store={store}>

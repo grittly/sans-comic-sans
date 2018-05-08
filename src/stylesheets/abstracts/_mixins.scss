@@ -24,7 +24,9 @@
 }
 
 // Mixins for transitions
-@mixin transition-animation($property) {
-  transition: $property 0.3s;
+@mixin transition-animation($property...) {
+  transition: $property;
+  transition-duration: 0.3s;
   transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
 }
+

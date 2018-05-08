@@ -31,23 +31,101 @@
   flex: 1;
 }
 .canvasPlaceholder {
-  // width: $mobile-breakpoint/2 * 1px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 2px solid $border-color;
   .uploadArea {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
   }
   &:after {
     display:block;
     content: "";
     padding-bottom: 70%;
     width:0px;
+  }
+  .uploadArea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 70%;
+      span {
+        visibility: hidden;
+        color: $accent-color;
+      }
+      input {
+        visibility: hidden;
+        height: 0;
+      }
+    }
+    .upload-image-icon {
+      width: 80%;
+    }
+    .load-sample-btn {
+      @include transition-animation(opacity, max-height);
+      // @include transition-animation(max-height);
+      // transition: opacity 0.3s, max-height 0.3s;
+      // transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+      display:flex;
+      max-height: 0;
+      opacity: 0;
+
+      overflow: hidden;
+    }
+
+    &:hover {
+      .load-sample-btn {
+        max-height: $baseline-margin;
+        opacity: 1;
+      }
+      label {
+        span {
+          visibility: visible;
+        }
+      }
+      .upload-image-icon:not(.loading) {
+        .picture, .arrow {
+          animation-name: picture-scale;
+          animation-duration: 1000ms;
+          animation-direction: alternate;
+          animation-iteration-count: infinite;
+          animation-timing-function: cubic-bezier(0.4, 0.0, 0.8, 1);
+        }
+        .sun{
+          animation-name: sun-scale;
+          animation-duration: 1000ms;
+          animation-direction: alternate;
+          animation-iteration-count: infinite;
+          animation-timing-function: cubic-bezier(0.4, 0.0, 0.8, 1);
+        }
+      }
+    }
+    .upload-image-icon {
+      fill: $accent-color;
+      &.loading {
+        .sun {
+          animation-name: sun-rotate;
+          animation-duration: 1500ms;
+          animation-iteration-count: infinite;
+          animation-timing-function: cubic-bezier(0.4, 0.0, 0.8, 1);
+        }
+
+      }
+    }
+
+  }
+}
+
+@keyframes sun-rotate{
+  from {
+    transform: translate(157px,131px) rotate(0deg) translate(-157px,-131px);
+  } to {
+    transform: translate(157px,131px) rotate(360deg) translate(-157px,-131px);
   }
 }
 

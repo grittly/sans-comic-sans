@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { UploadImageIcon } from '../Icons';
 
 /**
  * A placeholder for when there is no image loaded into CanvasVisible
@@ -7,17 +8,12 @@ import PropTypes from 'prop-types';
 const CanvasPlaceholder = props => (
   <div className="canvasPlaceholder">
     <div className="uploadArea">
-      <form>
-        <label htmlFor="image-browser">
-          Upload Image
-          <input id="image-browser" type="file" accept="image/*" onChange={props.handleImageUpload} />
-          { props.loading ?
-              'Loading' :
-              null
-          }
-        </label>
-      </form>
-      <button>Load sample image</button>
+      <label htmlFor="image-browser" className="upload-image-container">
+        <span>Click to Upload</span>
+        <UploadImageIcon loading={props.loading} />
+        <input id="image-browser" type="file" accept="image/*" onChange={props.handleImageUpload} />
+      </label>
+      <button className="load-sample-btn"><span>or use an example</span></button>
     </div>
   </div>
 );
