@@ -73,10 +73,6 @@
   min-height: 50%;
 }
 
-.header {
-  flex: 0 0 10%;
-}
-
 .footer {
   flex: 0 0 100%;
   display: flex;
@@ -111,6 +107,8 @@
   .rightContainer {
     flex: 0 0 auto;
     min-height: auto;
+    flex-direction:column;
+    padding-bottom: $actions-panel-height + ($baseline-margin/2);
   }
   .formsContainer {
     flex: 1;

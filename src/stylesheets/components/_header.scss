@@ -1,0 +1,16 @@
+.header {
+  flex: 0 0 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $baseline-margin/2 0 $baseline-margin;
+  svg {
+    width: 80%;
+    fill: none;
+    stroke: $text-color;
+    .sans-text {
+      stroke: $accent-color;
+    }
+  }
+}
+

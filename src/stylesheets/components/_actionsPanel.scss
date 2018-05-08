@@ -6,7 +6,7 @@
   display:flex;
   width: 100%;
   justify-content: space-around;
-  height: 3em;
+  height: $actions-panel-height;
   overflow: hidden;
   fill: $icon-color-dark;
   &.fixed {
@@ -19,7 +19,7 @@
 }
 
 .icon-hoc {
-  width: 1.6em;
+  width: $baseline-margin;
   display:flex;
   position: relative;
   top: 0;
