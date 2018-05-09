@@ -25,6 +25,7 @@ input, textarea {
   border-bottom: 1px solid $border-color;
   &:focus {
     border-width: 2px;
+    border-color: $accent-color;
   }
 }
 

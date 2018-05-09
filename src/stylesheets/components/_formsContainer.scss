@@ -1,12 +1,22 @@
 .form-section {
-  margin: 0 $gap $baseline-margin;
+  margin: 0 $section-gutter $baseline-margin* 2;
 
+  .title {
+    display: flex;
+    align-items: flex-end;
+  }
 }
 
 .selection-form {
   .input-section{
     display:flex;
     flex: 0 0 100%;
+  }
+  &.active {
+    .id-area span{
+      background-color: $accent-color;
+      color: $white-color;
+    }
   }
 
   &:not(:first-child){
@@ -29,8 +39,8 @@
   .errors-section{
     ul{
       list-style: none;
-       color: $accent-color;
-       font-family: Open-sans;
+      color: $accent-color;
+      margin: $baseline-margin/3 0 $baseline-margin/3;
     }
 
   }
@@ -44,12 +54,12 @@
     }
     padding: 0 0.3em;
     label{
-
     }
     input{
 
     }
     span{
+      text-align:center;
 
     }
 

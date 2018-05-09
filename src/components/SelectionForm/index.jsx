@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 /**
  * Form for a single selection
  */
 
 const SelectionForm = props => (
-  <div className="selection-form">
+  <div className="selection-form" className={classnames('selection-form', {active: props.active})}>
     <div className="input-section">
       <div className="id-area">
         <div className="input-label-wrapper">
@@ -98,7 +99,7 @@ const SelectionForm = props => (
     <div className="errors-section">
       <ul>
         { props.errors.map((error, idx) => (
-          <li className="font-small" key={ `selection-${props.id}-error-${idx}` }>{error}</li>
+          <li key={ `selection-${props.id}-error-${idx}` }>{error}</li>
         ))}
     </ul>
     </div>

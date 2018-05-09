@@ -6,6 +6,7 @@ import {
   modifySelection,
   setActiveSelection,
 } from '../../actions';
+import { GoChevronDown, GoChevronUp  } from 'react-icons/lib/go';
 
 /**
  * Container for Selection Forms that are linked to selections in CanvasVisible
@@ -19,6 +20,10 @@ class SelectionFormsContainer extends Component {
   render() {
     return (
       <div className="selection-forms-container form-section">
+        <div className="title">
+          <h4>Selections <GoChevronDown />
+          </h4>
+        </div>
         {
           this.props.selections.map(selection => (<SelectionForm
             key={`selection-form-${selection.id.value}`}
@@ -30,6 +35,7 @@ class SelectionFormsContainer extends Component {
             password={selection.password}
             updateCoordinates={this.props.updateCoordinates}
             setActiveSelection={this.props.setActiveSelection}
+            active={this.props.activeSelectionId === selection.id.value}
             errors={[
               ...selection.id.errors,
               ...selection.x.errors,
@@ -45,6 +51,10 @@ class SelectionFormsContainer extends Component {
   }
 }
 
+SelectionFormsContainer.defaultProps = {
+  activeSelectionId: null,
+};
+
 SelectionFormsContainer.propTypes = {
   selections: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.Object,
@@ -56,10 +66,12 @@ SelectionFormsContainer.propTypes = {
   })).isRequired,
   updateCoordinates: PropTypes.func.isRequired,
   setActiveSelection: PropTypes.func.isRequired,
+  activeSelectionId: PropTypes.number,
 };
 
 const mapStateToProps = state => ({
   selections: state.selections.collection,
+  activeSelectionId: state.selections.activeSelectionId,
 });
 
 const mapDispatchToProps = dispatch => ({
