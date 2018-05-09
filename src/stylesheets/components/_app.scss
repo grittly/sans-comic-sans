@@ -30,12 +30,21 @@
   margin: $gap;
   flex: 1;
 }
+.canvas-wrapper{
+  position:relative;
+  .canvas-stage {
+    box-shadow: 1px 2px 29px 0px rgba($dark-color,0.3);
+    border: 2px solid $border-color;
+    position:absolute;
+  }
+}
 .canvasPlaceholder {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 2px solid $border-color;
+  box-shadow: 1px 2px 29px 0px rgba($dark-color,0.3);
   .uploadArea {
   }
   &:after {
@@ -137,7 +146,7 @@
   min-height: 100vh;
   overflow: hidden;
   flex-wrap: wrap;
-  align-content: space-between;
+  // align-content: space-between;
   @include transition-animation(flex-basis);
   &.collapsed {
     flex-basis: 0%;

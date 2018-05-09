@@ -25,11 +25,14 @@
   top: 0;
   flex-direction: column;
   justify-content: center;
-  &:hover{
-    fill: $accent-color;
-    .underline{
-      visibility: visible;
+  &:not(.disabled){
+    &:hover{
+      fill: $accent-color;
+      .underline{
+        visibility: visible;
+      }
     }
+
   }
   .underline{
     visibility: hidden;
@@ -37,6 +40,9 @@
 
   }
   @include transition-animation(top);
+  &.disabled{
+    fill: rgba($dark-color, 0.3);
+  }
   &.hidden{
     top: -100%;
   }

@@ -1,0 +1,57 @@
+.form-section {
+  margin: 0 $gap $baseline-margin;
+
+}
+
+.selection-form {
+  .input-section{
+    display:flex;
+    flex: 0 0 100%;
+  }
+
+  &:not(:first-child){
+    .input-label-wrapper label{
+      display:none;
+    }
+  }
+
+  .id-area{
+    flex: 0 0 auto;
+    min-width: 2em;
+
+  }
+  .coordinates-area{
+    display: flex;
+    flex: 1 1 0%;
+
+  }
+
+  .errors-section{
+    ul{
+      list-style: none;
+       color: $accent-color;
+       font-family: Open-sans;
+    }
+
+  }
+
+  .input-label-wrapper{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    &.password{
+      flex: 2;
+    }
+    padding: 0 0.3em;
+    label{
+
+    }
+    input{
+
+    }
+    span{
+
+    }
+
+  }
+}

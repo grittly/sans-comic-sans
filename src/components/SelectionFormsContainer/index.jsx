@@ -18,7 +18,7 @@ class SelectionFormsContainer extends Component {
 
   render() {
     return (
-      <div className="selection-forms-container">
+      <div className="selection-forms-container form-section">
         {
           this.props.selections.map(selection => (<SelectionForm
             key={`selection-form-${selection.id.value}`}

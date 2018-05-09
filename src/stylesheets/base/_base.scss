@@ -19,5 +19,12 @@ button, input[type="submit"] {
 
 input, textarea {
   width: 100%;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid $border-color;
+  &:focus {
+    border-width: 2px;
+  }
 }
 

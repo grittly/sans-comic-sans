@@ -19,7 +19,6 @@ const MainContainer = props => (
       )}
     >
       <FormsContainer />
-      <Footer />
     </div>
   </div>
 );

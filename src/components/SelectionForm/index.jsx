@@ -15,7 +15,7 @@ const SelectionForm = props => (
         </div>
       </div>
       <div className="coordinates-area">
-        <div className="input-label-wrapper">
+        <div className="input-label-wrapper password">
           <label htmlFor={`selection-${props.id.value}-password`}>key:</label>
           <input
             type="text"
@@ -98,7 +98,7 @@ const SelectionForm = props => (
     <div className="errors-section">
       <ul>
         { props.errors.map((error, idx) => (
-          <li key={ `selection-${props.id}-error-${idx}` }>{error}</li>
+          <li className="font-small" key={ `selection-${props.id}-error-${idx}` }>{error}</li>
         ))}
     </ul>
     </div>

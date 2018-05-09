@@ -60,7 +60,8 @@ class ActionsPanel extends Component {
           />
           <DeleteSelectionIcon
             onClick={() => this.props.deleteSelection(this.props.currentSelectionId)}
-            hidden={!(this.props.imageLoaded && this.props.currentSelectionId) || this.props.isImageObfuscated}
+            hidden={!this.props.imageLoaded}
+            disabled={this.props.currentSelectionId === null || this.props.isImageObfuscated}
           />
           {
             this.props.isImageObfuscated ?

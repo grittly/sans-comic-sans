@@ -13,7 +13,7 @@ class OutputFormsContainer extends Component {
 
   render() {
     return (
-      <div className="output-forms-container">
+      <div className="output-forms-container form-section">
         <div>
           <label htmlFor="export-selections-summary">
             Base64 export
