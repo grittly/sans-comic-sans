@@ -14,10 +14,15 @@ button, input[type="submit"] {
   border: none;
   background-color: $accent-color;
   color: $white-color;
-
+  // margin: $baseline-margin/2 $gap;
+  margin-right: $gap;
+  &:disabled {
+    background-color: rgba($dark-color, 0.1);
+    color: lighten($dark-color, 40);
+  }
 }
 
-input, textarea {
+input[type="text"], input[type="number"], textarea {
   width: 100%;
   background-color: transparent;
   outline: none;
@@ -26,6 +31,47 @@ input, textarea {
   &:focus {
     border-width: 2px;
     border-color: $accent-color;
+    background-color: rgba($dark-color, 0.1);
+  }
+}
+
+textarea {
+  @include transition-animation(width, height);
+  width: 50%;
+  height: $baseline-margin;
+  resize: none;
+  &.expanded {
+    width: 100%;
+    height: $baseline-margin * 4;
+  }
+  &:focus {
+    &:not(.expanded){
+      width: 100%;
+      height: $baseline-margin * 4;
+    }
+  }
+}
+
+label {
+  margin-bottom: $baseline-margin/2;
+  .subheading {
+    font-weight: bold;
+  }
+  &.with-button {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    button {
+      margin: 0;
+      background-color: transparent;
+      border: 1px solid $border-color;
+      color: $dark-color;
+      align-self: flex-end;
+      &:hover {
+        background-color: $accent-color;
+        color: $white-color;
+      }
+    }
   }
 }
 

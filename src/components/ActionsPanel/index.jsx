@@ -60,13 +60,13 @@ class ActionsPanel extends Component {
           />
           <DeleteSelectionIcon
             onClick={() => this.props.deleteSelection(this.props.currentSelectionId)}
-            hidden={!this.props.imageLoaded}
-            disabled={this.props.currentSelectionId === null || this.props.isImageObfuscated}
+            hidden={!this.props.imageLoaded || this.props.isImageObfuscated}
+            disabled={this.props.currentSelectionId === null}
           />
           {
             this.props.isImageObfuscated ?
               <DownloadIcon
-                onClick={() => console.log("download")}
+                onClick={() => {}}
                 href={this.props.obfuscatedImageSrc.src}
                 hidden={!this.props.imageLoaded}
               /> :
@@ -83,9 +83,9 @@ class ActionsPanel extends Component {
             onClick={() => console.log("Open up modal")}
             hidden={false}
           />
+        </div>
       </div>
-      </div>
-  );
+    );
   }
 }
 

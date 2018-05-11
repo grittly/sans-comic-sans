@@ -1,3 +1,4 @@
+/* globals btoa */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -13,17 +14,19 @@ class OutputFormsContainer extends Component {
 
   render() {
     return (
-      <div className="output-forms-container form-section">
+      <div className="output-forms-container">
         <div>
-          <label htmlFor="export-selections-summary">
-            Base64 export
-            <textarea rows={5} id="export-selections-base64" value={this.props.selectionsBase64} readOnly placeholder="No selections presnt" />
+          <label htmlFor="export-selections-summary" className="with-button">
+            <span className="subheading">Base64 export</span>
+            <textarea rows={5} id="export-selections-base64" value={this.props.selectionsBase64} readOnly placeholder="No selections presnt" className="expanded" />
+            <button><small>save</small></button>
           </label>
         </div>
         <div>
-          <label htmlFor="export-selections-base64">
-            Summary
-            <textarea rows={5} id="export-selections-summary" value={this.props.summary} readOnly placeholder="No selections presnt" />
+          <label htmlFor="export-selections-base64" className="with-button">
+            <span className="subheading">Summary</span>
+            <textarea rows={5} id="export-selections-summary" value={this.props.summary} readOnly placeholder="No selections presnt" className="expanded" />
+            <button><small>save</small></button>
           </label>
         </div>
       </div>
@@ -50,17 +53,14 @@ const mapStateToProps = state => ({
     `size: ${selection.width.value} x ${selection.height.value}\n` +
     '---------------\n'
   ), ''),
-  selectionsBase64: state.selections.collection.length > 0
-    // eslint-disable-next-line no-undef
-  ? btoa(JSON.stringify(
-    state.selections.collection.map(selection => ({
+  selectionsBase64: state.selections.collection.length > 0 ?
+    btoa(JSON.stringify(state.selections.collection.map(selection => ({
       x: selection.x.value,
       y: selection.y.value,
       width: selection.width.value,
       height: selection.height.value,
       password: selection.password.value,
-    }))
-  )) : '',
+    })))) : '',
 });
 
 export default connect(mapStateToProps)(OutputFormsContainer);

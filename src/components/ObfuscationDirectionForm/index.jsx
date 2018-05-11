@@ -1,22 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import formSectionHOC from '../../HOC/formSectionHOC';
 
 /**
  *  Radio input form for chosing obfuscate or deobfuscate an image
  */
 const ObfuscationDirectionForm = props => (
-  <div>
+  <div className="radio-input">
     <label htmlFor="encrypt-input">
-      Encrypt
       <input id="encrypt-input" type="radio" checked={!props.decrypt} onChange={
         e => props.changeDirection(!e.target.checked)
-      } />
+      }
+    />
+      Encrypt
     </label>
     <label htmlFor="encrypt-input">
-      Decrypt
       <input id="encrypt-input" type="radio" checked={props.decrypt} onChange={
         e => props.changeDirection(e.target.checked)
-      } />
+      }
+    />
+      Decrypt
     </label>
   </div>
 );
@@ -26,4 +29,4 @@ ObfuscationDirectionForm.propTypes = {
   changeDirection: PropTypes.func.isRequired,
 };
 
-export default ObfuscationDirectionForm;
+export default formSectionHOC(ObfuscationDirectionForm, { title: 'Settings', collapsed: false });

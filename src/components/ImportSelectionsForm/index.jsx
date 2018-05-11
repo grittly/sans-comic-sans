@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import formSectionHOC from '../../HOC/formSectionHOC';
 
 /**
  * Import selections from a base64 string
@@ -30,10 +32,16 @@ class ImportSelectionsForm extends Component {
   render() {
     return (
       <div className="import-selections-form">
-        <label htmlFor="export-selections-summary">
-          Import selections
-          <textarea rows={5} id="export-selections-base64" placeholder="Paste the base64 key here" value={this.state.value} onChange={this.handleChange} />
-          <button type="button" onClick={this.handleClick}>Import</button>
+        <label htmlFor="export-selections-summary" className={classnames('with-button')}>
+          <textarea rows={5} id="export-selections-base64" placeholder="Paste the base64 key here" value={this.state.value} onChange={this.handleChange} className={classnames({ expanded: this.state.value !== '' })} />
+          {
+            this.state.value === '' ?
+              null :
+              <button type="button" onClick={this.handleClick}>
+                <small>import</small>
+              </button>
+
+          }
         </label>
       </div>
     );
@@ -44,4 +52,4 @@ ImportSelectionsForm.propTypes = {
   importSelections: PropTypes.func.isRequired,
 };
 
-export default ImportSelectionsForm;
+export default formSectionHOC(ImportSelectionsForm, { title: 'Import Selections', collapsed: true });

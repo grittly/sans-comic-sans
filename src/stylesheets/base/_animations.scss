@@ -1,4 +1,4 @@
-// Animation for UploadImageIcon sun rotation
+// Animations for UploadImageIcon 
 @keyframes sun-rotate {
   from {
     transform: translate(157px,131px) rotate(0deg) translate(-157px,-131px);
@@ -26,5 +26,28 @@
   }
 }
 
+// Animation for collapsing a container on screen
+@keyframes collapse {
+  0%{
+    max-height: none;
+  }
+  1%{
+    max-height: 150vh;
+  }
+  100%{
+    max-height: 0vh;
+  }
+}
 
 
+@keyframes expand {
+  0%{
+    max-height: 0vh;
+  }
+  99%{
+    max-height: 150vh;
+  }
+  100%{
+    max-height: none;
+  }
+}

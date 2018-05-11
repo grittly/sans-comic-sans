@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SelectionForm from '../SelectionForm';
+import formSectionHOC from '../../HOC/formSectionHOC';
 import {
   modifySelection,
   setActiveSelection,
 } from '../../actions';
-import { GoChevronDown, GoChevronUp  } from 'react-icons/lib/go';
 
 /**
  * Container for Selection Forms that are linked to selections in CanvasVisible
@@ -19,11 +19,7 @@ class SelectionFormsContainer extends Component {
 
   render() {
     return (
-      <div className="selection-forms-container form-section">
-        <div className="title">
-          <h4>Selections <GoChevronDown />
-          </h4>
-        </div>
+      <div className="selection-forms-container">
         {
           this.props.selections.map(selection => (<SelectionForm
             key={`selection-form-${selection.id.value}`}
@@ -86,4 +82,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(SelectionFormsContainer);
+)(formSectionHOC(SelectionFormsContainer, {title: 'Selections', collapsed: false}));

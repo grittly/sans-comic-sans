@@ -34,10 +34,12 @@ class FormsContainer extends Component {
             <div>
               <form>
                 <OutputFormsContainer />
-                <a href={this.props.obfuscatedImageSrc.src} download="obfuscatedImage">
-                  <button type="button">Download</button>
-                </a>
-                <button type="button">Start again</button>
+                <div className="form-buttons">
+                  <a href={this.props.obfuscatedImageSrc.src} download="obfuscatedImage">
+                    <button type="button">Download</button>
+                  </a>
+                  <button type="button">Start again</button>
+                </div>
               </form>
             </div> :
             <form onSubmit={this.handleSubmit}>
@@ -47,7 +49,9 @@ class FormsContainer extends Component {
                 changeDirection={this.props.changeObfuscationDirection}
               />
               <ImportSelectionsForm importSelections={this.props.importSelections} />
-              <button type="submit" disabled={!this.props.readyToObfuscate}>Obfuscate</button>
+              <div className="form-buttons">
+                <button type="submit" disabled={!this.props.readyToObfuscate}>Obfuscate</button>
+              </div>
             </form>
         }
       </div>

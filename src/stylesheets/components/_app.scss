@@ -43,7 +43,8 @@
   display: flex;
   flex: 0 0 50%;
   justify-content: flex-start;
-  align-items: center;
+  // align-items: center;
+  align-items: stretch;
   min-height: 100vh;
   overflow: hidden;
   flex-wrap: wrap;
@@ -55,10 +56,13 @@
 }
 
 .formsContainer{
-  min-width: $mobile-breakpoint/2 * 1px;
-  // padding: $gap;
   flex: 1;
   min-height: 50%;
+  margin: $baseline-margin * 2 $section-gutter * 2;
+  max-width: $mobile-breakpoint *1px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .footer {
