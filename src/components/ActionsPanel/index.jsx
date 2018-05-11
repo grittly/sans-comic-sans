@@ -72,7 +72,8 @@ class ActionsPanel extends Component {
               /> :
               <ScrambleIcon
                 onClick={() => this.props.obfuscateImage()}
-                hidden={!this.props.imageLoaded || !this.props.readyToObfuscate}
+                disabled={!this.props.readyToObfuscate}
+                hidden={!this.props.imageLoaded}
               />
           }
           <ClearIcon

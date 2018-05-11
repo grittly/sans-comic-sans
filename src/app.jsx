@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import Clipboard from 'clipboard';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -13,6 +14,7 @@ import './stylesheets/main.scss';
 import { init } from './actions';
 
 let store;
+const clipboard = new Clipboard('.copy-button');
 
 if (process.env.NODE_ENV === 'production') {
   store = createStore(

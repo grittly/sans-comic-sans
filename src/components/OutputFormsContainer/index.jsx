@@ -19,14 +19,14 @@ class OutputFormsContainer extends Component {
           <label htmlFor="export-selections-summary" className="with-button">
             <span className="subheading">Base64 export</span>
             <textarea rows={5} id="export-selections-base64" value={this.props.selectionsBase64} readOnly placeholder="No selections presnt" className="expanded" />
-            <button><small>save</small></button>
+            <button type="button" className="copy-button" data-clipboard-target="#export-selections-base64"><small>save</small></button>
           </label>
         </div>
         <div>
           <label htmlFor="export-selections-base64" className="with-button">
             <span className="subheading">Summary</span>
             <textarea rows={5} id="export-selections-summary" value={this.props.summary} readOnly placeholder="No selections presnt" className="expanded" />
-            <button><small>save</small></button>
+            <button type="button" className="copy-button" data-clipboard-target="#export-selections-summary"><small>save</small></button>
           </label>
         </div>
       </div>
