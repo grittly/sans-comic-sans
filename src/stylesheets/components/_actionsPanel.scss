@@ -10,7 +10,6 @@
   overflow: hidden;
   fill: $icon-color-dark;
   &.fixed {
-    // background-color: rgba($accent-color, 0.7);
     background-color: rgba($base-color, 0.7);
     position: fixed;
     bottom: 0;
@@ -48,6 +47,7 @@
   }
   svg {
     width: 100%;
+    stroke:none;
   }
 }
 
@@ -59,9 +59,9 @@
     left: 0;
     display: flex;
     width: 100% !important;
-  }
-  .icon-hoc {
-    fill: $icon-color-light;
+    .icon-hoc {
+      fill: $icon-color-light;
+    }
   }
   .actions-panel {
     background-color: $accent-color;

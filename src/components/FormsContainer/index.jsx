@@ -1,3 +1,4 @@
+/* globals HTMLImageElement */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -5,6 +6,7 @@ import {
   obfuscateImage,
   importSelections,
   changeObfuscationDirection,
+  unloadImage,
 } from '../../actions';
 import SelectionFormsContainer from '../SelectionFormsContainer';
 import OutputFormsContainer from '../OutputFormsContainer';
@@ -38,7 +40,7 @@ class FormsContainer extends Component {
                   <a href={this.props.obfuscatedImageSrc.src} download="obfuscatedImage">
                     <button type="button">Download</button>
                   </a>
-                  <button type="button">Start again</button>
+                  <button type="button" onClick={() => this.props.unloadImage()}>Start again</button>
                 </div>
               </form>
             </div> :
@@ -67,11 +69,11 @@ FormsContainer.propTypes = {
   readyToObfuscate: PropTypes.bool.isRequired,
   isObfuscated: PropTypes.bool.isRequired,
   obfuscateImage: PropTypes.func.isRequired,
-  // eslint-disable-next-line no-undef
   obfuscatedImageSrc: PropTypes.instanceOf(HTMLImageElement),
   importSelections: PropTypes.func.isRequired,
   decrypt: PropTypes.bool.isRequired,
   changeObfuscationDirection: PropTypes.func.isRequired,
+  unloadImage: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -87,6 +89,7 @@ const mapDispatchToProps = dispatch => ({
   obfuscateImage: () => dispatch(obfuscateImage()),
   importSelections: selectionsBase64 => dispatch(importSelections(selectionsBase64)),
   changeObfuscationDirection: decrypt => dispatch(changeObfuscationDirection(decrypt)),
+  unloadImage: () => dispatch(unloadImage()),
 });
 
 export default connect(

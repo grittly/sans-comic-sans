@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
+import Modal from '../Modal';
 import {
   obfuscateImage,
   unloadImage,
@@ -24,8 +25,11 @@ class ActionsPanel extends Component {
     super(props);
     this.state = {
       fixed: false,
+      showModal: false,
     };
     this.handleScrolling = this.handleScrolling.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   componentDidMount() {
@@ -47,9 +51,28 @@ class ActionsPanel extends Component {
     }
   }
 
+  openModal() {
+    this.setState({
+      showModal: true,
+    });
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeModal() {
+    this.setState({
+      showModal: false,
+    });
+    document.body.style.overflow = 'visible';
+  }
+
   render() {
     return (
       <div className="actions-panel-container" ref={(elem) => { this.actionsPanel = elem; }}>
+        {
+          this.state.showModal ?
+          <Modal closeModal={this.closeModal}/> :
+          null
+        }
         <div
           style={this.state.fixed ? { width: this.props.width } : {}}
           className={classnames('actions-panel', { fixed: this.state.fixed && this.props.imageLoaded })}
@@ -81,7 +104,7 @@ class ActionsPanel extends Component {
             hidden={!this.props.imageLoaded}
           />
           <HelpIcon
-            onClick={() => console.log("Open up modal")}
+            onClick={() => this.openModal()}
             hidden={false}
           />
         </div>

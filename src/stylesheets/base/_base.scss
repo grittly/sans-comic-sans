@@ -14,7 +14,6 @@ button, input[type="submit"] {
   border: none;
   background-color: $accent-color;
   color: $white-color;
-  // margin: $baseline-margin/2 $gap;
   margin-right: $gap;
   &:disabled {
     background-color: rgba($dark-color, 0.1);
@@ -27,7 +26,7 @@ input[type="text"], input[type="number"], textarea {
   background-color: transparent;
   outline: none;
   border: none;
-  border-bottom: 1px solid $border-color;
+  border-bottom: 2px solid rgba($border-color, 0.5);
   &:focus {
     border-width: 2px;
     border-color: $accent-color;

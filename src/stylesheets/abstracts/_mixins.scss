@@ -30,3 +30,8 @@
   transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
+// Mixin for Canvas border and shadow
+@mixin canvas-border(){
+  border: 2px solid $border-color;
+  box-shadow: 1px 2px 29px 0px rgba($dark-color,0.3);
+}

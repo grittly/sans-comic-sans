@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { GoX } from 'react-icons/lib/go';
 
 /**
  * Form for a single selection
  */
 
 const SelectionForm = props => (
-  <div className="selection-form" className={classnames('selection-form', {active: props.active})}>
+  <div className={classnames('selection-form', { active: props.active })}>
     <div className="input-section">
       <div className="id-area">
         <div className="input-label-wrapper">
@@ -94,14 +95,16 @@ const SelectionForm = props => (
           />
         </div>
       </div>
-      <div className="icons-area"></div>
+      <div className="icons-area">
+        <span onClick={() => props.deleteSelection(props.id.value)}><GoX /></span>
+      </div>
     </div>
     <div className="errors-section">
       <ul>
         { props.errors.map((error, idx) => (
-          <li key={ `selection-${props.id}-error-${idx}` }>{error}</li>
+          <li key={`selection-${props.id}-error-${idx}`}>{error}</li>
         ))}
-    </ul>
+      </ul>
     </div>
   </div>
 );
@@ -145,7 +148,9 @@ SelectionForm.propTypes = {
   }).isRequired,
   updateCoordinates: PropTypes.func.isRequired,
   setActiveSelection: PropTypes.func.isRequired,
+  deleteSelection: PropTypes.func.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  active: PropTypes.bool.isRequired,
 };
 
 export default SelectionForm;

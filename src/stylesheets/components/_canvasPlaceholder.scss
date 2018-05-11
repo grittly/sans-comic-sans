@@ -3,8 +3,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid $border-color;
-  box-shadow: 1px 2px 29px 0px rgba($dark-color,0.3);
+  @include canvas-border;
+  // border: 2px solid $border-color;
+  // box-shadow: 1px 2px 29px 0px rgba($dark-color,0.3);
   .uploadArea {
   }
   &:after {
@@ -37,13 +38,9 @@
     }
     .load-sample-btn {
       @include transition-animation(opacity, max-height);
-      // @include transition-animation(max-height);
-      // transition: opacity 0.3s, max-height 0.3s;
-      // transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
       display:flex;
       max-height: 0;
       opacity: 0;
-
       overflow: hidden;
     }
 
@@ -92,5 +89,17 @@
 @include mobile {
   .canvasPlaceholder {
     width: 100%;
+    .uploadArea {
+      .load-sample-btn {
+        max-height: $baseline-margin;
+        opacity: 1;
+      }
+      label {
+        span {
+          visibility: visible;
+        }
+      }
+
+    }
   }
 }

@@ -1,6 +1,5 @@
 .form-section {
   margin: 0 0 $baseline-margin;
-
   .title {
     display: flex;
     align-items: flex-end;
@@ -16,9 +15,7 @@
         }
         color: $accent-color;
       }
-
     }
-
   }
   .inner-container {
     position:relative;
@@ -48,6 +45,22 @@
 }
 
 .selection-form {
+  &.placeholder {
+    input {
+      opacity: 0.3;
+      border: 2px dashed $dark-color;
+    }
+    .icons-area {
+      visibility: hidden;
+    }
+  }
+  &:not(:first-child){
+    animation-name: expand;
+    animation-duration: 0.3s;
+    max-height: none;
+    animation-timing-function: cubic-bezier(0.5, 0, 1, 1);
+
+  }
   .input-section{
     display:flex;
     flex: 0 0 100%;
@@ -74,6 +87,11 @@
     display: flex;
     flex: 1 1 0%;
 
+  }
+
+  .icons-area {
+    display: flex;
+    align-items: flex-end;
   }
 
   .errors-section{
