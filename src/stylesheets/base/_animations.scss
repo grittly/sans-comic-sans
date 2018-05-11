@@ -51,3 +51,15 @@
     max-height: none;
   }
 }
+
+
+// Animation for opening modal
+@keyframes open-modal {
+  from {
+    max-width: 0;
+    opacity: 0;
+  } to {
+    max-width: $mobile-breakpoint * 1px;
+    opacity: 1;
+  }
+}

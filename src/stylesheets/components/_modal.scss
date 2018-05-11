@@ -12,6 +12,9 @@
   max-height: 100vh;
   overflow-y: scroll;
   .container{
+    animation-name: open-modal;
+    animation-duration: 0.3s;
+    animation-iteration-count: 1;
     margin-top: auto;
     margin-bottom: auto;
     max-width: $mobile-breakpoint * 1px;
