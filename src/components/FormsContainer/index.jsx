@@ -75,7 +75,9 @@ FormsContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  readyToObfuscate: state.selections.validated && !state.selections.hasErrors,
+  readyToObfuscate: state.selections.validated &&
+  !state.selections.hasErrors &&
+  state.selections.collection.length > 0,
   isObfuscated: state.obfuscatedImage.src !== null,
   obfuscatedImageSrc: state.obfuscatedImage.src,
   decrypt: state.settings.decrypt,

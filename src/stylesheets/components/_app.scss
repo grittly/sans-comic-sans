@@ -29,6 +29,7 @@
 .canvasContainer {
   margin: $gap;
   flex: 1;
+  max-width: 40vw;
 }
 .canvas-wrapper{
   position:relative;
@@ -60,6 +61,7 @@
   min-height: 50%;
   margin: $baseline-margin * 2 $section-gutter * 2;
   max-width: $mobile-breakpoint *1px;
+  max-width: 40vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -89,6 +91,9 @@
     align-items: flex-start;
     min-height: auto;
   }
+  .canvasContainer {
+    max-width: none;
+  }
 
   .rightContainer {
     flex: 0 0 auto;
@@ -99,6 +104,7 @@
   .formsContainer {
     flex: 1;
     min-width: 0;
+    max-width: none;
   }
 }
 

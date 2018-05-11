@@ -40,7 +40,6 @@ class ImportSelectionsForm extends Component {
               <button type="button" onClick={this.handleClick}>
                 <small>import</small>
               </button>
-
           }
         </label>
       </div>

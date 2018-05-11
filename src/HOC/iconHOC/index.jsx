@@ -18,7 +18,7 @@ export default function iconsHOC(Icon) {
       return (
         <a
           className={classnames('icon-hoc', { hidden: this.props.hidden, disabled: this.props.disabled })}
-          onClick={this.props.onClick}
+          onClick={this.props.disabled ? ()=>{} : this.props.onClick}
           href={this.props.href}
           download={this.props.href ? 'obfuscatedImage' : null}
         >

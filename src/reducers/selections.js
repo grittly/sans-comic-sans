@@ -142,6 +142,7 @@ export default function selections(state = defaultState, action) {
       return {
         ...state,
         collection: state.collection.filter(selection => selection.id.value !== action.id),
+        activeSelectionId: null,
       };
     case VALIDATE_SELECTIONS:
       const hasErrors

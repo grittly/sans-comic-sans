@@ -95,7 +95,7 @@ const mapStateToProps = state => ({
   imageLoaded: state.srcImage.src !== null,
   isImageObfuscated: state.obfuscatedImage.src !== null,
   obfuscatedImageSrc: state.obfuscatedImage.src,
-  readyToObfuscate: !state.selections.hasErrors && state.selections.validated,
+  readyToObfuscate: !state.selections.hasErrors && state.selections.validated && state.selections.collection.length > 0,
 });
 
 ActionsPanel.defaultProps = {
