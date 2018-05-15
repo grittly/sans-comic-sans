@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Rect, Group } from 'react-konva';
+import { Rect, Group, Path, Text } from 'react-konva';
 import PropTypes from 'prop-types';
 import {
   setBoundaries,
@@ -7,15 +7,27 @@ import {
 } from './_helpers';
 
 // configuration
-const SELECTION_FILL_ACTIVE = 'rgba(255,255,255,0.7)';
+const SELECTION_FILL_ACTIVE = 'rgba(35,149,154,0.3)';
 const SELECTION_FILL_INACTIVE = 'rgba(255,255,255,0.2)';
-const SELECTION_STROKE = 'green';
+const SELECTION_STROKE = 'rgba(255,255,255,1)';
+const SELECTION_STROKE_WIDTH = 2;
+const SELECTION_STROKE_DASH = [10, 5];
 const RESIZE_HANDLE_SIZE = 32;
-const RESIZE_HANDLE_FILL = 'red';
+const RESIZE_HANDLE_FILL = 'rgba(255, 255, 255, 1)';
+// const TEXT_COLOR = 'rgba(255,61,56,1)';
+const TEXT_COLOR = 'rgba(35,149,154,1)';
 
 const ResizeHandle = () => (
   <Group>
-    <Rect width={RESIZE_HANDLE_SIZE} height={RESIZE_HANDLE_SIZE} fill={RESIZE_HANDLE_FILL} />
+    <Rect
+      width={RESIZE_HANDLE_SIZE * 2}
+      height={RESIZE_HANDLE_SIZE * 2}
+      opacity={0}
+      x={RESIZE_HANDLE_SIZE / -2}
+      y={RESIZE_HANDLE_SIZE / -2}
+    />
+    <Path data="M20.35,32.35l12,-12l0,-4l-16,16l4,0Z" fill={RESIZE_HANDLE_FILL} />
+    <Path data="M32.35,8.35l-24,24l-4,0l28,-28l0,4Z" fill={RESIZE_HANDLE_FILL} />
   </Group>
 );
 
@@ -34,10 +46,27 @@ class SelectionCanvas extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    // Convenient to do scaling in one place
-    if (nextProps.validated) {
-      this.setState(scaleCoordinates(nextProps, RESIZE_HANDLE_SIZE));
+  // Convenient to do scaling in one place
+  componentWillReceiveProps({
+    x,
+    y,
+    scale,
+    width,
+    height,
+    containerWidth,
+    containerHeight,
+    validated,
+  }) {
+    if (validated) {
+      this.setState(scaleCoordinates({
+        x,
+        y,
+        width,
+        height,
+        containerWidth,
+        containerHeight,
+        scale,
+      }, RESIZE_HANDLE_SIZE));
     }
   }
 
@@ -149,6 +178,8 @@ class SelectionCanvas extends Component {
           onDragEnd={this.updateCoordinates}
           onClick={this.handleClick}
           onTap={this.handleClick}
+          strokeWidth={SELECTION_STROKE_WIDTH}
+          dash={SELECTION_STROKE_DASH}
         />
         {
           this.props.active ?
@@ -165,7 +196,20 @@ class SelectionCanvas extends Component {
             >
               <ResizeHandle />
             </Group> :
-            null
+            <Group
+              x={this.state.selection.x}
+              y={this.state.selection.y}
+              width={this.state.handle.width}
+              height={this.state.handle.height}
+            >
+              <Text
+                x={5}
+                y={5}
+                text={this.props.id}
+                fontSize={20}
+                fill={TEXT_COLOR}
+              />
+            </Group>
         }
       </Group>
     );

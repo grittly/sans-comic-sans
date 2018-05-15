@@ -26,7 +26,7 @@ input[type="text"], input[type="number"], textarea {
   background-color: transparent;
   outline: none;
   border: none;
-  border-bottom: 2px solid rgba($border-color, 0.5);
+  border-bottom: 1px solid $border-color;
   &:focus {
     border-width: 2px;
     border-color: $accent-color;

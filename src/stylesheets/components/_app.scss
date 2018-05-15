@@ -100,6 +100,10 @@
     min-height: auto;
     flex-direction:column;
     padding-bottom: $actions-panel-height + ($baseline-margin/2);
+    &.collapsed {
+      max-height:0;
+      padding: 0;
+    }
   }
   .formsContainer {
     flex: 1;

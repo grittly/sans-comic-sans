@@ -12,6 +12,7 @@
   max-height: 100vh;
   overflow-y: scroll;
   .container{
+    min-height: 80vh;
     animation-name: open-modal;
     animation-duration: 0.3s;
     animation-iteration-count: 1;

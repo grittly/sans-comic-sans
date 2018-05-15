@@ -20,43 +20,43 @@ const SelectionFormPlaceholder = props => (
           <label>key:</label>
           <input
             type="text"
-            id={`selection-empty-password`}
+            id="selection-empty-password"
             readOnly
             onFocus={() => props.addSelection()}
           />
         </div>
         <div className="input-label-wrapper">
-          <label htmlFor={`selection-empty-x`}>x:</label>
+          <label htmlFor="selection-empty-x">x:</label>
           <input
             type="number"
-            id={`selection-empty-x`}
+            id="selection-empty-x"
             readOnly
             onFocus={() => props.addSelection()}
           />
         </div>
         <div className="input-label-wrapper">
-          <label htmlFor={`selection-empty-y`}>y:</label>
+          <label htmlFor="selection-empty-y">y:</label>
           <input
             type="number"
-            id={`selection-empty-y`}
+            id="selection-empty-y"
             readOnly
             onFocus={() => props.addSelection()}
           />
         </div>
         <div className="input-label-wrapper">
-          <label htmlFor={`selection-empty-width`}>width:</label>
+          <label htmlFor="selection-empty-width">width:</label>
           <input
             type="number"
-            id={`selection-empty-width`}
+            id="selection-empty-width"
             readOnly
             onFocus={() => props.addSelection()}
           />
         </div>
         <div className="input-label-wrapper">
-          <label htmlFor={`selection-empty-height`}>height:</label>
+          <label htmlFor="selection-empty-height">height:</label>
           <input
             type="number"
-            id={`selection-empty-height`}
+            id="selection-empty-height"
             readOnly
             onFocus={() => props.addSelection()}
           />

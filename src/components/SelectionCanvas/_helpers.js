@@ -31,23 +31,31 @@ export function setBoundaries(position = 0, size = 0, min = 0, max = 0) {
  * @param {number} props.scale - scale factor due to canvas resizing
  * @param {number} handleSize - width of the square resize handle
  */
-export function scaleCoordinates(props, handleSize) {
+export function scaleCoordinates({
+  x,
+  y,
+  width,
+  height,
+  containerWidth,
+  containerHeight,
+  scale,
+}, handleSize) {
   return {
     selection: {
-      x: props.x * props.scale,
-      y: props.y * props.scale,
-      width: props.width * props.scale,
-      height: props.height * props.scale,
+      x: x * scale,
+      y: y * scale,
+      width: width * scale,
+      height: height * scale,
     },
     handle: {
-      x: ((props.x + props.width) * props.scale) - handleSize,
-      y: ((props.y + props.height) * props.scale) - handleSize,
+      x: ((x + width) * scale) - handleSize,
+      y: ((y + height) * scale) - handleSize,
       width: handleSize,
       height: handleSize,
     },
     container: {
-      width: props.containerWidth * props.scale,
-      height: props.containerHeight * props.scale,
+      width: containerWidth * scale,
+      height: containerHeight * scale,
     },
   };
 }

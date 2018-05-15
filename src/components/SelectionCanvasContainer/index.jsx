@@ -64,7 +64,17 @@ SelectionCanvasContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  selections: state.selections.collection.filter(selection => !selection.hasErrors),
+  selections: state.selections.collection
+    .filter(selection => !selection.hasErrors)
+    .sort((a, b) => {
+      // make sure the currently selected selection is rendered on top
+      if (a.id.value === state.selections.activeSelectionId) {
+        return 1;
+      } else if (b.id.value === state.selections.activeSelectionId) {
+        return -1;
+      }
+      return 0;
+    }),
   containerWidth: state.srcImage.width,
   containerHeight: state.srcImage.height,
   scale: state.srcImage.scale,
