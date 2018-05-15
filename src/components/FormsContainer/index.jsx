@@ -38,9 +38,9 @@ class FormsContainer extends Component {
                 <OutputFormsContainer />
                 <div className="form-buttons">
                   <a href={this.props.obfuscatedImageSrc.src} download="obfuscatedImage">
-                    <button type="button">Download</button>
+                    <button className="button" type="button">Download</button>
                   </a>
-                  <button type="button" onClick={() => this.props.unloadImage()}>Start again</button>
+                  <button className="button" type="button" onClick={() => this.props.unloadImage()}>Start again</button>
                 </div>
               </form>
             </div> :
@@ -52,7 +52,7 @@ class FormsContainer extends Component {
               />
               <ImportSelectionsForm importSelections={this.props.importSelections} />
               <div className="form-buttons">
-                <button type="submit" disabled={!this.props.readyToObfuscate}>Obfuscate</button>
+                <button className="button" type="submit" disabled={!this.props.readyToObfuscate}>Obfuscate</button>
               </div>
             </form>
         }

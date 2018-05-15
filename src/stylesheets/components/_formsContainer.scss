@@ -126,3 +126,16 @@
 
   }
 }
+
+.radio-button {
+  cursor: pointer;
+  padding: 1em $gap;
+  outline: none;
+  &.crossed-out{
+    div {
+      border-bottom: 2px solid $accent-color;
+      line-height: 0;
+      color: rgba($text-color, 0.8);
+    }
+  }
+}

@@ -12,12 +12,15 @@ html {
 
 button, input[type="submit"] {
   border: none;
-  background-color: $accent-color;
-  color: $white-color;
-  margin-right: $gap;
-  &:disabled {
-    background-color: rgba($dark-color, 0.1);
-    color: lighten($dark-color, 40);
+  background-color: transparent;
+  &.button {
+    &:disabled {
+      background-color: rgba($dark-color, 0.1);
+      color: lighten($dark-color, 40);
+    }
+    margin-right: $gap;
+    background-color: $accent-color;
+    color: $white-color;
   }
 }
 

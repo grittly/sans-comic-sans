@@ -61,6 +61,9 @@
     width: 100% !important;
     .icon-hoc {
       fill: $icon-color-light;
+      &.disabled {
+        fill: rgba($icon-color-light, 0.3);
+      }
     }
   }
   .actions-panel {

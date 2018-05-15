@@ -14,8 +14,7 @@ const SELECTION_STROKE_WIDTH = 2;
 const SELECTION_STROKE_DASH = [10, 5];
 const RESIZE_HANDLE_SIZE = 32;
 const RESIZE_HANDLE_FILL = 'rgba(255, 255, 255, 1)';
-// const TEXT_COLOR = 'rgba(255,61,56,1)';
-const TEXT_COLOR = 'rgba(35,149,154,1)';
+const TEXT_COLOR = '#333333';
 
 const ResizeHandle = () => (
   <Group>
@@ -202,12 +201,22 @@ class SelectionCanvas extends Component {
               width={this.state.handle.width}
               height={this.state.handle.height}
             >
+              <Rect
+                x={0}
+                y={0}
+                width={this.state.handle.width}
+                height={this.state.handle.height}
+                fill="rgba(250,250,250,0.3)"
+              />
               <Text
-                x={5}
+                x={0}
                 y={5}
                 text={this.props.id}
                 fontSize={20}
                 fill={TEXT_COLOR}
+                width={this.state.handle.width}
+                height={this.state.handle.height}
+                align="center"
               />
             </Group>
         }

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import formSectionHOC from '../../HOC/formSectionHOC';
 
 /**
@@ -7,20 +8,20 @@ import formSectionHOC from '../../HOC/formSectionHOC';
  */
 const ObfuscationDirectionForm = props => (
   <div className="radio-input">
-    <label htmlFor="encrypt-input">
-      <input id="encrypt-input" type="radio" checked={!props.decrypt} onChange={
-        e => props.changeDirection(!e.target.checked)
-      }
-    />
-      Encrypt
-    </label>
-    <label htmlFor="encrypt-input">
-      <input id="encrypt-input" type="radio" checked={props.decrypt} onChange={
-        e => props.changeDirection(e.target.checked)
-      }
-    />
-      Decrypt
-    </label>
+    <button
+      type="button"
+      className={classnames('radio-button', {'crossed-out': props.decrypt})}
+      onClick={(e) => {props.changeDirection(false)}}
+    >
+      <div>Encrypt</div>
+    </button>
+    <button
+      type="button"
+      className={classnames('radio-button', {'crossed-out': !props.decrypt})}
+      onClick={(e) => {props.changeDirection(true)}}
+    >
+      <div>Decrypt</div>
+    </button>
   </div>
 );
 

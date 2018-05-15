@@ -13,7 +13,7 @@ const CanvasPlaceholder = props => (
         <UploadImageIcon loading={props.loading} />
         <input id="image-browser" type="file" accept="image/*" onChange={props.handleImageUpload} />
       </label>
-      <button className="load-sample-btn"><span>or use an example</span></button>
+      <button className="button load-sample-btn"><span>or use an example</span></button>
     </div>
   </div>
 );
