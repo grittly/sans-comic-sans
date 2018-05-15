@@ -9,6 +9,7 @@ import {
   loadImage,
   unloadImage,
   resizeCanvas,
+  loadExample,
 } from '../../actions';
 import { IMAGE_STATUS } from '../../constants';
 
@@ -66,6 +67,7 @@ class CanvasContainer extends Component {
             <CanvasPlaceholder
               handleImageUpload={this.handleImageUpload}
               loading={this.props.imageStatus === IMAGE_STATUS.LOADING}
+              loadExample={this.props.loadExample}
             />
         }
         <ActionsPanel width={this.props.containerWidth} />
@@ -88,6 +90,7 @@ CanvasContainer.propTypes = {
   loadImage: PropTypes.func.isRequired,
   resizeCanvas: PropTypes.func.isRequired,
   isObfuscated: PropTypes.bool.isRequired,
+  loadExample: PropTypes.func.isRequired,
 };
 
 CanvasContainer.defaultProps = {
@@ -118,6 +121,7 @@ const mapDispatchToProps = dispatch => ({
   resizeCanvas: (width) => {
     dispatch(resizeCanvas(width));
   },
+  loadExample: () => dispatch(loadExample()),
 });
 
 export default connect(

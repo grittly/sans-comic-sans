@@ -24,16 +24,23 @@ import {
 // Actions related to loading source image
 
 /**
- * Initialize app (for use in development)
+ * Load example image
  */
-export function init() {
+export function loadExample() {
   /* eslint-disable */
   return (dispatch) => {
     const image = new window.Image();
-    image.src = 'http://via.placeholder.com/700x500';
-    return new Promise((resolve) => image.onload = resolve)
+    image.src = 'images/example.jpg';
+    return new Promise((resolve, reject) => {
+      image.onload = (img) => {
+        dispatch(loadImage(IMAGE_STATUS.LOADING));
+        resolve(img);
+      }
+      image.onerror = reject;
+    })
       .then(() => dispatch(loadImage(IMAGE_STATUS.DONE, image, image.width, image.height)))
-      .then(() => dispatch(addAndValidateSelection()));
+      .then(() => dispatch(addAndValidateSelection()))
+      .catch(() => console.log('Image not found'));
   };
   /* eslint-enable */
 }
@@ -194,7 +201,7 @@ export function validateSelections() {
  * Set or unset the id of the current selection
  * @param {number} id - Id corresponding to the id in collection
  * array inside selection reducer
-  */
+ */
 export function setActiveSelection(id) {
   return {
     type: SET_ACTIVE_SELECTION,
@@ -255,26 +262,26 @@ export function addSelection({
 
 /**
  * Add a selection representing an area on the source image
-  */
-  export function addAndValidateSelection({
-    x, y, width, height, password,
-  } = {}) {
-    return (dispatch, getState) => {
-      const imageWidth = getState().srcImage.width;
-      const imageHeight = getState().srcImage.height;
-      return Promise.resolve()
-        .then(() => dispatch(addSelection({
-          x,
-          y,
-          width,
-          height,
-          imageWidth,
-          imageHeight,
-          password,
-        })))
-        .then(() => dispatch(validateSelections()));
-    };
-  }
+ */
+export function addAndValidateSelection({
+  x, y, width, height, password,
+} = {}) {
+  return (dispatch, getState) => {
+    const imageWidth = getState().srcImage.width;
+    const imageHeight = getState().srcImage.height;
+    return Promise.resolve()
+      .then(() => dispatch(addSelection({
+        x,
+        y,
+        width,
+        height,
+        imageWidth,
+        imageHeight,
+        password,
+      })))
+      .then(() => dispatch(validateSelections()));
+  };
+}
 
 /**
  * Modify a selection

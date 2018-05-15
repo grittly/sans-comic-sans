@@ -11,7 +11,7 @@ import MainContainer from './components/MainContainer';
 import reducer from './reducers';
 import defaultState from './store/defaultState';
 import './stylesheets/main.scss';
-import { init } from './actions';
+// import { init } from './actions';
 
 let store;
 const clipboard = new Clipboard('.copy-button');
@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === 'production') {
     // Requires redux devtools extension to be installed
     composeWithDevTools(applyMiddleware(thunk)),
   );
-  store.dispatch(init());
+  // store.dispatch(init());
 }
 
 
