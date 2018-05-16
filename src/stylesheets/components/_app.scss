@@ -85,7 +85,9 @@
   .leftContainer {
     flex: 0 0 auto;
     max-width: 100%;
-    align-items: flex-start;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: auto;
     min-height: auto;
   }
   .canvasContainer {

@@ -38,6 +38,7 @@ class CanvasVisible extends Component {
               image={this.props.src}
               width={this.props.width}
               height={this.props.height}
+              preventDefault={false}
             />
             {
               this.props.displaySelections ?
