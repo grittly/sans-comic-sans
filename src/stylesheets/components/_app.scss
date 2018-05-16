@@ -29,8 +29,8 @@
 .canvasContainer {
   margin: $gap;
   flex: 1;
-  max-width: 40vw;
 }
+
 .canvas-wrapper{
   position:relative;
   .canvas-stage {
@@ -44,12 +44,10 @@
   display: flex;
   flex: 0 0 50%;
   justify-content: flex-start;
-  // align-items: center;
   align-items: stretch;
   min-height: 100vh;
   overflow: hidden;
   flex-wrap: wrap;
-  // align-content: space-between;
   @include transition-animation(flex-basis);
   &.collapsed {
     flex-basis: 0%;
@@ -61,7 +59,6 @@
   min-height: 50%;
   margin: $baseline-margin * 2 $section-gutter * 2;
   max-width: $mobile-breakpoint *1px;
-  max-width: 40vw;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -5,3 +5,9 @@ P.S. App can be used to erase any part of image regardless of content. It's not 
 
 ## Installation
 - install [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension) for Chrome/Firefox in 'development' mode
+
+### Docker
+```
+docker build -t sans-comic-sans .
+docker run -p 80:4000 sans-comic-sans
+```
