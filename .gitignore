@@ -1,3 +1,6 @@
 node_modules
 dist
-public
+# make sure empty public folder exists
+public/**/*
+!public/.keep
+
