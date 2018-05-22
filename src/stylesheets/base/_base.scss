@@ -77,3 +77,12 @@ label {
   }
 }
 
+// loading spinner
+.spinner {
+  display: none;
+  animation-name: spinner;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  transform-origin: center;
+}

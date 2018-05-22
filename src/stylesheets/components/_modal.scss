@@ -10,9 +10,10 @@
   justify-content: flex-start;
   align-items: center;
   max-height: 100vh;
-  overflow-y: scroll;
   .container{
     min-height: 80vh;
+    max-height: 100vh;
+    overflow-y: scroll;
     animation-name: open-modal;
     animation-duration: 0.3s;
     animation-iteration-count: 1;
@@ -38,8 +39,46 @@
   p {
 
   }
-  figure {
+  .figure {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    figcaption {
+      margin-top: $baseline-margin;
+      text-align: center;
+    }
+  }
+  .image {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:after {
+      content: "";
+      display: block;
+      width: 0;
+    }
 
+    &.loading {
+      .spinner {
+        display: block;
+      }
+      img {
+        opacity: 0;
+      }
+    }
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      transition: opacity 1s;
+      opacity: 1;
+    }
+    &.infographic:after{
+      padding-bottom: 5 / 7 * 100%;
+    }
   }
 }
 

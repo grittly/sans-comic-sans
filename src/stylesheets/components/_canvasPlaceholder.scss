@@ -89,6 +89,10 @@
 @include mobile {
   .canvasPlaceholder {
     width: 100%;
+    // In mobile, 100vh doesn't include the browser bar, 
+    // so centering CanvasPlaceholder in middle of viewport is difficult. Instead, 
+    // Going to set min-height for the placeholder to 80vh and align it to the top of the viewport
+    min-height: 80vh;
     .uploadArea {
       .load-sample-btn {
         max-height: $baseline-margin;

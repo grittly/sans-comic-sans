@@ -30,7 +30,7 @@ export function loadExample() {
   /* eslint-disable */
   return (dispatch) => {
     const image = new window.Image();
-    image.src = 'images/example.jpg';
+    image.src = 'images/example.png';
     return new Promise((resolve, reject) => {
       image.onload = (img) => {
         dispatch(loadImage(IMAGE_STATUS.LOADING));
@@ -39,8 +39,22 @@ export function loadExample() {
       image.onerror = reject;
     })
       .then(() => dispatch(loadImage(IMAGE_STATUS.DONE, image, image.width, image.height)))
-      .then(() => dispatch(addAndValidateSelection()))
-      .catch(() => console.log('Image not found'));
+      .then(() => dispatch(addAndValidateSelection({
+        x: 62,
+        y: 112,
+        width: 174,
+        height: 69,
+        password: "sanscomicsans",
+      })))
+      .then(() => dispatch(addAndValidateSelection({
+        x: 42,
+        y: 17,
+        width: 215,
+        height: 73,
+        password: "sanscomicsans",
+      })))
+      .then(() => dispatch(changeObfuscationDirection(true)))
+      .catch((e) => console.log('Problem loading example image'));
   };
   /* eslint-enable */
 }
@@ -102,7 +116,7 @@ export function obfuscateImage() {
     Promise.resolve()
       .then(() => dispatch({ type: IMAGE_OBFUSCATING, status: IMAGE_OBFUSCATING_STATUS.LOADING }))
       .then(() => {
-        const MAX_SIZE = 3000;
+        const MAX_SIZE = 1000;
         if (MAX_SIZE < srcImage.width || MAX_SIZE < srcImage.height) {
           [maxWidth, maxHeight] = srcImage.width > srcImage.height ?
             [MAX_SIZE, Math.round((srcImage.height * MAX_SIZE) / srcImage.width)] :

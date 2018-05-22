@@ -86,8 +86,11 @@
     flex: 0 0 auto;
     max-width: 100%;
     align-items: center;
-    margin-top: auto;
-    margin-bottom: auto;
+
+    // Temporarily disable this because not being truly centered on mobile devices
+    // (100vh does not include the height of the browser nav bar)
+    // margin-top: auto;
+    // margin-bottom: auto;
     min-height: auto;
   }
   .canvasContainer {
