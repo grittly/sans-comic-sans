@@ -9,11 +9,11 @@ import {
 // configuration
 const SELECTION_FILL_ACTIVE = 'rgba(35,149,154,0.3)';
 const SELECTION_FILL_INACTIVE = 'rgba(255,255,255,0.2)';
-const SELECTION_STROKE = 'rgba(255,255,255,1)';
+const SELECTION_STROKE = 'rgba(0,0,0,1)';
 const SELECTION_STROKE_WIDTH = 2;
 const SELECTION_STROKE_DASH = [10, 5];
 const RESIZE_HANDLE_SIZE = 32;
-const RESIZE_HANDLE_FILL = 'rgba(255, 255, 255, 1)';
+const RESIZE_HANDLE_FILL = 'rgba(0, 0, 0, 1)';
 const TEXT_COLOR = '#333333';
 
 const ResizeHandle = () => (
@@ -206,7 +206,7 @@ class SelectionCanvas extends Component {
                 y={0}
                 width={this.state.handle.width}
                 height={this.state.handle.height}
-                fill="rgba(250,250,250,0.3)"
+                fill="rgba(250,250,250,0.7)"
               />
               <Text
                 x={0}

@@ -139,3 +139,17 @@
     }
   }
 }
+
+@include mobile {
+  .form-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-align-items: stretch;
+    .button {
+      width: 100%;
+      margin: $baseline-margin/2 0 0;
+      padding: $baseline-margin/4 0;
+    }
+
+  }
+}

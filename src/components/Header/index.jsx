@@ -17,6 +17,8 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.handleScramble = this.handleScramble.bind(this);
+    this.handleUnscramble = this.handleUnscramble.bind(this);
   }
 
   componentDidMount() {
@@ -26,18 +28,34 @@ class Header extends Component {
       duration: 500,
       autoplay: false,
     });
-    toggleScramble.reverse();
   }
 
-  handleToggle() {
+  handleScramble() {
+    toggleScramble.seek(0);
+    if (toggleScramble.reversed) {
+      toggleScramble.reverse();
+    }
     toggleScramble.play();
-    toggleScramble.reverse();
+  }
+
+  handleUnscramble() {
+    toggleScramble.seek(500);
+    if (!toggleScramble.reversed) {
+      toggleScramble.reverse();
+    }
+    toggleScramble.play();
   }
 
   render() {
     return (
-      <header className="header">
-        <svg viewBox="0 0 175 17" onClick={this.handleToggle}>
+      <header
+        className="header"
+        onMouseEnter={this.handleScramble}
+        onMouseLeave={this.handleUnscramble}
+      >
+        <svg
+          viewBox="0 0 175 17"
+        >
           <g className="sans-text" >
             <path
               className="scrambled-letter"
