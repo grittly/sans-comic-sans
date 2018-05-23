@@ -45,7 +45,7 @@ class CanvasContainer extends Component {
       const image = new window.Image();
       image.src = reader.result;
       image.onload = () => {
-        this.props.loadImage(image, image.width, image.height);
+        this.props.loadImage(image);
       };
       image.onerror = this.props.unloadImage;
     };
@@ -109,8 +109,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadImage: (image, width, height) => {
-    dispatch(loadImage(IMAGE_STATUS.DONE, image, width, height));
+  loadImage: (image) => {
+    dispatch(loadImage(IMAGE_STATUS.DONE, image));
   },
   unloadImage: () => {
     dispatch(unloadImage());

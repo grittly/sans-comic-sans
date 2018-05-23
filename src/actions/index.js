@@ -19,6 +19,7 @@ import {
 import {
   runSelectionValidator,
   obfuscateSelectedArea,
+  resizeImage,
 } from './helpers';
 
 // Actions related to loading source image
@@ -83,20 +84,33 @@ export function scaleSelections(scale) {
 }
 
 /**
- * Load image into redux store
+ * Load image into redux store and resize it if the longest dimension exceeds max allowed size
  */
-export function loadImage(status, src, width, height) {
+export function loadImage(status, src) {
   return (dispatch) => {
-    return Promise.resolve()
-      .then(() => dispatch({
-        type: LOAD_IMAGE,
-        status,
-        src,
-        width,
-        height,
-      }));
+    switch (status) {
+      case IMAGE_STATUS.LOADING:
+        return dispatch({
+          type: LOAD_IMAGE,
+          status,
+        });
+      case IMAGE_STATUS.DONE:
+        return Promise.resolve()
+          .then(() => {
+            return resizeImage(src);
+          })
+          .then((img) => dispatch({
+            type: LOAD_IMAGE,
+            status,
+            src: img,
+            width: img.width,
+            height: img.height,
+          }));
+      default:
+    }
   };
 }
+
 
 /**
  *  Run image obfuscation
@@ -106,34 +120,19 @@ export function obfuscateImage() {
     const srcImage = getState().srcImage.src;
     const { decrypt } = getState().settings;
 
-    const canvasOriginal = document.createElement('canvas');
-    const ctxOriginal = canvasOriginal.getContext('2d');
-    const canvasEncrypted = document.createElement('canvas');
-    const ctxEncrypted = canvasEncrypted.getContext('2d');
-    let maxWidth = srcImage.width;
-    let maxHeight = srcImage.height;
-
     Promise.resolve()
       .then(() => dispatch({ type: IMAGE_OBFUSCATING, status: IMAGE_OBFUSCATING_STATUS.LOADING }))
       .then(() => {
-        const MAX_SIZE = 1000;
-        if (MAX_SIZE < srcImage.width || MAX_SIZE < srcImage.height) {
-          [maxWidth, maxHeight] = srcImage.width > srcImage.height ?
-            [MAX_SIZE, Math.round((srcImage.height * MAX_SIZE) / srcImage.width)] :
-            [Math.round((srcImage.width * MAX_SIZE) / srcImage.height), MAX_SIZE];
-        }
-        const scale = maxWidth / srcImage.width;
-        canvasOriginal.width = maxWidth;
-        canvasOriginal.height = maxHeight;
-
-        canvasEncrypted.width = maxWidth;
-        canvasEncrypted.height = maxHeight;
-        ctxOriginal.drawImage(srcImage, 0, 0, maxWidth, maxHeight);
-
-        return dispatch(scaleSelections(scale));
-      })
-      .then(() => {
+        const canvasOriginal = document.createElement('canvas');
+        const ctxOriginal = canvasOriginal.getContext('2d');
+        const canvasEncrypted = document.createElement('canvas');
+        const ctxEncrypted = canvasEncrypted.getContext('2d');
         const selections = getState().selections.collection;
+        canvasOriginal.width = srcImage.width;
+        canvasOriginal.height = srcImage.height;
+        canvasEncrypted.width = srcImage.width;
+        canvasEncrypted.height = srcImage.height;
+        ctxOriginal.drawImage(srcImage, 0, 0, srcImage.width, srcImage.height);
         selections.forEach(({
           x, y, width, height, password,
         }) => {
@@ -158,7 +157,7 @@ export function obfuscateImage() {
             Math.round(y.value),
           );
         });
-        ctxOriginal.drawImage(canvasEncrypted, 0, 0, maxWidth, maxHeight);
+        ctxOriginal.drawImage(canvasEncrypted, 0, 0, srcImage.width, srcImage.height);
         return new Promise((resolve) => {
           canvasOriginal.toBlob((blob) => {
             resolve(blob);

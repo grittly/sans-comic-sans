@@ -1,3 +1,4 @@
+/* globals document, URL */
 import {
   VALIDATE_PRESENCE,
   VALIDATE_ALLOWED_CHARACTERS,
@@ -36,7 +37,7 @@ export function runSelectionValidator(selections, imgWidth, imgHeight) {
           RULE_NUMERIC_RANGE: { minNum: 0, maxNum: imgWidth - selection.width.value },
         }),
         y: Validate('y', selection.y, {
-          RULE_NUMERIC_RANGE: { minNum: 0, maxNum: imgWidth - selection.height.value },
+          RULE_NUMERIC_RANGE: { minNum: 0, maxNum: imgHeight - selection.height.value },
         }),
         width: Validate('width', selection.width, {
           RULE_NUMERIC_RANGE: { minNum: 0, maxNum: imgWidth - selection.x.value },
@@ -74,4 +75,44 @@ export function obfuscateSelectedArea({
   const result = noiseGenerator(password, originalImage, encryptedImage, decrypt);
   // eslint-disable-next-line no-undef
   return new ImageData(result, originalImage.width, originalImage.height);
+}
+
+
+/**
+ *  Resize image so longest edge is at most maxSize
+ *  @param {HTMLImageElement} img - Image being loaded
+ *  @param {number} maxSize - maximum size for any one dimension of img
+ *
+ */
+export function resizeImage(img, maxSize = 1000) {
+  return Promise.resolve()
+    .then(() => {
+      let maxWidth = img.width;
+      let maxHeight = img.height;
+      if (maxSize < img.width || maxSize < img.height) {
+        [maxWidth, maxHeight] = img.width > img.height ?
+          [maxSize, Math.round((img.height * maxSize) / img.width)] :
+          [Math.round((img.width * maxSize) / img.height), maxSize];
+      }
+      if (maxWidth < img.width) {
+        const canvasResize = document.createElement('canvas');
+        const ctxResize = canvasResize.getContext('2d');
+        canvasResize.width = maxWidth;
+        canvasResize.height = maxHeight;
+        ctxResize.drawImage(img, 0, 0, maxWidth, maxHeight);
+        return new Promise((resolve) => {
+          canvasResize.toBlob((blob) => {
+            resolve(blob);
+          });
+        })
+          .then((blob) => {
+            const tmpImg = document.createElement('img');
+            tmpImg.src = URL.createObjectURL(blob);
+            return new Promise((resolve) => {
+              tmpImg.onload = () => resolve(tmpImg);
+            });
+          });
+      }
+      return img;
+    });
 }
